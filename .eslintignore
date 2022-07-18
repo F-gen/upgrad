@@ -1,0 +1,4 @@
+/dist
+/src/vender
+node_modules
+package.json
