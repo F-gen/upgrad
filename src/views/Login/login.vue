@@ -1,7 +1,5 @@
 <template>
-  <div class="m-0 mx-auto">
-    Test  
-  </div>
+  <div />
 </template>
 
 <script>
