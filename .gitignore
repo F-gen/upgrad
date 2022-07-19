@@ -12,8 +12,12 @@ dist
 dist-ssr
 *.local
 src/api
-src/intercept
+src/intercept.js
 .env.dev
+.env.devBuild
+.env.prod
+.env.prodBuild
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
