@@ -6,7 +6,7 @@ import store from "./store/index";
 const CancelToken = axios.CancelToken;
 import { getSession, removeSession } from "./utils/auth";
 import { filterObjectEmpty, addRequestData } from "./utils/tool";
-import router from "@/router/index";
+import router from "./router/index";
 const clearRequest = {
   source: {
     token: null,

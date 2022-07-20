@@ -1,5 +1,5 @@
 
-import { getSession, setSession } from "@/utils/auth";
+import { getSession, setSession } from "../../utils/auth.js";
 const state = {
   userName: getSession("userName"),
   token: getSession("token"),
