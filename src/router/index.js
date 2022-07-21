@@ -13,9 +13,10 @@ const routes=[{
   }
 ]
 const router=createRouter({
-  history:createWebHistory(),
+  mode: 'hash',
+  history: createWebHistory(),
   routes,
-  base: process.env.VUE_APP_BASE_URL,
+  base: '/',
 })
 
 export default router

@@ -1,5 +1,5 @@
 <template>
-  <div @click="loginFn"> </div>
+  <div />
 </template>
 
 <script>
@@ -13,6 +13,7 @@ const loginFn = async () => {
   let token;
   if (window.location.hostname === "localhost") {
     token = await api.getFutailToken();
+
   } else {
     token = this.$route.query.token;
   }
@@ -23,4 +24,5 @@ const loginFn = async () => {
     path: "/dashboard",
   });
 }
+loginFn();
 </script>
