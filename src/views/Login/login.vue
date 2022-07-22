@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router'
 export default {
   name: 'HomeLayout',
 };
@@ -11,16 +13,18 @@ export default {
 <script setup>
 const loginFn = async () => {
   let token;
+  const store = useStore();
+  const router = useRouter();
   if (window.location.hostname === "localhost") {
     token = await api.getFutailToken();
 
   } else {
-    token = this.$route.query.token;
+    token = router.query.token;
   }
   let data = await api.login({ token: token });
-  this.$store.commit("user/setToken", data);
+  store.commit("user/setToken", data);
   //   store.commit("user/setToken", data);
-  this.$router.replace({
+  router.replace({
     path: "/dashboard",
   });
 }
