@@ -1,6 +1,9 @@
 <template>
-  <div class="main">
-    <h1>test</h1>
+  <div>
+    <h1 class="text-base">
+      test
+    </h1>
+    <span class="iconify w-56 h-56 stroke-orange-500" data-icon="material-symbols:360" data-inline="false" />
   </div>
 </template>
 
@@ -12,6 +15,3 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-
-</style>

@@ -1,10 +1,15 @@
 import { defineConfig } from 'vite'
-const {resolve}  = require("path");
+import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
-// https://vitejs.dev/config/
+
+// more config  https://github.com/F-gen/vite_Vue3_Practice/blob/main/vite.config.ts
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': `${path.resolve(__dirname, './src')}`,
+    },
+  },
 
-
-  plugins: [vue(),WindiCSS(),]
+  plugins: [vue(), WindiCSS(),]
 })
