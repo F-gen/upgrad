@@ -46,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
       if (window.location.hostname === "localhost") {
         next({ path: "/login" });
       } else {
-        location.href = process.env.VUE_APP_BASE_LOGIN;
+        location.href = import.meta.env.VUE_APP_BASE_LOGIN;
       }
     }
   }
@@ -105,13 +105,13 @@ axios.interceptors.response.use(
         case 401:
           message.warning("登录过期，请重新登录");
           removeSession("token");
-          location.href = process.env.VUE_APP_BASE_LOGIN;
+          location.href = import.meta.env.VUE_APP_BASE_LOGIN;
           // ;
           break;
         case 402:
           message.warning("没有权限请联系运维同事或管理员开通");
           localStorage.removeItem("token");
-          location.href = process.env.VUE_APP_BASE_LOGIN;
+          location.href = import.meta.env.VUE_APP_BASE_LOGIN;
           break;
         case 400:
           result = data.data;

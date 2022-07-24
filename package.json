@@ -10,6 +10,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^2.2.1",
     "ant-design-vue": "^3.2.10",
     "axios": "^0.27.2",
@@ -22,6 +23,8 @@
     "@vitejs/plugin-vue": "^2.3.3",
     "eslint": "^8.20.0",
     "eslint-plugin-vue": "^9.2.0",
+    "unplugin-auto-import": "^0.10.0",
+    "unplugin-vue-components": "^0.21.1",
     "vite": "^2.9.9",
     "vite-plugin-windicss": "^1.8.7",
     "windicss": "^3.5.6"
