@@ -1,4 +1,4 @@
-- Vite+v3.2 + windcss3.5+ vuex4 +andv 3.2
+- Vite+Vue3.2 + windcss3.5+ vuex4 +andv 3.2
 
 - npm init @vitejs/app project-name
 
@@ -32,8 +32,9 @@
 └── package.json               # package.json
 ```
 
-(unplugin-auto-import)[https://github.com/antfu/unplugin-auto-import]
+[unplugin-auto-import](https://github.com/antfu/unplugin-auto-import)
 
-(unplugin-vue-components)[https://github.com/antfu/unplugin-vue-components]
+[unplugin-vue-components](https://github.com/antfu/unplugin-vue-components)
 
-更多v3+vite 模板见(awesome-vite)[https://github.com/vitejs/awesome-vite]
+[更多vite 模板见(awesome-vite](https://github.com/vitejs/awesome-vite)
+

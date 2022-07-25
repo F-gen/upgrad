@@ -18,6 +18,7 @@ src/intercept.js
 .env.prod
 .env.prodBuild
 src/store
+src/views/Login
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

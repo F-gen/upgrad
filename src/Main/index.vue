@@ -26,8 +26,8 @@
             </RouterLink>
           </li>
           <!-- System -->
-          <li class="ml-20 group">
-            <span class="text-white cursor-pointer">System</span>
+          <li class="group">
+            <span class="text-white cursor-pointer ml-20 mr-10">System</span>
             <div
               class="absolute top-15 right-1/6 w-82 h-95 flex flex-row border-zinc-200 border-solid border pl-3 pr-3 hidden group-hover:flex">
               <div class="flex-1 mr-2">
