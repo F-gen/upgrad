@@ -1,5 +1,5 @@
 <template>
-  <div class="Keyword" />
+  <div>class="Keyword" /</div>
 </template>
 
 <script>

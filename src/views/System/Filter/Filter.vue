@@ -1,5 +1,5 @@
 <template>
-  <div class="Filter" />
+  <div>filter</div>
 </template>
 
 <script>

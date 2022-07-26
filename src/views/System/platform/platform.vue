@@ -1,5 +1,5 @@
 <template>
-  <div class="platform" />
+  <div>platform </div>
 </template>
 
 <script>
