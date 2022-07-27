@@ -1,16 +1,18 @@
 <template>
-  <div>
-    brand
-  </div>
+  <div />
 </template>
 
 <script>
 export default {
   name: 'BrandConfig',
-  setup() {
-    return {}
-  }
-}
+};
 </script>
-<style lang="less" scoped>
-</style>
+
+<script setup>
+const Allbrand = async () => {
+ const data= await api.queryAllBrandName()
+ console.log(data);
+
+}
+Allbrand()
+</script>
