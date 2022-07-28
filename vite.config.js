@@ -13,16 +13,25 @@ export default defineConfig({
     },
   },
 
-  plugins: [vue(), WindiCSS(), Components({
-    dts: true,
-    resolvers: [AntDesignVueResolver()]
-  }), AutoImport({
-    imports: [
-      'vue',
-      'vue-router',
-    ],
-    resolvers: [AntDesignVueResolver()],
-    dts: true,
-    vueTemplate: true,
-  }),]
+  plugins: [
+    vue(),
+    WindiCSS(),
+    Components({
+      dts: true,
+      resolvers: [AntDesignVueResolver()]
+    }),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.md$/, // .md
+      ],
+      imports: ['vue', 'vue-router', 'vuex', { '@/api/index': [['*', 'api']] }],
+      dts: true,
+
+      resolvers: [AntDesignVueResolver()],
+
+      vueTemplate: true,
+    }),]
 })

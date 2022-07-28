@@ -3,8 +3,7 @@
 </template>
 
 <script>
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router'
+
 export default {
   name: 'HomeLayout',
 };
@@ -17,7 +16,7 @@ const loginFn = async () => {
   const router = useRouter();
   if (window.location.hostname === "localhost") {
     // token = await api.getFutailToken();
-    token = "74358c62-08ca-45c5-b37e-15c54efb19f4"
+    token = "6995fa76-4aa5-40fb-b38e-b882e3a0cb7f"
 
   } else {
     token = router.query.token;
@@ -26,7 +25,7 @@ const loginFn = async () => {
   store.commit("user/setToken", data);
   //   store.commit("user/setToken", data);
   router.replace({
-    path: "/dashboard",
+    path: "/Layout/BrandDiscovery",
   });
 }
 loginFn();

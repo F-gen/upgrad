@@ -6,8 +6,8 @@ const routes = [{
   component: () => import('@/views/Login/login.vue'),
 
 }, {
-  path: '/dashboard',
-  name: 'dashboard',
+  path: '/Layout',
+  name: 'Layout',
     component: Layout,
     children: [
       {

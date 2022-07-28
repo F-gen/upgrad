@@ -10,18 +10,18 @@
       <div>
         <ul class="flex leading-15">
           <li class="ml-20">
-            <RouterLink to="/dashboard/BrandDiscovery" class="text-white">
+            <RouterLink to="/Layout/BrandDiscovery" class="text-white">
               Brand Discovery
             </RouterLink>
           </li>
           <li class="ml-20">
-            <RouterLink to="/dashboard/BrandNewsHome" class="text-white">
+            <RouterLink to="/Layout/BrandNewsHome" class="text-white">
               Brand News
             </RouterLink>
           </li>
           <!-- <li>Data Intelligence</li> -->
           <li class="ml-20">
-            <RouterLink to="/dashboard/OriginData" class="text-white">
+            <RouterLink to="/Layout/OriginData" class="text-white">
               Social Buzz
             </RouterLink>
           </li>
