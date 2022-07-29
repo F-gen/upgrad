@@ -13,10 +13,8 @@ dist-ssr
 *.local
 src/api
 src/intercept.js
-.env.dev
-.env.devBuild
-.env.prod
-.env.prodBuild
+.env.production
+.env.development
 src/store
 src/views/Login
 # Editor directories and files

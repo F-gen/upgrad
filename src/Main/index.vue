@@ -145,8 +145,7 @@ const leftroute = reactive([
 ])
 const username = getSession("userName");
 const quit = () => {
-  // removeSession("token");
-  window.location.href = "https://biuat.ibaiqiu.com/a/dist/";
+  window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
 }
 
 </script>
