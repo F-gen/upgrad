@@ -1,21 +1,31 @@
 <template>
-  <div>
-    {{ value1 }}
+  <div class="bg-[#f0f2f5] w-full h-full box-border p-6">
+    <div class="bg-light-50 p-6">
+      <a-tabs v-model:activeKey="activeKey" @change="changtab">
+        <a-tab-pane key="BrandConfig" tab="Brand" />
+        <a-tab-pane key="BrandCatagory" tab="Category" />
+      </a-tabs>
+      <component :is="componentList[componentId]" />
+    </div>
   </div>
 </template>
 
 <script>
+import BrandCatagory from "./components/brand-catagory.vue";
+import BrandConfig from "./components/brand-config.vue";
 export default {
-  name: 'BrandConfig',
+  name: 'Brand',
 };
+let componentList = {
+  BrandCatagory,
+  BrandConfig
+}
 </script>
 
 <script setup>
-const value1 = ref("")
-const Allbrand = async () => {
-  const value = await api.queryAllBrandName()
-  console.log(value);
-  value1.value = value[0]
+const activeKey = ref('BrandConfig')
+const componentId = ref('BrandConfig')
+const changtab = (activeKey) => {
+  componentId.value = activeKey
 }
-Allbrand()
 </script>

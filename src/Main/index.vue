@@ -29,7 +29,7 @@
           <li class="group">
             <span class="text-white cursor-pointer ml-20 mr-10">System</span>
             <div
-              class="absolute top-15 right-1/6 w-82 h-95 flex flex-row border-zinc-200 border-solid border pl-3 pr-3 hidden group-hover:flex">
+              class=" bg-[#ffffff] absolute top-15 right-1/6 w-82 h-95 flex flex-row border-zinc-200 border-solid border pl-3 pr-3 hidden group-hover:flex">
               <div class="flex-1 mr-2">
                 <!-- Configuration -->
                 <div class="border-zinc-200 border-b-1 border-solid text-[#1890ff] ">
@@ -87,7 +87,7 @@
       </div>
     </div>
     <!-- main -->
-    <div class="h-screen mt-15">
+    <div class="h-[calc(100vh-60px)] mt-15">
       <router-view />
     </div>
     <div>
