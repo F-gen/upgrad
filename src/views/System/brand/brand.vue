@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#f0f2f5] w-full h-full box-border p-6">
+  <div class="bg-[#f0f2f5] w-full box-border p-6">
     <div class="bg-light-50 p-6">
       <a-tabs v-model:activeKey="activeKey" @change="changtab">
         <a-tab-pane key="BrandConfig" tab="Brand" />

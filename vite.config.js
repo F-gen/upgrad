@@ -19,18 +19,18 @@ export default defineConfig(
             'card-padding-base': '16px', //a-card padding
             'card-head-padding': '14px', // 卡片
             'card-head-font-size': '12px', // 卡片字体大小
-            // "@btn-border-radius-base": 0, //按钮边框
-            // "@btn-height-base": "30px",
-            // "@btn-border-radius-base": 0, //按钮边框
-            // "@card-radius": "4px",
-            // "@table-padding-vertical": "10px",
-            // "@table-padding-horizontal": "18px",
-            // "@background-color-light": "#F2F6FC",
-            // "@input-padding-vertical-base": "5px",
-            // "@select-dropdown-line-height": "24px", //行高
-            // "@border-radius-base": 0,
-            // "@card-padding-base": "16px",
-            // "@zindex-table-fixed": 0,
+            'btn-border-radius-base': 0, //按钮边框
+            'btn-height-base': '30px',
+            'card-radius': '4px',
+            'table-padding-vertical': '10px',
+            'table-padding-horizontal': '18px',
+            'background-color-light': '#F2F6FC',
+            'table-row-hover-bg': '#e6f7ff', //table 中 行hover 背景
+            'input-padding-vertical-base': '5px',
+            'select-dropdown-line-height': '24px', //行高
+            'border-radius-base': 0,
+            'card-padding-base': '16px',
+            'zindex-table-fixed': 0,
           },
           javascriptEnabled: true,
         },

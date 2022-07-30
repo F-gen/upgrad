@@ -33,7 +33,16 @@
       </a-form>
     </div>
     <div>
-      <a-table :columns="columns" :data-source="tableDATA" bordered />
+      <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
+        :scroll="{ x: 950, y: 580 }">
+        <template #bodyCell="{ column }">
+          <template v-if="column.key === 'action'">
+            <a>Edit</a>
+            <a-divider type="vertical" />
+            <a>Delete</a>
+          </template>
+        </template>
+      </a-table>
     </div>
   </div>
 </template>
@@ -48,16 +57,33 @@ export default {
 
 const BrandItems = ref([])
 const BackupBrandItems = ref([])
-const columns = ref([])
-const tableDATA = ref([])
+const columns = reactive([
+  { title: 'NO', dataIndex: 'key', key: 'key' },
+  { title: 'Brand Eng Name', dataIndex: 'brandNameEn', key: 'brandNameEn' },
+  { title: 'Brand Name', dataIndex: 'brandNameCn', key: 'brandNameCn' },
+  { title: 'Category', dataIndex: 'brandType', key: 'brandType' },
+  { title: 'Is BQ Operate', dataIndex: 'bqOperate', key: 'bqOperate' },
+  { title: 'Action', dataIndex: 'action', key: 'action' },
+])
+const paginationOption = reactive(
+  {
+    showQuickJumper: true,
+    pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
+    showSizeChanger: true,
+    defaultPageSize: 50,
+  },
+)
+const tabData = ref([])
 const searchText = ref('')
 const SearchBrand = (value) => {
+
   let timer
   if (timer) clearTimeout(this.timer);
   timer = setTimeout(async () => {
     BrandItems.value = await api.queryAllBrandName({ keyword: value, });
     clearTimeout(timer);
   }, 500);
+  searchText.value = value;
 }
 const getBrandAgain = () => {
   BrandItems.value = BackupBrandItems.value
@@ -67,16 +93,23 @@ const Allbrand = async () => {
   BrandItems.value = data
   BackupBrandItems.value = data
 }
-Allbrand()
-const onSearch = () => {
 
+const onSearch = async () => {
+  const data = await api.queryBrand({
+    keyword: searchText.value,
+  });
+  tabData.value = data.map((item, index) => {
+    item.key = index + 1;
+    return item;
+  });
 }
+
 const reset = () => {
 
 }
 const add = () => {
 
 }
+Allbrand()
+onSearch()
 </script>
-<style lang="less" scoped>
-</style>
