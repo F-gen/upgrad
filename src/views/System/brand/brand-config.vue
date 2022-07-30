@@ -11,14 +11,29 @@
           </a-select>
         </a-form-item>
         <a-form-item>
-          <a-button type="primary">
+          <a-button type="primary" @click="onSearch">
             <template #icon>
               <SearchOutlined />
             </template>
             Search
           </a-button>
+          <a-button type="primary" class="ml-3" @click="reset">
+            <template #icon>
+              <undo-outlined />
+            </template>
+            Reset
+          </a-button>
+          <a-button type="primary" class="ml-3" @click="add">
+            <template #icon>
+              <plus-outlined />
+            </template>
+            New
+          </a-button>
         </a-form-item>
       </a-form>
+    </div>
+    <div>
+      <a-table :columns="columns" :data-source="tableDATA" bordered />
     </div>
   </div>
 </template>
@@ -30,11 +45,19 @@ export default {
 </script>
 
 <script setup>
+
 const BrandItems = ref([])
 const BackupBrandItems = ref([])
+const columns = ref([])
+const tableDATA = ref([])
 const searchText = ref('')
-const SearchBrand = () => {
-
+const SearchBrand = (value) => {
+  let timer
+  if (timer) clearTimeout(this.timer);
+  timer = setTimeout(async () => {
+    BrandItems.value = await api.queryAllBrandName({ keyword: value, });
+    clearTimeout(timer);
+  }, 500);
 }
 const getBrandAgain = () => {
   BrandItems.value = BackupBrandItems.value
@@ -45,6 +68,15 @@ const Allbrand = async () => {
   BackupBrandItems.value = data
 }
 Allbrand()
+const onSearch = () => {
+
+}
+const reset = () => {
+
+}
+const add = () => {
+
+}
 </script>
 <style lang="less" scoped>
 </style>

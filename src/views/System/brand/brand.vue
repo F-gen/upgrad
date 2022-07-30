@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import BrandCatagory from "./components/brand-catagory.vue";
-import BrandConfig from "./components/brand-config.vue";
+import BrandCatagory from "./brand-catagory.vue";
+import BrandConfig from "./brand-config.vue";
 export default {
   name: 'Brand',
 };
