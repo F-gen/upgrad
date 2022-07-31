@@ -49,13 +49,16 @@ router.beforeEach(async (to, from, next) => {
       next();
     } else {
       if (window.location.hostname === "localhost") {
-        next({ path: "/login" });
+        next({ path: "/login" }).catch(error => {
+          console.info(error.message)
+        });
       } else {
         location.href = import.meta.env.VUE_APP_BASE_LOGIN;
       }
     }
   }
 });
+
 
 // 添加请求拦截器
 axios.interceptors.request.use(

@@ -29,32 +29,32 @@
           <li class="group">
             <span class="text-white cursor-pointer ml-20 mr-10 hover:text-primary ">System</span>
             <div
-              class=" bg-[#ffffff] absolute top-15 right-1/6 w-[328px] h-[380px]  flex flex-row border-zinc-200 border-solid border pl-3 pr-3  group-hover:flex">
-              <div class="flex-auto mr-2">
+              class=" bg-[#ffffff]  absolute top-15 right-1/6  w-[328px] h-[380px]  flex-row border-zinc-200 border-solid border pl-3 pr-3  group-hover:flex">
+              <div class="flex-1 mr-2">
                 <!-- Configuration -->
-                <div class="border-zinc-200 border-b-1 border-solid text-[#1890ff] ">
-                  <span class="iconify ml-5 mr-1 text-base align-middle" data-icon="fluent:apps-20-regular"
+                <div class="border-zinc-200 border-b-[1px] border-solid text-primary ">
+                  <span class="iconify ml-5 mr-1 text-base align-middle inline-block" data-icon="fluent:apps-20-regular"
                     data-inline="false" />
-                  <span class="align-middle">
+                  <span class="align-middle inline-block">
                     Configuration
                   </span>
                 </div>
                 <!-- 渲染的子级 -->
-                <div v-for="i, index in leftroute" :key="index"
-                  class="border-zinc-200  hover:text-[#1890ff] leading-5 mt-5 ">
-                  <span class="iconify ml-5 mr-2 text-base align-middle" :data-icon="i.icon" data-inline="false" />
+                <div v-for="i, index in leftroute" :key="index" class="hover:text-primary leading-5 mt-5 ">
+                  <span class="iconify ml-5 mr-2 text-base align-middle inline-block" :data-icon="i.icon"
+                    data-inline="false" />
                   <span class="align-middle">
-                    <RouterLink :to="i.path" class="text-[#333]">{{ i.title }}</RouterLink>
+                    <RouterLink :to="i.path" class="text-[#333] inline-block">{{ i.title }}</RouterLink>
                   </span>
                 </div>
               </div>
               <!-- right -->
-              <div class="ml-2 flex-auto">
+              <div class="ml-2 flex-1">
                 <!-- Others -->
-                <div class="border-zinc-200 border-b-1 border-solid text-[#1890ff] ">
-                  <span class="iconify ml-5 mr-1 text-base align-middle" data-icon="iconoir:more-horiz-circled-outline"
-                    data-inline="false" />
-                  <span class="align-middle">
+                <div class="border-zinc-200 border-b-[1px] border-solid text-[#1890ff] ">
+                  <span class="iconify ml-5 mr-1 text-base align-middle inline-block"
+                    data-icon="iconoir:more-horiz-circled-outline" data-inline="false" />
+                  <span class="align-middle inline-block">
                     Others
                   </span>
                 </div>
@@ -68,7 +68,7 @@
         <a-dropdown>
           <div>
             <a-avatar>
-              <span class="iconify" data-icon="ic:round-person" data-inline="false" />
+              <span class="iconify text-2xl" data-icon="ic:round-person" data-inline="false" />
             </a-avatar>
             <span class="ml-3  text-white text-sm">{{ JSON.parse(username) }}</span>
           </div>

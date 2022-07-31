@@ -1,5 +1,8 @@
 <template>
-  <div>channle</div>
+  <div>channle</div>.
+  <a-table>
+    123
+  </a-table>
 </template>
 
 <script>
