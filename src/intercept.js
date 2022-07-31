@@ -3,6 +3,7 @@ import { message } from "ant-design-vue";
 import axios from "axios";
 // import router from './router/index';
 import store from "./store/index";
+
 const CancelToken = axios.CancelToken;
 import { getSession, removeSession } from "./utils/auth";
 import { filterObjectEmpty, addRequestData } from "./utils/tool";
@@ -21,6 +22,8 @@ function loadingStart() {
     store.commit("loading/setSpining", true);
   }
   requestCount++;
+  // console.log(requestCount);
+  // console.log(store.getters.spinning, "start");
 }
 
 // 隐藏loading
@@ -28,6 +31,8 @@ const hideLoading = () => {
   requestCount--;
   if (requestCount === 0) {
     store.commit("loading/setSpining", false);
+    // console.log(requestCount);
+    // console.log(store.state.loading.spinning, "end");
   }
 };
 
@@ -46,7 +51,7 @@ router.beforeEach(async (to, from, next) => {
       if (window.location.hostname === "localhost") {
         next({ path: "/login" });
       } else {
-        location.href = import.meta.env.VITE_APP_BASE_LOGIN;
+        location.href = import.meta.env.VUE_APP_BASE_LOGIN;
       }
     }
   }
@@ -105,13 +110,13 @@ axios.interceptors.response.use(
         case 401:
           message.warning("登录过期，请重新登录");
           removeSession("token");
-          location.href = import.meta.env.VITE_APP_BASE_LOGIN;
+          location.href = import.meta.env.VUE_APP_BASE_LOGIN;
           // ;
           break;
         case 402:
           message.warning("没有权限请联系运维同事或管理员开通");
           localStorage.removeItem("token");
-          location.href = import.meta.env.VITE_APP_BASE_LOGIN;
+          location.href = import.meta.env.VUE_APP_BASE_LOGIN;
           break;
         case 400:
           result = data.data;

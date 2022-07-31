@@ -29,7 +29,6 @@ export default defineConfig(
             'input-padding-vertical-base': '5px',
             'select-dropdown-line-height': '24px', //行高
             'border-radius-base': 0,
-            'card-padding-base': '16px',
             'zindex-table-fixed': 0,
           },
           javascriptEnabled: true,

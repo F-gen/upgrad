@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full">
+  <div class="w-full ">
     <div>
       <a-form layout="inline">
         <a-form-item class="w-50">
@@ -32,9 +32,9 @@
         </a-form-item>
       </a-form>
     </div>
-    <div>
+    <div class="mt-4">
       <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
-        :scroll="{ x: 950, y: 580 }">
+        :scroll="{ x: 1500, y: 'calc(100vh - 316px)' }">
         <template #bodyCell="{ column }">
           <template v-if="column.key === 'action'">
             <a>Edit</a>

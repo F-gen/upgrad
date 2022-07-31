@@ -1,10 +1,10 @@
 import { createStore } from "vuex";
 import user from '../store/modules/user'
-import loading from "./modules/loading";
+import loading from "../store/modules/loading";
 import getters from './getter'
 const store = createStore({
   modules: {
     user, loading,
-  }
-}, getters)
+  }, getters
+})
 export default store
