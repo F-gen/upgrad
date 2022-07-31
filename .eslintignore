@@ -5,3 +5,4 @@ package.json
 index.html
 jsconfig.json
 components.d.ts
+/src/index.css

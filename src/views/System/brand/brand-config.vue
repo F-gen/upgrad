@@ -2,7 +2,7 @@
   <div class="w-full ">
     <div>
       <a-form layout="inline">
-        <a-form-item class="w-50">
+        <a-form-item class="w-[200px]">
           <a-select v-model:value="searchText" show-search placeholder="Select a person" :filter-option="false"
             :show-arrow="false" @search="SearchBrand" @blur="getBrandAgain">
             <a-select-option v-for="item, index in BrandItems" :key="index" :value="item">
@@ -34,12 +34,21 @@
     </div>
     <div class="mt-4">
       <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
-        :scroll="{ x: 1500, y: 'calc(100vh - 316px)' }">
-        <template #bodyCell="{ column }">
+        :scroll="{ y: 'calc(100vh - 316px)' }">
+        <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
-            <a>Edit</a>
+            <a @click="edit(record)">Edit</a>
             <a-divider type="vertical" />
-            <a>Delete</a>
+            <a-popconfirm title="确定删除该品牌 ?" @confirm="dele(record)">
+              <template #icon>
+                <question-circle-outlined style="color: red" />
+              </template>
+              <a href="#">Delete</a>
+            </a-popconfirm>
+          </template>
+          <template v-if="column.key === 'bqOperate'">
+            <a-switch checked-children="是" un-checked-children="否" :checked="record.bqOperate"
+              @change="changebqOperate(record)" />
           </template>
         </template>
       </a-table>
@@ -48,15 +57,15 @@
 </template>
 
 <script>
+import { message } from 'ant-design-vue';
 export default {
   name: 'BrandConfig',
 };
 </script>
-
 <script setup>
-
-const BrandItems = ref([])
-const BackupBrandItems = ref([])
+// data
+let BrandItems = ref([])
+let BackupBrandItems = ref([])
 const columns = reactive([
   { title: 'NO', dataIndex: 'key', key: 'key' },
   { title: 'Brand Eng Name', dataIndex: 'brandNameEn', key: 'brandNameEn' },
@@ -73,8 +82,9 @@ const paginationOption = reactive(
     defaultPageSize: 50,
   },
 )
-const tabData = ref([])
-const searchText = ref('')
+let tabData = ref([])
+let searchText = ref('')
+// mehtods
 const SearchBrand = (value) => {
 
   let timer
@@ -94,6 +104,7 @@ const Allbrand = async () => {
   BackupBrandItems.value = data
 }
 
+// 初始搜索
 const onSearch = async () => {
   const data = await api.queryBrand({
     keyword: searchText.value,
@@ -103,11 +114,41 @@ const onSearch = async () => {
     return item;
   });
 }
-
+// 按钮是否运营
+const changebqOperate = async (record) => {
+  await api.updBrand({
+    bqOperate: !record.bqOperate,
+    brandId: record.brandId,
+    brandNameCn: record.brandNameCn,
+    brandNameEn: record.brandNameEn,
+    type: record.type,
+    brandType: record.brandType,
+  });
+  message.success('编辑成功');
+  onSearch();
+}
+// 重置 
 const reset = () => {
+  searchText.value = ''
+  BrandItems.value = BackupBrandItems.value
+  onSearch()
 
 }
+//弹层 新增 品牌
 const add = () => {
+
+}
+//弹层 新增 编辑品牌
+const edit = () => {
+
+}
+// 删除品牌
+const dele = async (record) => {
+  await api.delBrand({
+    brandId: record.brandId,
+  });
+  onSearch()
+  message.success("删除成功")
 
 }
 Allbrand()

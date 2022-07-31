@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import path from 'path'
 import vue from '@vitejs/plugin-vue'
-import WindiCSS from 'vite-plugin-windicss'
+// import WindiCSS from 'vite-plugin-windicss'
 import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -44,7 +44,7 @@ export default defineConfig(
 
     plugins: [
       vue(),
-      WindiCSS(),
+      // WindiCSS(),
       Components({
         dts: true,
         resolvers: [AntDesignVueResolver({ importStyle: false })],

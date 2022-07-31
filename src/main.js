@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'virtual:windi.css'
+
+import './index.css'
 import router from './router'
 import store from './store'
 import 'ant-design-vue/dist/antd.less'; // 静态自定义样式

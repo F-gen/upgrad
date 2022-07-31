@@ -1,36 +1,36 @@
 <template>
   <div class="flex relative h-screen flex-col">
     <!-- nav -->
-    <div class="h-15 z-2 bg-stone-900 flex w-full justify-between fixed top-0 left-0">
+    <div class="h-[60px]  bg-stone-900 flex w-full justify-between fixed top-0 left-0">
       <!-- logo -->
       <div class="leading-14 ml-10">
         <img src="@/assets/MI.png" class="w-25 h-7 inline-block">
       </div>
       <!-- route -->
       <div>
-        <ul class="flex leading-15">
+        <ul class="flex leading-14">
           <li class="ml-20">
-            <RouterLink to="/Layout/BrandDiscovery" class="text-white">
+            <a class=" hover:text-primary text-[#fff] text-opacity-100" @click="toRoute('/Layout/BrandDiscovery')">
               Brand Discovery
-            </RouterLink>
+            </a>
           </li>
           <li class="ml-20">
-            <RouterLink to="/Layout/BrandNewsHome" class="text-white">
+            <a class="text-white hover:text-primary text-opacity-100" @click="toRoute('/Layout/BrandNewsHome')">
               Brand News
-            </RouterLink>
+            </a>
           </li>
           <!-- <li>Data Intelligence</li> -->
           <li class="ml-20">
-            <RouterLink to="/Layout/OriginData" class="text-white">
+            <a class="text-white hover:text-primary text-opacity-100" @click="toRoute('/Layout/OriginData')">
               Social Buzz
-            </RouterLink>
+            </a>
           </li>
           <!-- System -->
           <li class="group">
-            <span class="text-white cursor-pointer ml-20 mr-10">System</span>
+            <span class="text-white cursor-pointer ml-20 mr-10 hover:text-primary ">System</span>
             <div
-              class=" bg-[#ffffff] absolute top-15 right-1/6 w-82 h-95 flex flex-row border-zinc-200 border-solid border pl-3 pr-3 hidden group-hover:flex">
-              <div class="flex-1 mr-2">
+              class=" bg-[#ffffff] absolute top-15 right-1/6 w-[328px] h-[380px]  flex flex-row border-zinc-200 border-solid border pl-3 pr-3  group-hover:flex">
+              <div class="flex-auto mr-2">
                 <!-- Configuration -->
                 <div class="border-zinc-200 border-b-1 border-solid text-[#1890ff] ">
                   <span class="iconify ml-5 mr-1 text-base align-middle" data-icon="fluent:apps-20-regular"
@@ -49,7 +49,7 @@
                 </div>
               </div>
               <!-- right -->
-              <div class="ml-2 flex-1">
+              <div class="ml-2 flex-auto">
                 <!-- Others -->
                 <div class="border-zinc-200 border-b-1 border-solid text-[#1890ff] ">
                   <span class="iconify ml-5 mr-1 text-base align-middle" data-icon="iconoir:more-horiz-circled-outline"
@@ -70,7 +70,7 @@
             <a-avatar>
               <span class="iconify" data-icon="ic:round-person" data-inline="false" />
             </a-avatar>
-            <span class="ml-10px text-base text-white text-sm">{{ JSON.parse(username) }}</span>
+            <span class="ml-3  text-white text-sm">{{ JSON.parse(username) }}</span>
           </div>
 
           <template #overlay>
@@ -87,7 +87,7 @@
       </div>
     </div>
     <!-- main -->
-    <div class="h-[calc(100vh-60px)] mt-15">
+    <div class="h-[calc(100vh-60px)] mt-[60px]">
       <router-view />
     </div>
     <div>
@@ -105,6 +105,7 @@ export default {
 </script>
 
 <script setup>
+const router=useRouter();
 const leftroute = reactive([
   {
     path: '/System/brand',
@@ -147,5 +148,9 @@ const username = getSession("userName");
 const quit = () => {
   window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
 }
-
+const toRoute = (paths) => {
+  router.push({
+    path: paths
+  });
+}
 </script>
