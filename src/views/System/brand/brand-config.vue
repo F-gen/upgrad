@@ -143,8 +143,8 @@ const reset = () => {
 };
 //弹层 新增 品牌
 const add = () => {
-  // configBrand.visible = true;
-  console.log(configBrand.value);
+  configBrand.value.visible = true;
+  // console.log(configBrand.value);
 
 };
 //弹层 新增 编辑品牌
