@@ -1,7 +1,7 @@
 <template>
   <div class="flex relative h-screen flex-col">
     <!-- nav -->
-    <div class="h-[60px]  bg-stone-900 flex w-full justify-between fixed top-0 left-0">
+    <div class="h-[60px] z-10  bg-stone-900 flex w-full justify-between fixed top-0 left-0">
       <!-- logo -->
       <div class="leading-14 ml-10">
         <img src="@/assets/MI.png" class="w-25 h-7 inline-block">
@@ -29,7 +29,7 @@
           <li class="group">
             <span class="text-white cursor-pointer ml-20 mr-10 hover:text-primary ">System</span>
             <div
-              class=" bg-[#ffffff]  absolute top-15 right-1/6  w-[328px] h-[380px]  flex-row border-zinc-200 border-solid border pl-3 pr-3  group-hover:flex">
+              class=" bg-[#ffffff] z-10 hidden absolute top-15 right-1/6  w-[328px] h-[380px]  flex-row border-zinc-200 border-solid border pl-3 pr-3  group-hover:flex">
               <div class="flex-1 mr-2">
                 <!-- Configuration -->
                 <div class="border-zinc-200 border-b-[1px] border-solid text-primary ">
