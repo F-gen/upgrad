@@ -16,7 +16,7 @@ const loginFn = async () => {
   const router = useRouter();
   if (window.location.hostname === "localhost") {
     // token = await api.getFutailToken();
-    token = "d3e9891d-d81c-4868-b744-33a5240fea9b"
+    token = "17f5b1d7-60fe-4191-9d5c-3aaf3f5a2c5c"
 
   } else {
     token = router.query.token;

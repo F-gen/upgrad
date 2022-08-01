@@ -51,7 +51,7 @@
               <!-- right -->
               <div class="ml-2 flex-1">
                 <!-- Others -->
-                <div class="border-zinc-200 border-b-[1px] border-solid text-[#1890ff] ">
+                <div class="border-zinc-200 border-b-[1px] border-solid text-primary ">
                   <span class="iconify ml-5 mr-1 text-base align-middle inline-block"
                     data-icon="iconoir:more-horiz-circled-outline" data-inline="false" />
                   <span class="align-middle inline-block">

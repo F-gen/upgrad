@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full ">
+  <div class="w-full">
     <div>
       <a-form layout="inline">
         <a-form-item class="w-[200px]">
           <a-select v-model:value="searchText" show-search placeholder="Select a person" :filter-option="false"
             :show-arrow="false" @search="SearchBrand" @blur="getBrandAgain">
-            <a-select-option v-for="item, index in BrandItems" :key="index" :value="item">
+            <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
               {{ item }}
             </a-select-option>
           </a-select>
@@ -34,7 +34,7 @@
     </div>
     <div class="mt-4">
       <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
-        :scroll="{ y: 'calc(100vh - 316px)' }">
+        :scroll="{ y: 'calc(100vh - 376px)' }">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <a @click="edit(record)">Edit</a>
@@ -53,56 +53,59 @@
         </template>
       </a-table>
     </div>
+    <Config ref="configBrand" @refresh="refresh" />
   </div>
 </template>
 
+
 <script>
-import { message } from 'ant-design-vue';
 export default {
-  name: 'BrandConfig',
+  name: "BrandConfig",
 };
 </script>
+
 <script setup>
+import { message } from "ant-design-vue";
+import Config from "./components/config-box.vue";
 // data
-let BrandItems = ref([])
-let BackupBrandItems = ref([])
+let BrandItems = ref([]);
+let BackupBrandItems = ref([]);
+const configBrand = ref(null)
+
 const columns = reactive([
-  { title: 'NO', dataIndex: 'key', key: 'key' },
-  { title: 'Brand Eng Name', dataIndex: 'brandNameEn', key: 'brandNameEn' },
-  { title: 'Brand Name', dataIndex: 'brandNameCn', key: 'brandNameCn' },
-  { title: 'Category', dataIndex: 'brandType', key: 'brandType' },
-  { title: 'Is BQ Operate', dataIndex: 'bqOperate', key: 'bqOperate' },
-  { title: 'Action', dataIndex: 'action', key: 'action' },
-])
-const paginationOption = reactive(
-  {
-    showQuickJumper: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
-    showSizeChanger: true,
-    defaultPageSize: 50,
-  },
-)
-let tabData = ref([])
-let searchText = ref('')
+  { title: "NO", dataIndex: "key", key: "key" },
+  { title: "Brand Eng Name", dataIndex: "brandNameEn", key: "brandNameEn" },
+  { title: "Brand Name", dataIndex: "brandNameCn", key: "brandNameCn" },
+  { title: "Category", dataIndex: "brandType", key: "brandType" },
+  { title: "Is BQ Operate", dataIndex: "bqOperate", key: "bqOperate" },
+  { title: "Action", dataIndex: "action", key: "action" },
+]);
+const paginationOption = reactive({
+  showQuickJumper: true,
+  pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
+  showSizeChanger: true,
+  defaultPageSize: 50,
+});
+let tabData = ref([]);
+let searchText = ref("");
 // mehtods
 const SearchBrand = (value) => {
-
-  let timer
+  let timer;
   if (timer) clearTimeout(this.timer);
   timer = setTimeout(async () => {
-    BrandItems.value = await api.queryAllBrandName({ keyword: value, });
+    BrandItems.value = await api.queryAllBrandName({ keyword: value });
     clearTimeout(timer);
-  }, 500);
+  }, 1000);
   searchText.value = value;
-}
+};
 const getBrandAgain = () => {
-  BrandItems.value = BackupBrandItems.value
-}
+  BrandItems.value = BackupBrandItems.value;
+};
 const Allbrand = async () => {
-  const data = await api.queryAllBrandName()
-  BrandItems.value = data
-  BackupBrandItems.value = data
-}
+  const data = await api.queryAllBrandName();
+  BrandItems.value = data;
+  BackupBrandItems.value = data;
+};
 
 // 初始搜索
 const onSearch = async () => {
@@ -113,7 +116,12 @@ const onSearch = async () => {
     item.key = index + 1;
     return item;
   });
+};
+const refresh = () => {
+
+  onSearch()
 }
+
 // 按钮是否运营
 const changebqOperate = async (record) => {
   await api.updBrand({
@@ -124,33 +132,31 @@ const changebqOperate = async (record) => {
     type: record.type,
     brandType: record.brandType,
   });
-  message.success('编辑成功');
+  message.success("编辑成功");
   onSearch();
-}
-// 重置 
+};
+// 重置
 const reset = () => {
-  searchText.value = ''
-  BrandItems.value = BackupBrandItems.value
-  onSearch()
-
-}
+  searchText.value = "";
+  BrandItems.value = BackupBrandItems.value;
+  onSearch();
+};
 //弹层 新增 品牌
 const add = () => {
+  // configBrand.visible = true;
+  console.log(configBrand.value);
 
-}
+};
 //弹层 新增 编辑品牌
-const edit = () => {
-
-}
+const edit = () => { };
 // 删除品牌
 const dele = async (record) => {
   await api.delBrand({
     brandId: record.brandId,
   });
-  onSearch()
-  message.success("删除成功")
-
-}
-Allbrand()
-onSearch()
+  onSearch();
+  message.success("删除成功");
+};
+Allbrand();
+onSearch();
 </script>
