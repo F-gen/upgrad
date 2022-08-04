@@ -78,6 +78,7 @@ const dele = async (record) => {
     typeName: record.typeName,
     value: record.value,
   });
+   message.success("删除成功");
   getCategory();
 };
 getCategory();
