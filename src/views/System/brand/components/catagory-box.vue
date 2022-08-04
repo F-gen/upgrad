@@ -86,6 +86,7 @@ const handleOk =async () => {
     visible.value = false;
 };
 const handleCancel = () => {
+ ruleForm.value.resetFields();
   visible.value = false;
   item.typeName = "brand_type";
   item.value = "";
