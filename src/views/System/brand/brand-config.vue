@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div>
     <div>
       <a-form layout="inline">
         <a-form-item class="w-[200px]">
