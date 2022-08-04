@@ -2,7 +2,7 @@
  * @Author: eureka fugen1999@163.com
  * @Date: 2022-08-01 10:33:46
  * @LastEditors: eureka
- * @LastEditTime: 2022-08-03 21:12:50
+ * @LastEditTime: 2022-08-04 11:34:09
  * @FilePath: \upgrad-main\src\views\System\brand\components\config-box.vue
  * @Description: 
  * 
@@ -87,7 +87,6 @@ let item = reactive({
 });
 const ruleForm = ref();
 
-// let show = computed(() => props.visible);
 const emits = defineEmits(["refresh"]);
 const props = defineProps({
   brandCategory: {
@@ -111,47 +110,34 @@ const handleChange = (val) => {
     }
   });
 };
-const handleOk = () => {
-  ruleForm.value.validate().then((res) => {
-    
-    if (item.brandId == null) {
-      api.insBrand([
-        {
-          bqOperate: item.bqOperate,
-          brandNameCn: item.brandNameCn,
-          brandId: item.brandId,
-          type: item.type,
-          brandType: item.brandType,
-          brandNameEn: item.brandNameEn,
-        },
-      ]);
-      item.brandId = null;
-      item.brandNameCn = "";
-      item.brandNameEn = "";
-      item.brandType = "";
-      item.type = null;
-      emits("refresh");
-      message.success("新增成功");
-    } else {
-      api.updBrand({
-        bqOperate: item.bqOperate,
-        brandNameCn: item.brandNameCn,
-        brandId: item.brandId,
-        type: item.type,
-        brandType: item.brandType,
-        brandNameEn: item.brandNameEn,
-      });
-      item.brandId = null;
-      item.brandNameCn = "";
-      item.brandNameEn = "";
-      item.brandType = "";
-      item.type = null;
-      emits("refresh");
-      message.success("编辑成功");
-    }
-    visible.value = false;
-    
-  });
+const handleOk = async () => {
+  await ruleForm.value.validate();
+  if (item.brandId == null) {
+    await api.insBrand([
+      {
+        ...item,
+      },
+    ]);
+    item.brandId = null;
+    item.brandNameCn = "";
+    item.brandNameEn = "";
+    item.brandType = "";
+    item.type = null;
+    emits("refresh");
+    message.success("新增成功");
+  } else {
+    await api.updBrand({
+      ...item,
+    });
+    item.brandId = null;
+    item.brandNameCn = "";
+    item.brandNameEn = "";
+    item.brandType = "";
+    item.type = null;
+    emits("refresh");
+    message.success("编辑成功");
+  }
+  visible.value = false;
 };
 const handleCancel = () => {
   visible.value = false;
