@@ -3,60 +3,34 @@
     <div>
       <a-form layout="inline">
         <a-form-item class="w-[200px]">
-          <a-select
-            v-model:value="searchText"
-            show-search
-            placeholder="Select a person"
-            :filter-option="false"
-            :show-arrow="false"
-            @search="SearchBrand"
-            @blur="getBrandAgain"
-          >
-            <a-select-option
-              v-for="(item, index) in BrandItems"
-              :key="index"
-              :value="item"
-            >
+          <a-select v-model:value="searchText" show-search :filter-option="false" :show-arrow="false"
+            @search="SearchBrand" @blur="getBrandAgain">
+            <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
               {{ item }}
             </a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item>
           <a-button type="primary" @click="onSearch">
-            <span
-              class="iconify inline align-middle mr-1 mb-1 text-sm"
-              data-icon="material-symbols:search"
-              data-inline="false"
-            ></span>
+            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
+              data-inline="false" />
             <span class="inline">Search</span>
           </a-button>
           <a-button type="primary" class="ml-3" @click="reset">
-            <span
-              class="iconify inline align-middle mr-1 mb-1 text-sm"
-              data-icon="carbon:reset"
-              data-inline="false"
-            ></span>
+            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset" data-inline="false" />
             <span class="inline">Reset</span>
           </a-button>
           <a-button type="primary" class="ml-3" @click="add">
-            <span
-              class="iconify inline align-middle mr-1 mb-1 text-base"
-              data-icon="ic:round-plus"
-              data-inline="false"
-            ></span>
+            <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus"
+              data-inline="false" />
             <span class="inline">New</span>
           </a-button>
         </a-form-item>
       </a-form>
     </div>
     <div class="mt-4">
-      <a-table
-        :columns="columns"
-        :data-source="tabData"
-        bordered
-        :pagination="paginationOption"
-        :scroll="{ y: 'calc(100vh - 376px)' }"
-      >
+      <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
+        :scroll="{ y: 'calc(100vh - 376px)' }">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <a @click="edit(record)">Edit</a>
@@ -69,21 +43,13 @@
             </a-popconfirm>
           </template>
           <template v-if="column.key === 'bqOperate'">
-            <a-switch
-              checked-children="是"
-              un-checked-children="否"
-              :checked="record.bqOperate"
-              @change="changebqOperate(record)"
-            />
+            <a-switch checked-children="是" un-checked-children="否" :checked="record.bqOperate"
+              @change="changebqOperate(record)" />
           </template>
         </template>
       </a-table>
     </div>
-    <Config
-      ref="configBrand"
-      @refresh="onSearch()"
-      :brandCategory="brandCategory"
-    />
+    <Config ref="configBrand" :brand-category="brandCategory" @refresh="onSearch()" />
   </div>
 </template>
 
