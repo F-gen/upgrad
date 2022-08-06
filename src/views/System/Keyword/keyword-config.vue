@@ -212,7 +212,6 @@ const add = () => {
 }
 //弹层 新增 编辑品牌
 const edit = async (record) => {
-  console.log(record);
   configKeyword.value.visible = true;
   configKeyword.value.item.showIndustry = record.showIndustry;
   configKeyword.value.item.id = record.id;
