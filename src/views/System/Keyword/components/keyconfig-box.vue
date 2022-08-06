@@ -1,28 +1,47 @@
 
 <template>
-  <a-modal :visible="visible" :title="!item.brandId ? '新增品牌' : '编辑品牌'" @ok="handleOk" @cancel="handleCancel">
+  <a-modal :visible="visible" :title="item.id == null ? '新增采集字' : '编辑采集字'" @ok="handleOk" @cancel="handleCancel">
     <a-form ref="ruleForm" autocomplete="off" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
-      <a-form-item label="Brand Name" name="brandNameCn" :rules="[
+      <a-form-item label="Brand Name">
+        <a-select v-model:value="item.brandName" :disabled="item.id ? true : false" show-search @search="handleSearch"
+          @change="handleChangebrand">
+          <a-select-option v-for="item in BrandItems" :key="item" :value="item">
+            {{ item }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+
+      <a-form-item label="Industry" name="showIndustry" :rules="[
         {
           required: true,
-          message: 'BrandName 不能为空',
+          message: 'Industry 不能为空',
           trigger: 'change',
         },
       ]">
-        <a-input v-model:value="item.brandNameCn" />
+        <a-select v-model:value="item.showIndustry" show-arrow mode="multiple" :max-tag-count="1" @change="changeInd">
+          <a-select-option v-for="item in industrydata" :key="item.indId" :value="item.indName">
+            {{ item.indName }}
+          </a-select-option>
+        </a-select>
       </a-form-item>
-      <a-form-item label="Brand Eng Name" name="brandNameEn" :rules="[
+      <a-form-item label="Keyword" name="keyword" :rules="[
         {
           required: true,
-          message: 'BrandName Eng 不能为空',
+          message: 'Keyword 不能为空',
           trigger: 'change',
         },
       ]">
-        <a-input v-model:value="item.brandNameEn" />
+        <a-input v-model:value="item.keyword" />
       </a-form-item>
-      <a-form-item label="Category">
-        <a-select v-model:value="item.brandType" allow-clear @change="handleChange">
-          <a-select-option v-for="item in renderCategory" :key="item.code" :value="item.value">
+      <a-form-item label="Report Type" name="reportType" :rules="[
+        {
+          required: true,
+          message: 'Report Type 不能为空',
+          trigger: 'change',
+        },
+      ]">
+        <a-select v-model:value="item.reportType" allow-clear show-arrow @change="changeReport">
+          <a-select-option v-for="item in reportTypedata" :key="item.code" :value="item.value">
             {{ item.value }}
           </a-select-option>
         </a-select>
@@ -33,65 +52,120 @@
 
 <script>
 export default {
-  name: "ConfigBox",
+  name: "KeywordConfigBox",
 };
 </script>
 
 <script setup>
 import { message } from "ant-design-vue";
 let visible = ref(false);
-let renderCategory = ref([]);
 let item = reactive({
-  bqOperate: false,
+  showIndustry: [],
+  reportType: null,
   brandId: null,
-  brandNameCn: "",
-  brandNameEn: "",
-  brandType: "",
-  type: null,
+  id: null,
+  brandName: "",
+  industryId: "",
+  keyword: "",
+  must: null,
+  reportTypeId: null,
 });
 const ruleForm = ref();
-
+const industrydata = ref([])
+const reportTypedata = ref([])
+const BrandItems = ref([])
 const emits = defineEmits(["refresh"]);
 const props = defineProps({
-  brandCategory: {
+  industry: {
     type: Array,
     default: () => [],
   },
+  reportType: {
+    type: Array,
+    default: () => [],
+  },
+
 });
+const handleSearch = (value) => {
+  let timer;
+  if (timer) clearTimeout(this.timer);
+  timer = setTimeout(async () => {
+    BrandItems.value = await api.queryAllBrandName({ keyword: value });
+    clearTimeout(timer);
+  }, 1000);
+}
+const handleChangebrand = async (value) => {
+  const brandDetail = await api.queryBrand({
+    keyword: value,
+  });
+  item.brandId = brandDetail[0].brandId;
+  console.log(item.brandId);
+}
+const changeInd = () => {
+  let tempid = [];
+  item.showIndustry.forEach((item) => {
+    var temp = industrydata.value.find((val) => item === val.indName);
+    tempid.push(temp.indId + "");
+  });
+  item.industryId = tempid.join(",");
+}
+const changeReport = () => {
+  reportTypedata.value.forEach((val) => {
+    if (val.value === item.reportType) {
+      item.reportTypeId = val.code;
+    }
+  })
+}
 watchEffect(() => {
-  if (props.brandCategory) {
-    renderCategory.value = props.brandCategory;
+  if (props.industry) {
+    industrydata.value = props.industry;
+    reportTypedata.value = props.reportType;
   }
 });
 defineExpose({
   visible,
   item,
+  BrandItems
 });
-const handleChange = (val) => {
-  renderCategory.value.forEach((type) => {
-    if (type.value == val) {
-      item.type = type.code - 0;
-    }
-  });
-};
+
 const handleOk = async () => {
+
   await ruleForm.value.validate();
-  if (item.brandId == null) {
-    await api.insBrand([
+  if (item.id == null) {
+    let data = await api.insBrandWord(
       {
-        ...item,
+        must: false,
+        brandId: item.brandId,
+        industryId: item.industryId,
+        keyword: item.keyword,
+        reportTypeId: item.reportTypeId,
       },
-    ]);
+    );
+    if (data) {
+      message.warning(data.message);
+    } else {
+      message.success("新增成功");
+    }
     resetItem();
     emits("refresh");
-    message.success("新增成功");
+
   } else {
-    await api.updBrand({
-      ...item,
+    let data = await api.updBrandKeyword({
+      brandId: item.brandId,
+      must: item.must,
+      id: item.id,
+      industryId: item.industryId,
+      keyword: item.keyword,
+      reportTypeId: item.reportTypeId
     });
+    if (data) {
+      message.warning(data.message);
+    } else {
+      message.success("编辑成功");
+    }
     resetItem();
     emits("refresh");
-    message.success("编辑成功");
+
   }
 
 };
@@ -102,9 +176,15 @@ const handleCancel = () => {
 const resetItem = () => {
   visible.value = false;
   item.brandId = null;
-  item.brandNameCn = "";
-  item.brandNameEn = "";
-  item.brandType = "";
-  item.type = null;
+  item.industryId = "";
+  item.keyword = "";
+  item.reportTypeId = null;
+  item.must = null;
+  item.reportType = null;
+  item.showIndustry = [];
+  item.id = null
+  item.brandName = ""
+
+
 }
 </script>

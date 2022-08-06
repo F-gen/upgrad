@@ -65,7 +65,8 @@
         </template>
       </a-table>
     </div>
-    <Config ref="configKeyword" @refresh="getKeyList()" />
+    <Config ref="configKeyword" :report-type="reportType" :industry="industry" :brand-items="BackupBrandItems"
+      @refresh="getKeyList()" />
   </div>
 </template>
 
@@ -82,7 +83,7 @@ import Config from "./components/keyconfig-box.vue";
 import { downloadFile } from "@/utils/tool";
 // data
 let BrandItems = ref([]);
-let BackupBrandItems = ref([]);
+const BackupBrandItems = ref([]);
 const industry = ref([])
 const brandDetail = ref([]) //获取品牌详情 得id
 const reportType = ref([]) //报告类型
@@ -207,15 +208,20 @@ const reset = () => {
 //弹层 新增 品牌
 const add = () => {
   configKeyword.value.visible = true;
-};
+  configKeyword.value.BrandItems = BrandItems.value;
+}
 //弹层 新增 编辑品牌
 const edit = async (record) => {
+  console.log(record);
   configKeyword.value.visible = true;
+  configKeyword.value.item.showIndustry = record.showIndustry;
+  configKeyword.value.item.id = record.id;
   configKeyword.value.item.brandId = record.brandId;
-  configKeyword.value.item.brandNameCn = record.brandNameCn;
-  configKeyword.value.item.brandNameEn = record.brandNameEn;
-  configKeyword.value.item.brandType = record.brandType;
-  configKeyword.value.item.type = record.type;
+  configKeyword.value.item.reportType = record.reportType;
+  configKeyword.value.item.brandName = record.brandName;
+  configKeyword.value.item.industryId = record.industryId;
+  configKeyword.value.item.keyword = record.keyword;
+  configKeyword.value.item.reportTypeId = record.reportTypeId;
 };
 // 删除品牌
 const dele = async (record) => {
