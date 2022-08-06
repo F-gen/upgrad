@@ -1,13 +1,4 @@
-<!--
- * @Author: eureka fugen1999@163.com
- * @Date: 2022-07-31 08:51:20
- * @LastEditors: eureka
- * @LastEditTime: 2022-08-04 13:34:55
- * @FilePath: \upgrad-main\src\views\System\brand\brand-catagory.vue
- * @Description: 
- * 
- * Copyright (c) 2022 by eureka, All Rights Reserved. 
--->
+
 <template>
   <div>
     <a-button type="primary" class="ml-3" @click="add">
@@ -21,7 +12,7 @@
         <template v-if="column.key === 'action'">
           <a @click="edit(record)">Edit</a>
           <a-divider type="vertical" />
-          <a-popconfirm title="确定删除该类型 ?" @confirm="dele(record)">
+          <a-popconfirm title="确定删除该报告类型 ?" @confirm="dele(record)">
             <template #icon>
               <question-circle-outlined style="color: red" />
             </template>
@@ -30,7 +21,7 @@
         </template>
       </template>
     </a-table>
-    <Catagory ref="catagoryref" @refresh="getCategory()" />
+    <Catagory ref="reportType" @refresh="getReport()" />
   </div>
 </template>
 
@@ -42,18 +33,18 @@ export default {
 
 <script setup>
 import { message } from "ant-design-vue";
-import Catagory from "./components/catagory-box.vue";
-const catagoryref = ref();
+import Catagory from "./components/report-box.vue";
+const reportType = ref();
 const datas = ref([]);
 const columns = reactive([
   { title: "NO", dataIndex: "key", key: "key" },
 
-  { title: "Category Name", dataIndex: "value", key: "value" },
+  { title: "Report Type Name", dataIndex: "value", key: "value" },
   { title: "Action", dataIndex: "action", key: "action" },
 ]);
-const getCategory = async () => {
+const getReport = async () => {
 
-  const data = await api.queryDict({ type: "brand_type" });
+  const data = await api.queryDict({ type: "report_type" });
   datas.value = data.map((item, index) => {
     item.key = index + 1;
     return item;
@@ -61,12 +52,12 @@ const getCategory = async () => {
 
 };
 const add = () => {
-  catagoryref.value.visible = true;
+  reportType.value.visible = true;
 };
 const edit = (record) => {
-  catagoryref.value.visible = true;
-  catagoryref.value.item.value = record.value;
-  catagoryref.value.item.code = record.code;
+  reportType.value.visible = true;
+  reportType.value.item.value = record.value;
+  reportType.value.item.code = record.code;
 };
 const dele = async (record) => {
   await api.delDict({
@@ -74,8 +65,8 @@ const dele = async (record) => {
     typeName: record.typeName,
     value: record.value,
   });
-   message.success("删除成功");
-  getCategory();
+  message.success("删除成功");
+  getReport();
 };
-getCategory();
+getReport();
 </script>

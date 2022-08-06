@@ -12,11 +12,7 @@
   <div class="bg-[#f0f2f5] w-full box-border p-6">
     <div class="bg-[#fff] p-6">
       <a-button type="primary" class="ml-3" @click="add">
-        <span
-          class="iconify inline align-middle mr-1 mb-1 text-base"
-          data-icon="ic:round-plus"
-          data-inline="false"
-        ></span>
+        <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus" data-inline="false" />
         <span class="inline">New</span>
       </a-button>
       <div class="mt-4">
@@ -25,7 +21,7 @@
             <template v-if="column.key === 'action'">
               <a @click="edit(record)">Edit</a>
               <a-divider type="vertical" />
-              <a-popconfirm title="确定删除该品牌 ?" @confirm="dele(record)">
+              <a-popconfirm title="确定删除该行业 ?" @confirm="dele(record)">
                 <template #icon>
                   <question-circle-outlined style="color: red" />
                 </template>
@@ -35,34 +31,20 @@
           </template>
         </a-table>
       </div>
-      <a-modal
-        :visible="visible"
-        @ok="handleOk"
-        @cancel="handleCancel"
-        :title="item.indId == null ? '新增行业' : '编辑行业'"
-        centered
-      >
-        <a-form
-          :model="item"
-          :label-col="{ span: 6 }"
-          :wrapper-col="{ span: 14 }"
-          ref="ruleForm"
-        >
-          <a-form-item
-            label="Industry Name"
-            name="indName"
-            :rules="[
-              {
-                required: true,
-                message: 'Industry Name 不能为空',
-                trigger: 'blur',
-              },
-            ]"
-          >
-            <a-input  v-model:value="item.indName" />
+      <a-modal :visible="visible" :title="item.indId == null ? '新增行业' : '编辑行业'" centered @ok="handleOk"
+        @cancel="handleCancel">
+        <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
+          <a-form-item label="Industry Name" name="indName" :rules="[
+            {
+              required: true,
+              message: 'Industry Name 不能为空',
+              trigger: 'blur',
+            },
+          ]">
+            <a-input v-model:value="item.indName" />
           </a-form-item>
           <a-form-item label="Industry Eng Name">
-            <a-input  v-model:value="item.indNameEn" />
+            <a-input v-model:value="item.indNameEn" />
           </a-form-item>
         </a-form>
       </a-modal>

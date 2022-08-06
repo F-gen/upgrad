@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: "config-box",
+  name: "ConfigBox",
 };
 </script>
 
@@ -118,35 +118,29 @@ const handleOk = async () => {
         ...item,
       },
     ]);
-    item.brandId = null;
-    item.brandNameCn = "";
-    item.brandNameEn = "";
-    item.brandType = "";
-    item.type = null;
+    resetItem();
     emits("refresh");
     message.success("新增成功");
   } else {
     await api.updBrand({
       ...item,
     });
-    item.brandId = null;
-    item.brandNameCn = "";
-    item.brandNameEn = "";
-    item.brandType = "";
-    item.type = null;
+    resetItem();
     emits("refresh");
     message.success("编辑成功");
   }
-  visible.value = false;
+
 };
 const handleCancel = () => {
- ruleForm.value.resetFields();
+  ruleForm.value.resetFields();
+  resetItem();
+};
+const resetItem = () => {
   visible.value = false;
   item.brandId = null;
   item.brandNameCn = "";
   item.brandNameEn = "";
   item.brandType = "";
   item.type = null;
-  item.bqOperate = false;
-};
+}
 </script>
