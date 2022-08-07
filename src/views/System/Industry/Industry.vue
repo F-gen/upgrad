@@ -95,27 +95,20 @@ const handleOk = async () => {
   await ruleForm.value.validate();
   if (item.indId == null) {
     await api.insIndInfo([{ ...item }]);
-    item.indId = null;
-    item.indName = "";
-    item.indNameEn = "";
+    resetItem();
     getIndustry();
     message.success("新增成功");
   } else {
     await api.updIndInfo({ ...item });
-    item.indId = null;
-    item.indName = "";
-    item.indNameEn = "";
+    resetItem();
     getIndustry();
     message.success("编辑成功");
   }
-  visible.value = false;
+  
 };
 const handleCancel = () => {
  ruleForm.value.resetFields();
-  visible.value = false;
-  item.indId = null;
-  item.indName = "";
-  item.indNameEn = "";
+resetItem()
 };
 const getIndustry = async () => {
   const data = await api.queryInd();
@@ -124,5 +117,11 @@ const getIndustry = async () => {
     return item;
   });
 };
+const resetItem=() => {
+    visible.value = false;
+  item.indId = null;
+  item.indName = "";
+  item.indNameEn = "";
+}
 getIndustry();
 </script>
