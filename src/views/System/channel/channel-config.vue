@@ -20,7 +20,7 @@
             <template v-if="column.key === 'action'">
               <a @click="edit(record)">Edit</a>
               <a-divider type="vertical" />
-              <a-popconfirm title="确定删除该行业 ?" @confirm="dele(record)">
+              <a-popconfirm title="确定删除该渠道 ?" @confirm="dele(record)">
                 <template #icon>
                   <question-circle-outlined style="color: red" />
                 </template>
