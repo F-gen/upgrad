@@ -2,7 +2,7 @@
  * @Author: eureka fugen1999@163.com
  * @Date: 2022-08-01 10:33:46
  * @LastEditors: eureka
- * @LastEditTime: 2022-08-04 11:34:09
+ * @LastEditTime: 2022-08-08 10:59:18
  * @FilePath: \upgrad-main\src\views\System\brand\components\config-box.vue
  * @Description: 
  * 
@@ -107,6 +107,9 @@ const handleChange = (val) => {
   renderCategory.value.forEach((type) => {
     if (type.value == val) {
       item.type = type.code - 0;
+    } else {
+      item.type = null;
+      item.brandType = "";
     }
   });
 };
@@ -129,7 +132,6 @@ const handleOk = async () => {
     emits("refresh");
     message.success("编辑成功");
   }
-
 };
 const handleCancel = () => {
   ruleForm.value.resetFields();
@@ -142,5 +144,5 @@ const resetItem = () => {
   item.brandNameEn = "";
   item.brandType = "";
   item.type = null;
-}
+};
 </script>
