@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  name: "Industry",
+  name: "channel-config",
 };
 </script>
 
