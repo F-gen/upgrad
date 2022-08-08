@@ -25,7 +25,7 @@
 import channelConfig from './channel-config.vue';
 import channelBrand from './channel-brand.vue';
 export default {
-  name: "Keyword",
+  name: "channel",
 };
 let componentList = {
   channelConfig,
