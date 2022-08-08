@@ -19,7 +19,7 @@
             v-model:value="item.brandChannelInfo"
             mode="multiple"
             :max-tag-count="1"
-            @change="changechannel"
+         
           >
             <a-select-option
               v-for="(item, index) in channelDetail"
@@ -51,16 +51,15 @@ const item = reactive({
   brandChannelInfo: [],
 });
 const channelList = ref([]);
-const changechannel = () => {
-  item.brandChannelInfo.forEach((item) => {
+
+const handleOk = async () => {
+    item.brandChannelInfo.forEach((item) => {
     channelDetail.value.forEach((item1) => {
       if (item === item1.channelName) {
         channelList.value.push(item1.channelId);
       }
     });
   });
-};
-const handleOk = async () => {
   await api.updBrandChannel({
     brandId: item.brandId,
     channelList: channelList.value.join(","),
