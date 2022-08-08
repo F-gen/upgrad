@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "Catagory",
+  name: "reportType",
 };
 </script>
 
