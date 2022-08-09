@@ -2,8 +2,9 @@
 <template>
   <div>
     <a-form layout="inline">
-      <a-form-item class="w-[200px]">
+      <a-form-item label="Brand Eng Name">
         <a-select
+          style="width: 200px"
           v-model:value="searchText"
           show-search
           :filter-option="false"
@@ -17,6 +18,22 @@
             :value="item"
           >
             {{ item }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item label="Channel">
+        <a-select
+          style="width: 200px"
+          :maxTagCount="1"
+          mode="multiple"
+          v-model:value="channelidlist"
+        >
+          <a-select-option
+            v-for="item in channelInfo"
+            :key="item.key"
+            :value="item.channelId"
+          >
+            {{ item.channelName }}
           </a-select-option>
         </a-select>
       </a-form-item>
@@ -75,6 +92,7 @@ export default {
 </script>
 
 <script setup>
+let channelidlist=ref([])
 const paginationOption = reactive({
   showQuickJumper: true,
   pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
@@ -104,7 +122,7 @@ const getBrandAgain = () => {
   BrandItems.value = BackupBrandItems.value;
 };
 let tabData = ref([]);
-const channelInfo = ref([]);
+const channelInfo = ref([]);// channel 数据
 const getBaseData = async () => {
   const data = await api.queryAllBrandName();
   BrandItems.value = data;
@@ -112,17 +130,18 @@ const getBaseData = async () => {
   channelInfo.value = await api.queryChannel();
 };
 const onSearch = async () => {
-  let data = await api.queryBrandChannel({
-    keyword: searchText.value,
+  let {result} = await api.queryBrandChannel({
+    brandName: searchText.value,
+    channelIdList: channelidlist.value,
   });
-  // this.tabData = data;
-  tabData.value = data.map((item, index) => {
+  tabData.value = result.map((item, index) => {
     item.key = index + 1;
     return item;
   });
 };
 const reset = () => {
   searchText.value = "";
+  channelidlist.value = [];
   BrandItems.value = BackupBrandItems.value;
   onSearch();
 };
