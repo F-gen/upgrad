@@ -2,35 +2,77 @@
   <div>
     <div>
       <a-form layout="inline">
-        <a-form-item class="w-[200px]">
-          <a-select v-model:value="searchText" show-search :filter-option="false" :show-arrow="false"
-            @search="searchBrand" @blur="getBrandAgain">
-            <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
+        <a-form-item label="Brand Eng Name">
+          <a-select
+            style="width: 200px"
+            v-model:value="searchText"
+            show-search
+            :filter-option="false"
+            :show-arrow="false"
+            @search="searchBrand"
+            @blur="getBrandAgain"
+          >
+            <a-select-option
+              v-for="(item, index) in BrandItems"
+              :key="index"
+              :value="item"
+            >
               {{ item }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="Platform Name">
+          <a-select
+            v-model:value="platformId"
+            style="width: 200px"
+            :maxTagCount="1"
+            mode="multiple"
+          >
+            <a-select-option
+              v-for="item in platform"
+              :key="item.key"
+              :value="item.platId"
+            >
+              {{ item.platName }}
             </a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item>
           <a-button type="primary" @click="onSearch">
-            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
-              data-inline="false" />
+            <span
+              class="iconify inline align-middle mr-1 mb-1 text-sm"
+              data-icon="material-symbols:search"
+              data-inline="false"
+            />
             <span class="inline">Search</span>
           </a-button>
           <a-button type="primary" class="ml-3" @click="reset">
-            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset" data-inline="false" />
+            <span
+              class="iconify inline align-middle mr-1 mb-1 text-sm"
+              data-icon="carbon:reset"
+              data-inline="false"
+            />
             <span class="inline">Reset</span>
           </a-button>
           <a-button type="primary" class="ml-3" @click="add">
-            <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus"
-              data-inline="false" />
+            <span
+              class="iconify inline align-middle mr-1 mb-1 text-base"
+              data-icon="ic:round-plus"
+              data-inline="false"
+            />
             <span class="inline">New</span>
           </a-button>
         </a-form-item>
       </a-form>
     </div>
     <div class="mt-4">
-      <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
-        :scroll="{ y: 'calc(100vh - 376px)' }">
+      <a-table
+        :columns="columns"
+        :data-source="tabData"
+        bordered
+        :pagination="paginationOption"
+        :scroll="{ y: 'calc(100vh - 376px)' }"
+      >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <a @click="edit(record)">Edit</a>
@@ -45,40 +87,84 @@
         </template>
       </a-table>
     </div>
-    <a-modal :visible="visible" :title="!item.id ? '新增平台' : '编辑平台'" centered @ok="handleOk" @cancel="handleCancel">
-      <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
-        <a-form-item label="Brand Name" name="brandName" :rules="[
+    <a-modal
+      :visible="visible"
+      :title="!item.id ? '新增平台' : '编辑平台'"
+      centered
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <a-form
+        ref="ruleForm"
+        :model="item"
+        :label-col="{ span: 6 }"
+        :wrapper-col="{ span: 14 }"
+      >
+        <a-form-item
+          label="Brand Name"
+          name="brandName"
+          :rules="[
             { required: true, message: 'Brand Name 不能为空', trigger: 'blur' },
-          ]">
-          <a-select v-model:value="item.brandName" show-search :disabled="item.id == null ? false : true"
-            :default-active-first-option="false" :filter-option="false" :not-found-content="null" @search="searchBrand"
-            @change="handleChangeBrand" @blur="getBrandAgain">
-            <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
+          ]"
+        >
+          <a-select
+            v-model:value="item.brandName"
+            show-search
+            :disabled="item.id == null ? false : true"
+            :default-active-first-option="false"
+            :filter-option="false"
+            :not-found-content="null"
+            @search="searchBrand"
+            @change="handleChangeBrand"
+            @blur="getBrandAgain"
+          >
+            <a-select-option
+              v-for="(item, index) in BrandItems"
+              :key="index"
+              :value="item"
+            >
               {{ item }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="Platform Name" name="platformName" :rules="[
+        <a-form-item
+          label="Platform Name"
+          name="platformName"
+          :rules="[
             {
               required: true,
               message: 'Platform Name 不能为空',
               trigger: 'blur',
             },
-          ]">
-          <a-select v-model:value="item.platformName" show-search :disabled="item.id == null ? false : true" allow-clear
-            @change="handleChangePlatform">
-            <a-select-option v-for="(item, index) in platform" :key="index" :value="item.platName">
+          ]"
+        >
+          <a-select
+            v-model:value="item.platformName"
+            show-search
+            :disabled="item.id == null ? false : true"
+            allow-clear
+            @change="handleChangePlatform"
+          >
+            <a-select-option
+              v-for="(item, index) in platform"
+              :key="index"
+              :value="item.platName"
+            >
               {{ item.platName }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="official ID" name="officialId" :rules="[
+        <a-form-item
+          label="official ID"
+          name="officialId"
+          :rules="[
             {
               required: true,
               message: 'official ID 不能为空',
               trigger: 'blur',
             },
-          ]">
+          ]"
+        >
           <a-input v-model:value="item.officialId" />
         </a-form-item>
         <a-form-item label="official Url">
@@ -101,8 +187,9 @@ export default {
 
 <script setup>
 import { message } from "ant-design-vue";
+let platformId = ref([]);
 // data
-let BrandItems = ref([]);
+let BrandItems = ref([]); // 品牌数据
 let BackupBrandItems = ref([]);
 const visible = ref(false);
 const columns = reactive([
@@ -126,7 +213,7 @@ const paginationOption = reactive({
 });
 let tabData = ref([]);
 let searchText = ref("");
-let platform = ref([]);
+let platform = ref([]); // 平台数据
 const ruleForm = ref();
 const item = reactive({
   id: null,
@@ -139,30 +226,6 @@ const item = reactive({
   officialUserName: "",
 });
 
-// const rules = {
-//   brandName: [
-//     {
-//       required: true,
-//       trigger: blur,
-//       message: "Brand Name 不能为空",
-//     },
-//   ],
-//   platformName: [
-//     {
-//       required: true,
-//       trigger: blur,
-//       message: "Platfrom Name 不能为空",
-//     },
-//   ],
-//   officialId: [
-//     {
-//       required: true,
-//       trigger: blur,
-//       message: "officialId 不能为空",
-//     },
-//   ],
-// };
-// mehtods
 const searchBrand = (value) => {
   let timer;
   if (timer) clearTimeout(this.timer);
@@ -180,9 +243,7 @@ const handleChangeBrand = async () => {
 };
 const handleChangePlatform = (value) => {
   item.platformName = value;
-  item.platformId = platform.value.find(
-    val => val.platName === value
-  ).platId;
+  item.platformId = platform.value.find((val) => val.platName === value).platId;
 };
 const getBrandAgain = () => {
   BrandItems.value = BackupBrandItems.value;
@@ -190,17 +251,18 @@ const getBrandAgain = () => {
 // 平台平台表格   平台选项
 const getBaseData = async () => {
   const data = await api.queryAllBrandName();
+  platform.value = await api.queryPlatform();
   BrandItems.value = data;
   BackupBrandItems.value = data;
-  platform.value = await api.queryPlatform();
 };
 
 // 初始搜索
 const onSearch = async () => {
-  const data = await api.queryBrandPlatform({
-    keyword: searchText.value,
+  const { result } = await api.queryBrandPlatform({
+    brandName: searchText.value,
+    platformIdList: platformId.value,
   });
-  tabData.value = data.map((item, index) => {
+  tabData.value = result.map((item, index) => {
     item.key = index + 1;
     return item;
   });
@@ -209,14 +271,15 @@ const onSearch = async () => {
 // 重置
 const reset = () => {
   searchText.value = "";
+  platformId.value = [];
   BrandItems.value = BackupBrandItems.value;
   onSearch();
 };
 //弹层 新增 平台
 const add = () => {
   visible.value = true;
-  if (searchText.value !== '') {
-    item.brandName = searchText.value
+  if (searchText.value !== "") {
+    item.brandName = searchText.value;
     handleChangeBrand();
   }
 };
