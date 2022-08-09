@@ -8,7 +8,7 @@
       </div>
       <!-- route -->
       <div>
-        <ul class="flex leading-14">
+        <ul class="flex leading-14 text-[14px]">
           <li class="ml-20">
             <a class=" hover:text-primary text-[#fff] text-opacity-100" @click="toRoute('/Layout/BrandDiscovery')">
               Brand Discovery
