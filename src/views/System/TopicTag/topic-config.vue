@@ -189,9 +189,11 @@ const handleOk = async () => {
       topicName: item.topicName,
       topicNameEn: item.topicNameEn,
     });
+     message.success("新增成功");
     resetItem();
   } else {
     await api.updTopic({ ...item });
+     message.success("编辑成功");
     resetItem();
   }
 };
