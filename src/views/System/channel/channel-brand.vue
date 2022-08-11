@@ -3,78 +3,43 @@
   <div>
     <a-form layout="inline">
       <a-form-item label="Brand Eng Name">
-        <a-select
-          style="width: 200px"
-          v-model:value="searchText"
-          show-search
-          :filter-option="false"
-          :show-arrow="false"
-          @search="SearchBrand"
-          @blur="getBrandAgain"
-        >
-          <a-select-option
-            v-for="(item, index) in BrandItems"
-            :key="index"
-            :value="item"
-          >
+        <a-select v-model:value="searchText" style="width: 200px" show-search :filter-option="false" :show-arrow="false"
+          @search="SearchBrand" @blur="getBrandAgain">
+          <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
             {{ item }}
           </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item label="Channel">
-        <a-select
-          style="width: 200px"
-          :maxTagCount="1"
-          mode="multiple"
-          v-model:value="channelidlist"
-        >
-          <a-select-option
-            v-for="item in channelInfo"
-            :key="item.key"
-            :value="item.channelId"
-          >
+        <a-select v-model:value="channelidlist" style="width: 200px" :max-tag-count="1" mode="multiple">
+          <a-select-option v-for="item in channelInfo" :key="item.key" :value="item.channelId">
             {{ item.channelName }}
           </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item>
         <a-button type="primary" @click="onSearch">
-          <span
-            class="iconify inline align-middle mr-1 mb-1 text-sm"
-            data-icon="material-symbols:search"
-            data-inline="false"
-          />
+          <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
+            data-inline="false" />
           <span class="inline">Search</span>
         </a-button>
         <a-button type="primary" class="ml-3" @click="reset">
-          <span
-            class="iconify inline align-middle mr-1 mb-1 text-sm"
-            data-icon="carbon:reset"
-            data-inline="false"
-          />
+          <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset" data-inline="false" />
           <span class="inline">Reset</span>
         </a-button>
       </a-form-item>
     </a-form>
   </div>
   <div class="mt-4">
-    <a-table
-      :data-source="tabData"
-      bordered
-      :pagination="paginationOption"
-      :columns="columns"
-      :scroll="{ y: 'calc(100vh - 376px)' }"
-    >
+    <a-table :data-source="tabData" bordered :pagination="paginationOption" :columns="columns"
+      :scroll="{ y: 'calc(100vh - 376px)' }">
       >
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <a @click="edit(record)">Edit</a>
         </template>
         <template v-if="column.key === 'brandChannelInfo'">
-          <a-tag
-            v-for="item in record.brandChannelInfo"
-            :key="item.channelName"
-          >
+          <a-tag v-for="item in record.brandChannelInfo" :key="item.channelName">
             {{ item.channelName }}
           </a-tag>
         </template>
@@ -87,12 +52,12 @@
 <script>
 import ChannelBrandEdit from "./channel-brand-edit.vue";
 export default {
-  name: "channel-brand",
+  name: "ChannelBrand",
 };
 </script>
 
 <script setup>
-let channelidlist=ref([])
+let channelidlist = ref([])
 const paginationOption = reactive({
   showQuickJumper: true,
   pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
@@ -130,7 +95,7 @@ const getBaseData = async () => {
   channelInfo.value = await api.queryChannel();
 };
 const onSearch = async () => {
-  let {result} = await api.queryBrandChannel({
+  let { result } = await api.queryBrandChannel({
     brandName: searchText.value,
     channelIdList: channelidlist.value,
   });
