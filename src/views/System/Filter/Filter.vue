@@ -1,14 +1,15 @@
 <template>
-  <div>filter</div>
+  <div>
+    Filterword
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Filterword',
-  setup() {
-    return {}
-  }
-}
+  name: ' Filterword',
+};
 </script>
-<style lang="less" scoped>
-</style>
+
+<script setup>
+
+</script>
