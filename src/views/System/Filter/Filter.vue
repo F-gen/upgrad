@@ -1,6 +1,62 @@
 <template>
-  <div>
-    Filterword
+  <div class="bg-[#f0f2f5] w-full box-border p-6">
+    <div class="bg-[#fff] p-6">
+      <div>
+        <a-form layout="inline">
+          <a-form-item class="w-[200px]" label="Report Type">
+            <a-select :show-arrow="false" @change="changereport">
+              <a-select-option v-for="item in report_type" :key="item.code" :value="item.code">
+                {{ item.value }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item label="Industry" class="w-[200px]">
+            <a-select :show-arrow="false" @change="changeInd">
+              <a-select-option v-for="item in Industry" :key="item.indId" :value="item.indId">
+                {{ item.indName }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" @click="onSearch">
+              <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
+                data-inline="false" />
+              <span class="inline">Search</span>
+            </a-button>
+            <a-button type="primary" class="ml-3" @click="reset">
+              <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset"
+                data-inline="false" />
+              <span class="inline">Reset</span>
+            </a-button>
+            <a-button type="primary" class="ml-3" @click="add">
+              <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus"
+                data-inline="false" />
+              <span class="inline">New</span>
+            </a-button>
+          </a-form-item>
+        </a-form>
+      </div>
+      <div class="mt-4">
+        <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
+          :scroll="{ y: 'calc(100vh - 376px)' }">
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'action'">
+              <a @click="edit(record)">Edit</a>
+              <a-divider type="vertical" />
+              <a-popconfirm title="确定删除该过滤词 ?" @confirm="dele(record)">
+                <template #icon>
+                  <question-circle-outlined style="color: red" />
+                </template>
+                <a href="#">Delete</a>
+              </a-popconfirm>
+            </template>
+            <template v-if="column.key === 'filterCond'">
+              <span>{{ record.filterCond === 0 ? "不包含" : "包含" }}</span>
+            </template>
+          </template>
+        </a-table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,5 +67,69 @@ export default {
 </script>
 
 <script setup>
+// 搜索栏
+const report_type = ref([])
+const Industry = ref([])
+const getData = async () => {
+  report_type.value = await api.queryDict({ type: "report_type" });
+  Industry.value = await api.queryInd();
+}
+getData()
+const changereport = (val) => {
+  console.log(val);
+  reportId.value = val;
+}
+const changeInd = (val) => {
+  console.log(val);
+  industryId.value = val;
+}
+const reportId = ref('')
+const industryId = ref('')
+const onSearch = () => {
+  if (reportId.value === '') {
+    reportId.value = '-1'
+  } else if (industryId.value === '') {
+    industryId.value = '-1'
+  }
+  getTableData(industryId.value, reportId.value)
+}
+const reset = () => {
+  reportId.value = ''
+  industryId.value = ''
+  getTableData('-1', '-1')
+}
+const add = () => { }
 
+// 表格  
+// 过滤词  await api.queryDict({ type: "filter_field" });
+const getTableData = async (ind, rep) => {
+  let data = await api.queryFilter({
+    industryId: ind,
+    reportId: rep
+  });
+  tabData.value = data.map((item, index) => {
+    item.key = index + 1;
+    return item;
+  });
+}
+getTableData('-1', '-1')
+const tabData = ref([])
+const columns = ref([
+  { title: "NO", dataIndex: "key", key: "key" },
+  { title: "Report Type", dataIndex: "report", key: "report" },
+  { title: "Industry", dataIndex: "industry", key: "industry" },
+  { title: "Filter Field", dataIndex: "filterField", key: "filterField" },
+  { title: "Filter Condition", dataIndex: "filterCond", key: "filterCond" },
+  { title: "Filter Word", dataIndex: "filterWord", key: "filterWord", ellipsis: true },
+  { title: "Action", dataIndex: "action", key: "action" },
+  { title: "Action", dataIndex: "action", key: "action" },
+])
+const paginationOption = reactive({
+  showQuickJumper: true,
+  pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
+  showSizeChanger: true,
+  defaultPageSize: 50,
+});
+const edit = () => { }
+const dele = () => { }
 </script>
