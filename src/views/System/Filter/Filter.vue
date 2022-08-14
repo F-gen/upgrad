@@ -58,9 +58,15 @@
       </div>
     </div>
   </div>
+  <filterEdit ref="editfilter" />
+  <filterAdd ref="addfilter" @refresh="onSearch" :Industry="Industry" :report_type="report_type"
+    :filterfield="filterfield" />
 </template>
 
 <script>
+import filterEdit from './filter-edit.vue'
+import filterAdd from './filter-add.vue'
+import { message } from 'ant-design-vue';
 export default {
   name: ' Filterword',
 };
@@ -70,9 +76,11 @@ export default {
 // 搜索栏
 const report_type = ref([])
 const Industry = ref([])
+const filterfield = ref([])
 const getData = async () => {
   report_type.value = await api.queryDict({ type: "report_type" });
   Industry.value = await api.queryInd();
+  filterfield.value = await api.queryDict({ type: "filter_field" });
 }
 getData()
 const changereport = (val) => {
@@ -88,7 +96,8 @@ const industryId = ref('')
 const onSearch = () => {
   if (reportId.value === '') {
     reportId.value = '-1'
-  } else if (industryId.value === '') {
+  }
+  if (industryId.value === '') {
     industryId.value = '-1'
   }
   getTableData(industryId.value, reportId.value)
@@ -98,10 +107,13 @@ const reset = () => {
   industryId.value = ''
   getTableData('-1', '-1')
 }
-const add = () => { }
+
+const addfilter = ref()
+const add = () => {
+  addfilter.value.visible = true
+}
 
 // 表格  
-// 过滤词  await api.queryDict({ type: "filter_field" });
 const getTableData = async (ind, rep) => {
   let data = await api.queryFilter({
     industryId: ind,
@@ -122,7 +134,7 @@ const columns = ref([
   { title: "Filter Condition", dataIndex: "filterCond", key: "filterCond" },
   { title: "Filter Word", dataIndex: "filterWord", key: "filterWord", ellipsis: true },
   { title: "Action", dataIndex: "action", key: "action" },
-  { title: "Action", dataIndex: "action", key: "action" },
+
 ])
 const paginationOption = reactive({
   showQuickJumper: true,
@@ -130,6 +142,17 @@ const paginationOption = reactive({
   showSizeChanger: true,
   defaultPageSize: 50,
 });
-const edit = () => { }
-const dele = () => { }
+const editfilter = ref()
+const edit = (record) => {
+  console.log(record);
+  editfilter.value.visible = true
+  editfilter.value.item.report = record.report
+}
+const dele = async (record) => {
+  await api.delFilter({
+    tempId: record.tempId,
+  });
+  message.success('删除成功');
+  onSearch();
+}
 </script>
