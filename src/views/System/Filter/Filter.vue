@@ -58,7 +58,7 @@
       </div>
     </div>
   </div>
-  <filterEdit ref="editfilter" />
+  <filterEdit ref="editfilter" :Industry="Industry" :filterfield="filterfield" />
   <filterAdd ref="addfilter" @refresh="onSearch" :Industry="Industry" :report_type="report_type"
     :filterfield="filterfield" />
 </template>
@@ -67,6 +67,7 @@
 import filterEdit from './filter-edit.vue'
 import filterAdd from './filter-add.vue'
 import { message } from 'ant-design-vue';
+
 export default {
   name: ' Filterword',
 };
@@ -147,6 +148,12 @@ const edit = (record) => {
   console.log(record);
   editfilter.value.visible = true
   editfilter.value.item.report = record.report
+  editfilter.value.item.reportId = record.reportId
+  editfilter.value.item.indName = record.industry
+  editfilter.value.item.filterField = record.filterField
+  editfilter.value.item.filterCond = record.filterCond
+  editfilter.value.item.tempId = record.tempId
+
 }
 const dele = async (record) => {
   await api.delFilter({
