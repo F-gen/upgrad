@@ -42,6 +42,10 @@
           <a-select-option :value="1"> 包含</a-select-option>
         </a-select>
       </a-form-item>
+      <a-form-item>
+        <a-input></a-input>
+
+      </a-form-item>
     </a-form>
   </a-modal>
 </template>
