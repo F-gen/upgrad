@@ -43,7 +43,7 @@
         </a-select>
       </a-form-item>
       <a-form-item>
-        <a-input></a-input>
+
 
       </a-form-item>
     </a-form>
