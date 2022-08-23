@@ -21,6 +21,7 @@ const loginFn = async () => {
     token = router.query.token;
   }
   let data = await api.login({ token: token });
+  console.log(data, "userData");
   store.commit("user/setToken", data);
   //   store.commit("user/setToken", data);
   router.replace({
