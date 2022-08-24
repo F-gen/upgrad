@@ -97,7 +97,7 @@ defineExpose({
 const ruleForm = ref()
 const handleOk = async () => {
   // await ruleForm.value.validate();
-  visible.value = false
+  resetItem()
   console.log(item);
   /*
 
@@ -115,6 +115,19 @@ const handleOk = async () => {
 }
 const handleCancel = () => {
   //  ruleForm.value.resetFields();
+  resetItem()
+
+}
+const resetItem = () => {
   visible.value = false
+  item.report = ''
+  item.tempId = false
+  item.reportId = null
+  item.indName = ''
+  item.indId = null
+  item.filterField = ''
+  item.filterFieldId = null
+  item.filterCond = null
+  item.tags = []
 }
 </script>
