@@ -11,7 +11,17 @@
 .ant-input {
   border-radius: 0;
 }
-
+:deep(.ant-select) {
+  border-right: none;
+}
+.btnsearch{
+  position: relative;
+  left: -1%;
+  border-left: none;
+  padding-top: 3px;
+  height: 32px;
+  border-radius: 0px 4px 4px 0px;
+}
 .ant-spin-nested-loading {
   width: 100%;
   height: 100%;

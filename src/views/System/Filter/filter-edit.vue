@@ -42,8 +42,39 @@
           <a-select-option :value="1"> 包含</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item>
-
+      <a-form-item label="Filter Word">
+        <!-- search -->
+        <div class=" flex items-center mb-[6px]">
+          <a-select v-model:value="searchText" show-search style="width: 186px" @search="searchFilterword">
+            <a-select-option v-for="(item, index) in item.filterword" :key="index" :value="item">
+              {{ item }}
+            </a-select-option>
+          </a-select>
+          <button @click="onSearch" class=" relative pt-1 h-8 rounded-r text-[#fff] bg-[#1890ff] w-[89px]">
+            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
+              data-inline="false" />
+            Search
+          </button>
+        </div>
+        <!-- search -->
+        <!-- 新增 input-->
+        <div
+          class="w-[275px] h-[120px] rounded  pt-1 pr-[10px] pb-1 pl-[10px] overflow-scroll border-solid border-[#ccc] border-[1px]">
+          <a-input v-if="inputVisible" ref="input" type="text" size="small" class="mr-1 w-[78px]"
+            v-model:value="inputValue" @blur="handleInputConfirm" @keyup.enter="handleInputConfirm" />
+          <!-- 新增 -->
+          <a-tag v-else style="background: #fff; borderstyle: dashed" @click="addinput">
+            <span class="iconify inline " data-icon="material-symbols:add" data-inline="false"></span>
+            New Tag
+          </a-tag>
+          <!-- 修改已有 -->
+          <a-input v-if="isshow" type="text" ref="input" size="small" class="mr-1 w-[78px]" style=" width: 120px"
+            v-model:value="inputval" @blur="handleInputChange" @keyup.enter="handleInputChange" />
+          <a-tag v-else @click="showinput(val)" v-for="(val, index) in item.filterword" :key="val"
+            :closable="index !== 0" @close="() => handleClose(val)">
+            {{ val }}
+          </a-tag>
+        </div>
 
       </a-form-item>
     </a-form>
@@ -88,12 +119,46 @@ const item = reactive({
   filterField: '',
   filterFieldId: null,
   filterCond: null,
-  tags: [],
+  filterword: [],
+  backupfilterword: []
 })
+
 defineExpose({
   visible,
   item,
 })
+// 过滤词词中的搜索
+const searchText = ref('')
+const onSearch = () => { }
+const searchFilterword = (value) => {
+  searchText.value = value;
+  item.backupfilterword = item.filterword
+  item.backupfilterword.forEach((i) => {
+    if (i.startsWith(value)) {
+      let temp = []
+      temp.push(i)
+      item.filterword = temp
+    }
+  })
+
+}
+// 新增input  tag
+const inputVisible = ref(false)
+const inputValue = ref('')
+const input = ref()
+const handleInputConfirm = () => { }
+const addinput = () => {
+  inputVisible.value = true
+  input.value.focus()
+}
+
+// 修改input  tag
+const isshow = ref(false)
+const inputval = ref('')
+const handleInputChange = () => { }
+const showinput = () => { }
+const handleClose = () => { }
+// 校验 确认提交
 const ruleForm = ref()
 const handleOk = async () => {
   // await ruleForm.value.validate();

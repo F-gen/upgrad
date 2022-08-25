@@ -145,7 +145,7 @@ const paginationOption = reactive({
 });
 const editfilter = ref()
 const edit = (record) => {
-  console.log(record);
+
   editfilter.value.visible = true
   editfilter.value.item.report = record.report
   editfilter.value.item.reportId = record.reportId
@@ -153,6 +153,7 @@ const edit = (record) => {
   editfilter.value.item.filterField = record.filterField
   editfilter.value.item.filterCond = record.filterCond
   editfilter.value.item.tempId = record.tempId
+  editfilter.value.item.filterword = record.filterList
 
 }
 const dele = async (record) => {
