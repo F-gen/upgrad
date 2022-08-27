@@ -26,35 +26,32 @@
             </a>
           </li>
           <!-- System -->
-          <li class="group">
-            <span class="text-white cursor-pointer ml-20 mr-10 hover:text-primary ">System</span>
-            <div
-              class=" bg-[#ffffff] z-10 hidden absolute top-15 right-1/6  w-[328px] h-[380px]  flex-row border-zinc-200 border-solid border pl-3 pr-3  group-hover:flex">
-              <div class="flex-1 mr-2">
+          <li class="route_second">
+            <span class="title">System</span>
+            <div class="box">
+              <!-- left -->
+              <div class="cardcol">
                 <!-- Configuration -->
-                <div class="border-zinc-200 border-b-[1px] border-solid text-primary ">
-                  <span class="iconify ml-5 mr-1 text-base align-middle inline-block" data-icon="fluent:apps-20-regular"
-                    data-inline="false" />
-                  <span class="align-middle inline-block">
+                <div class="title">
+                  <span class="iconify " data-icon="fluent:apps-20-regular" data-inline="false" />
+                  <span>
                     Configuration
                   </span>
                 </div>
                 <!-- 渲染的子级 -->
-                <div v-for="i, index in leftroute" :key="index" class="hover:text-primary leading-5 mt-5 ">
-                  <span class="iconify ml-5 mr-2 text-base align-middle inline-block" :data-icon="i.icon"
-                    data-inline="false" />
-                  <span class="align-middle">
+                <div v-for="i, index in leftroute" :key="index" class="title_child">
+                  <span class="iconify" :data-icon="i.icon" data-inline="false" />
+                  <span>
                     <RouterLink :to="i.path" class="text-[#333] inline-block">{{ i.title }}</RouterLink>
                   </span>
                 </div>
               </div>
               <!-- right -->
-              <div class="ml-2 flex-1">
+              <div class="cardcol">
                 <!-- Others -->
-                <div class="border-zinc-200 border-b-[1px] border-solid text-primary ">
-                  <span class="iconify ml-5 mr-1 text-base align-middle inline-block"
-                    data-icon="iconoir:more-horiz-circled-outline" data-inline="false" />
-                  <span class="align-middle inline-block">
+                <div class="title">
+                  <span class="iconify" data-icon="iconoir:more-horiz-circled-outline" data-inline="false" />
+                  <span>
                     Others
                   </span>
                 </div>
@@ -191,6 +188,7 @@ const toRoute = (paths) => {
       display: flex;
       line-height: 56px;
       font-size: 14px;
+      color: #fff;
 
       .route_first {
         margin-left: 40px;
@@ -198,6 +196,47 @@ const toRoute = (paths) => {
         a {
           color: #fff;
 
+          &:hover {
+              color: #1890ff;
+            }
+          }
+          }
+          
+          .route_second {
+            .title {
+              cursor: pointer;
+              margin: 0 40px;
+            }
+          
+            .box {
+              background-color: #fff;
+              z-index: 10;
+              overflow: hidden;
+              position: absolute;
+              top: 60px;
+              right: 18%;
+              width: 328px;
+              height: 380px;
+              padding: 0 12px;
+              display: flex;
+              border: 1px solid #ccc;
+          
+              .cardcol {
+                flex: 1 1 0%;
+                margin-right: 8px;
+          
+          
+                .title {
+                  border-bottom: 1px solid #ccc;
+                  color: #1890ff;
+                  display: flex;
+                }
+          
+                .title_child {
+                  line-height: 20px;
+                  margin-top: 20px;
+                }
+              }
         }
       }
     }
@@ -215,10 +254,4 @@ const toRoute = (paths) => {
     height: calc(100vh - 60px);
   }
 }
-
-
-
-
-
-
 </style>
