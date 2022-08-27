@@ -1,0 +1,320 @@
+.page {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 100vh;
+  //
+  max-width: 1920px;
+  margin: 0 auto;
+
+  .basicheader {
+
+    height: 60px;
+    z-index: 2;
+    width: 100%;
+    background-color: #20242a;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    justify-content: space-between;
+    color: #fff;
+
+    .logo {
+      display: flex;
+      line-height: 64px;
+
+      .img {
+        width: 100px;
+        // margin-top: 20px;
+        display: inline-block;
+        margin-left: 40px;
+      }
+
+    }
+
+    .route {
+      nav {
+        width: var(--menu-width);
+        display: flex;
+        transform-style: preserve-3d;
+        justify-content: space-evenly;
+        position: relative;
+        z-index: 2;
+        margin: 0px auto;
+        // perspective: 2000px;
+        flex-wrap: wrap;
+        // top: 3em;
+        line-height: 60px;
+      }
+
+      nav .nochildren {
+        color: #f0f0f0;
+        // font-weight: 600;
+      }
+
+      nav .menu-item {
+        color: #f0f0f0;
+        // font-weight: 600;
+        transform-style: preserve-3d;
+        flex-grow: 1;
+        display: flex;
+        // flex-basis: var(--item-width);
+        box-sizing: border-box;
+        // padding: 1em 1.5em;
+        justify-content: center;
+        perspective: 200px;
+        letter-spacing: 0.5px;
+        // height: 7.5em;
+      }
+
+      nav.menu-text,
+      nav .menu-text a {
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        padding: 0 3em;
+        color: #f0f0f0;
+        text-decoration: none;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        transition: color 0.1s ease-out;
+        text-align: center;
+      }
+
+      nav .menu-text_border {
+        display: flex;
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        margin: 0 8px 16px 8px;
+        color: #f0f0f0;
+        text-decoration: none;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        transition: color 0.1s ease-out;
+        // text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+       
+      }
+ 
+      nav .menu-text span {
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+
+        color: #333;
+
+      }
+
+      nav .menu-text a:hover {
+        color: #1890ff;
+      }
+
+      // 整体子集菜单栏目
+      .menu-item .sub-menu {
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-size: 14px;
+        position: absolute;
+        top: 60px;
+        color: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        min-width: 35.5em;
+        pointer-events: none;
+        box-sizing: border-box;
+        z-index: 999;
+        margin-left: -5em;
+        clip-path: inset(0 10em 10em 15em);
+        opacity: 0;
+        font-weight: initial;
+        padding: 0 1.5em 0 1.5em;
+        border: 1px solid #ccc;
+        transition: all 0.25s ease-out, opacity 0.25s ease-in, margin-left 0.25s ease-out, clip-path 0.15s ease-out;
+      }
+
+      // submenu 宽度
+      .menu-item .sub-menu.double {
+        // min-width: 26.25em;
+        // height: 18.75em;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+      }
+
+      .menu-item .sub-menu .bottomLine {
+        border-bottom: 1px solid #ccc;
+      }
+
+      .menu-item:hover .sub-menu {
+        pointer-events: all;
+        clip-path: inset(0 0 0 0);
+      }
+
+      // 小箭头
+      .menu-text:after {
+        transition: bottom 0.25s ease-out, opacity 0.01s ease-out 0.01s;
+        opacity: 0;
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        bottom: -5em;
+        left: calc(50% - 10px);
+        // border-color: transparent transparent #f0f0f0 transparent;
+        // border-width: 10px;
+        // border-style: solid;
+      }
+
+      .menu-item:hover .menu-text:after {
+        bottom: 0.5em;
+        opacity: 0.5;
+        color: #f0f0f0;
+        transition: bottom 0.25s ease-out, opacity 0.01s ease-out 0.15s;
+      }
+
+      // 下拉框的背景色
+      .menu-item:hover .sub-menu {
+        opacity: 1;
+        margin-left: 0;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      @keyframes clipPath {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          transform: rotateX(0deg) scale(1);
+          top: 4.5em;
+          opacity: 1;
+        }
+      }
+
+      /* Menu specific */
+      .menu-item .title {
+        font-weight: 500;
+        color: #333333;
+        margin: 0.25em 0 0.25em 0;
+      }
+
+      .menu-item .icon-box * {
+        transition: all 0.1s ease-out;
+        position: relative;
+      }
+
+      .menu-item .icon-box.space {
+        margin-bottom: 1.25em;
+      }
+
+      .menu-item .icon-box.flat {
+        height: 1.5em;
+        margin-bottom: 0.5em;
+      }
+
+      .menu-item .icon,
+      .menu-item .text {
+        float: left;
+        color: #333333;
+      }
+
+      .menu-item .icon-box:hover .icon,
+      .menu-item .icon-box:hover .title {
+        color: #1890ff;
+      }
+
+      // icon 颜色 字体 边距离
+      .menu-item .icon {
+        color: #2c3e50;
+        font-size: 1.25em;
+        margin: 2px 16px 0 0;
+
+      }
+
+      .menu-item .icon-box {
+        cursor: pointer;
+      }
+
+      // 里面每个 目录菜单
+      .menu-item .icon-box {
+        float: left;
+        width: 100%;
+        margin: 0;
+        height: 45px;
+        row-gap: 0;
+        line-height: 1em;
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+      }
+
+
+    }
+
+    //路由结束
+
+
+    .user {
+      // text-#f0f0f0 leading-14 mr-8
+      color: #fff;
+      // width: 130px;
+      padding-right: 24px;
+      line-height: 58px;
+
+      // line-height: 64px;
+      // margin-right: 30px;
+      .dropItem {
+        display: flex;
+        align-items: center;
+        // width: 175px;
+      }
+
+      a {
+        color: #fff;
+        // margin-top: 10px;
+      }
+
+      span {
+        margin: 0 .0391rem 0 10px;
+      }
+    }
+  }
+
+  //nav结束
+
+  .container {
+    margin-top: 60px;
+    // overflow: hidden;
+    height: calc(100vh - 60px);
+  }
+
+  .online:hover .message {
+    display: block;
+  }
+
+  .online {
+    position: fixed;
+    right: 5px;
+    bottom: 10px;
+    display: flex;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 8px;
+    background-color: #1890ff;
+    writing-mode: vertical-lr;
+
+    .icon {
+      margin: 3px 0 3px 0;
+    }
+
+    .message {
+      display: none;
+    }
+  }
+
+}

@@ -39,9 +39,29 @@ const hideLoading = () => {
 router.beforeEach(async (to, from, next) => {
   // 清楚请求
   const hasToken = getSession("token");
+  const routes = store.state.user.routes;
   if (hasToken) {
-    //  token存在说明已权限已通
-    next();
+    if (routes && routes.length > 0) {
+
+      next();
+    } else {
+      const tem = await store.dispatch("user/getRoutByRole")
+
+      tem.forEach((i) => {
+        router.addRoute(i);
+      })
+      let hasBrandNews = tem[0].children.some(i => i.path == '/Layout/BrandDiscovery')
+
+      if (hasBrandNews) {
+        router.push('/Layout/BrandDiscovery');//v3
+        // router.push('/Layout/DownloadCenter')
+      } else {
+        // 没有BrandNewsHome路由，跳转到第一个
+        router.push(tem[0].children[1].path);
+      }
+
+      next();
+    }
   } else {
     // console.log(to);
     // 不存在进入login页面重新获取权限

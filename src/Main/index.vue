@@ -1,81 +1,93 @@
 <template>
-  <div class="mainpage">
+  <div class="page">
     <!-- nav -->
-    <div class="nav">
-      <!-- logo -->
+    <div class="basicheader">
       <div class="logo">
-        <img src="@/assets/MI.png" class="logo-img">
+        <router-link to="/BrandAnalysis/BrandExplore/BrandDiscovery">
+          <div><img src="./../../assets/MI.png" alt="" class="img" /></div>
+        </router-link>
       </div>
-      <!-- route -->
-      <div>
-        <ul class="nav-route">
-          <li class="route_first">
-            <a @click="toRoute('/Layout/BrandDiscovery')">
-              Brand Discovery
-            </a>
-          </li>
-          <li class="route_first">
-            <a @click="toRoute('/Layout/BrandNewsHome')">
-              Brand News
-            </a>
-          </li>
-          <!-- <li>Data Intelligence</li> -->
-          <li class="route_first">
-            <a @click="toRoute('/Layout/OriginData')">
-              Social Buzz
-            </a>
-          </li>
-          <!-- System -->
-          <li class="route_second">
-            <span class="title">System</span>
-            <div class="box">
-              <!-- left -->
-              <div class="cardcol">
-                <!-- Configuration -->
-                <div class="title">
-                  <span class="iconify " data-icon="fluent:apps-20-regular" data-inline="false" />
-                  <span>
-                    Configuration
-                  </span>
-                </div>
-                <!-- 渲染的子级 -->
-                <div v-for="i, index in leftroute" :key="index" class="title_child">
-                  <span class="iconify" :data-icon="i.icon" data-inline="false" />
-                  <span>
-                    <RouterLink :to="i.path" class="text-[#333] inline-block">{{ i.title }}</RouterLink>
-                  </span>
-                </div>
+      <div class="route">
+        <nav id="menu">
+          <div v-for="(item, index) in routes[0].children" :key="index">
+            <div v-show="!item.hidden" :class="[
+              item.children ? 'menu-item highlight' : 'nochildren highlight',
+            ]">
+              <!-- 一级 -->
+              <div class="menu-text" @click="routeReplace(item.path)">
+                <a>{{ item.meta.title }}</a>
               </div>
-              <!-- right -->
-              <div class="cardcol">
-                <!-- Others -->
-                <div class="title">
-                  <span class="iconify" data-icon="iconoir:more-horiz-circled-outline" data-inline="false" />
-                  <span>
-                    Others
-                  </span>
+              <!-- 三级开始 -->
+
+              <div class="sub-menu double">
+                <!-- 二级 -->
+
+                <div v-for="i in item.children" :key="i.path">
+                  <!-- 二级标题config... -->
+                  <div class="menu-text_border" v-show="!item.hidden" v-if="i.children">
+                    <div class="icon">
+                      <span :class="['iconfont', i.meta.icon]"></span>
+                    </div>
+
+                    <div class="title">
+                      {{ i.meta.title }}
+                    </div>
+
+                    <!-- <span >{{ i.meta.title }}</span> -->
+                  </div>
+                  <!-- 二级标题config... end -->
+                  <!-- 三级star-->
+                  <div class="icon-box gb a" v-for="inner in i.children" :key="inner.path"
+                    @click="routeReplace(inner.path)">
+                    <div class="icon">
+                      <span :class="['iconfont', inner.meta.icon]"></span>
+                    </div>
+                    <div class="text">
+                      <div class="title">
+                        {{ inner.meta.title }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 三级结束 -->
                 </div>
+
+                <div></div>
               </div>
             </div>
-          </li>
-        </ul>
+          </div>
+        </nav>
       </div>
-      <!-- use -->
       <div class="user">
-        <a-dropdown>
+        <a-dropdown placement="bottomCenter">
           <div>
             <a-avatar>
-              <span class="iconify text-2xl" data-icon="ic:round-person" data-inline="false" />
+              <a-icon type="user" />
             </a-avatar>
-            <span style="margin-right:12px; ">{{ JSON.parse(username) }}</span>
+            <span style="margin-left: 12px; color: #fff">{{
+              JSON.parse(username)
+              }}</span>
+            <a-icon type="down" style="margin-left: 4px" />
           </div>
 
           <template #overlay>
-            <a-menu>
+            <a-menu style="width: 130px; margin-right: 24px">
+              <!-- <a-menu-item
+                @click="$router.push('/Layout/DownloadCenter')"
+                v-show="!$store.getters.routerNameList.includes('DownloadCenter')"
+              >
+                <span class="dropItem">
+                  <span
+                    class="iconfont icon-xiazai"
+                    style="margin: 0 5px 0 10px"
+                  ></span>
+                  <span>下载中心</span>
+                </span>
+              </a-menu-item> -->
+              <!-- <a-menu-divider  v-show="!$store.getters.routerNameList.includes('DownloadCenter')" /> -->
               <a-menu-item key="logout" @click="quit()">
-                <span class="flex items-center">
-                  <span class="iconify mr-1" data-icon="majesticons:logout-line" data-inline="false" />
-                  <span>退出登录</span>
+                <span class="dropItem">
+                  <a-icon type="close" style="margin-left: 10px" />
+                  <span class="text">退出登录</span>
                 </span>
               </a-menu-item>
             </a-menu>
@@ -83,13 +95,21 @@
         </a-dropdown>
       </div>
     </div>
-    <!-- main -->
-    <div class="main">
+    <!-- container -->
+    <div class="container">
       <router-view />
     </div>
+    <!-- back-top -->
     <div>
       <a-back-top />
-      <strong style="color: rgba(64, 64, 64, 0.6)" />
+      <strong style="color: rgba(64, 64, 64, 0.6)"> </strong>
+    </div>
+
+    <div class="online" @click="onlinetack">
+      <div class="icon" style="margin-left: 3px">
+        <a-icon type="message" />
+      </div>
+      <div class="message">在线运维</div>
     </div>
   </div>
 </template>
@@ -103,6 +123,8 @@ export default {
 
 <script setup>
 const router = useRouter();
+const store = useStore()
+const routes = store.getters.routes
 const leftroute = reactive([
   {
     path: '/System/brand',
@@ -145,7 +167,7 @@ const username = getSession("userName");
 const quit = () => {
   window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
 }
-const toRoute = (paths) => {
+const routeReplace = (paths) => {
   router.push({
     path: paths
   });
@@ -153,105 +175,5 @@ const toRoute = (paths) => {
 </script>
 
 <style scoped lang="scss">
-.mainpage {
-  // position: relative;
-  // height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  .nav {
-    display: flex;
-    height: 60px;
-    z-index: 10;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #20242a;
-    justify-content: space-between;
-
-    .logo {
-      line-height: 56px;
-      margin-left: 40px;
-
-      .logo-img {
-        width: 100px;
-        height: 28px;
-        // border-radius: 50%;
-        background-color: #20242a;
-        display: inline-block;
-        // vertical-align: middle;
-      }
-    }
-
-    .nav-route {
-      display: flex;
-      line-height: 56px;
-      font-size: 14px;
-      color: #fff;
-
-      .route_first {
-        margin-left: 40px;
-
-        a {
-          color: #fff;
-
-          &:hover {
-              color: #1890ff;
-            }
-          }
-          }
-          
-          .route_second {
-            .title {
-              cursor: pointer;
-              margin: 0 40px;
-            }
-          
-            .box {
-              background-color: #fff;
-              z-index: 10;
-              overflow: hidden;
-              position: absolute;
-              top: 60px;
-              right: 18%;
-              width: 328px;
-              height: 380px;
-              padding: 0 12px;
-              display: flex;
-              border: 1px solid #ccc;
-          
-              .cardcol {
-                flex: 1 1 0%;
-                margin-right: 8px;
-          
-          
-                .title {
-                  border-bottom: 1px solid #ccc;
-                  color: #1890ff;
-                  display: flex;
-                }
-          
-                .title_child {
-                  line-height: 20px;
-                  margin-top: 20px;
-                }
-              }
-        }
-      }
-    }
-
-    .user {
-      color: #fff;
-      line-height: 56px;
-      margin-right: 32px;
-    }
-  }
-
-  .main {
-    margin-top: 60px;
-
-    height: calc(100vh - 60px);
-  }
-}
+@import "./Main.scss";
 </style>
