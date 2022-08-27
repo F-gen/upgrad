@@ -1,27 +1,27 @@
 <template>
-  <div class="flex relative h-screen flex-col">
+  <div class="mainpage">
     <!-- nav -->
-    <div class="h-[60px] z-10  bg-stone-900 flex w-full justify-between fixed top-0 left-0">
+    <div class="nav">
       <!-- logo -->
-      <div class="leading-14 ml-10">
-        <img src="@/assets/MI.png" class="w-25 h-7 inline-block">
+      <div class="logo">
+        <img src="@/assets/MI.png" class="logo-img">
       </div>
       <!-- route -->
       <div>
-        <ul class="flex leading-14 text-[14px]">
-          <li class="ml-20">
-            <a class=" hover:text-primary text-[#fff] text-opacity-100" @click="toRoute('/Layout/BrandDiscovery')">
+        <ul class="nav-route">
+          <li class="route_first">
+            <a @click="toRoute('/Layout/BrandDiscovery')">
               Brand Discovery
             </a>
           </li>
-          <li class="ml-20">
-            <a class="text-white hover:text-primary text-opacity-100" @click="toRoute('/Layout/BrandNewsHome')">
+          <li class="route_first">
+            <a @click="toRoute('/Layout/BrandNewsHome')">
               Brand News
             </a>
           </li>
           <!-- <li>Data Intelligence</li> -->
-          <li class="ml-20">
-            <a class="text-white hover:text-primary text-opacity-100" @click="toRoute('/Layout/OriginData')">
+          <li class="route_first">
+            <a @click="toRoute('/Layout/OriginData')">
               Social Buzz
             </a>
           </li>
@@ -64,13 +64,13 @@
         </ul>
       </div>
       <!-- use -->
-      <div class="text-white leading-14 mr-8">
+      <div class="user">
         <a-dropdown>
           <div>
             <a-avatar>
               <span class="iconify text-2xl" data-icon="ic:round-person" data-inline="false" />
             </a-avatar>
-            <span class="ml-3  text-white text-sm">{{ JSON.parse(username) }}</span>
+            <span style="margin-right:12px; ">{{ JSON.parse(username) }}</span>
           </div>
 
           <template #overlay>
@@ -87,7 +87,7 @@
       </div>
     </div>
     <!-- main -->
-    <div class="h-[calc(100vh-60px)] mt-[60px]">
+    <div class="main">
       <router-view />
     </div>
     <div>
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <script setup>
-const router=useRouter();
+const router = useRouter();
 const leftroute = reactive([
   {
     path: '/System/brand',
@@ -154,3 +154,71 @@ const toRoute = (paths) => {
   });
 }
 </script>
+
+<style scoped lang="scss">
+.mainpage {
+  // position: relative;
+  // height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .nav {
+    display: flex;
+    height: 60px;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #20242a;
+    justify-content: space-between;
+
+    .logo {
+      line-height: 56px;
+      margin-left: 40px;
+
+      .logo-img {
+        width: 100px;
+        height: 28px;
+        // border-radius: 50%;
+        background-color: #20242a;
+        display: inline-block;
+        // vertical-align: middle;
+      }
+    }
+
+    .nav-route {
+      display: flex;
+      line-height: 56px;
+      font-size: 14px;
+
+      .route_first {
+        margin-left: 40px;
+
+        a {
+          color: #fff;
+
+        }
+      }
+    }
+
+    .user {
+      color: #fff;
+      line-height: 56px;
+      margin-right: 32px;
+    }
+  }
+
+  .main {
+    margin-top: 60px;
+
+    height: calc(100vh - 60px);
+  }
+}
+
+
+
+
+
+
+</style>
