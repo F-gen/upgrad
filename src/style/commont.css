@@ -14,6 +14,7 @@
 :deep(.ant-select) {
   border-right: none;
 }
+
 .btnsearch{
   position: relative;
   left: -1%;

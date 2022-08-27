@@ -63,12 +63,12 @@
           <a-input v-if="inputVisible" ref="input" type="text" size="small" class="mr-1 w-[78px]"
             v-model:value="inputValue" @blur="handleInputConfirm" @keyup.enter="handleInputConfirm" />
           <!-- 新增 -->
-          <a-tag v-else style="background: #fff; borderstyle: dashed" @click="addinput">
+          <a-tag v-else class="bg-[#fff] border-dashed mt-1" @click="addinput">
             <span class="iconify inline " data-icon="material-symbols:add" data-inline="false"></span>
             New Tag
           </a-tag>
           <!-- 修改已有 -->
-          <a-input v-if="isshow" type="text" ref="input" size="small" class="mr-1 w-[78px]" style=" width: 120px"
+          <a-input v-if="isshow" type="text" ref="input" size="small" class="mr-1  w-[78px]" style=" width: 120px"
             v-model:value="inputval" @blur="handleInputChange" @keyup.enter="handleInputChange" />
           <a-tag v-else @click="showinput(val)" v-for="(val, index) in item.filterword" :key="val"
             :closable="index !== 0" @close="() => handleClose(val)">
