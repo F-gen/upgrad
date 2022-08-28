@@ -19,10 +19,10 @@
         </a-form-item>
         <a-form-item>
           <a-button type="primary" style="margin-left: 10px" @click="onSearch">
-            <a-icon type="search" />Search
+            <search-outlined />Search
           </a-button>
           <a-button type="primary" style="margin-left: 10px" @click="reset">
-            <a-icon type="redo" />Reset
+            <undo-outlined />Reset
           </a-button>
         </a-form-item>
       </a-form>
@@ -33,6 +33,9 @@
             <template v-if="column.key === 'action'">
               <a @click="checkData(record)">数据权限</a>
             </template>
+            <template v-if="column.key === 'brandNameList'">
+              {{ record.brandNameList }}
+            </template>
             <template v-if="column.key === 'status'">
               {{ record.status == 0 ? "未锁定 " : "锁定 " }}
             </template>
@@ -40,9 +43,9 @@
 
         </a-table>
         <div class="page">
-          <a-pagination v-model:value="UserList.pageNum" :page-size="UserList.pageSize" :total="total" show-size-changer
-            :page-size-options="pageSizeOptions" :default-current="UserList.pageNum" @showSizeChange="onShowSizeChange"
-            @change="onShowSizeChange" />
+          <a-pagination v-model:current="UserList.pageNum" v-model:pageSize="UserList.pageSize" :total="total"
+            show-size-changer :page-size-options="pageSizeOptions" :default-current="UserList.pageNum"
+            @showSizeChange="onShowSizeChange" />
         </div>
       </div>
     </a-card>
@@ -67,8 +70,8 @@ const search = reactive({
   username: "", // 姓名eng
   name: "", // 姓名
 })
-const brandId = ref([]), //  getUserList 使用
-const data = ref([]),
+const brandId = ref([]) //  getUserList 使用
+const data = ref([])
 const columns = ref([
   { title: "用户ID", key: "userNameEn", dataIndex: "userNameEn" },
   { title: "姓名", key: "userNameCn", dataIndex: "userNameCn" },
@@ -78,7 +81,7 @@ const columns = ref([
     key: "brandNameList",
     scopedSlots: { customRender: "brandNameList" },
     width: "200px",
-    elipsis: true,
+    ellipsis: true,
   },
   { title: "角色", key: "roleName", dataIndex: "roleName" },
   {
@@ -111,7 +114,7 @@ const onShowSizeChange = (current, pageSize) => {
   UserList.pageSize = pageSize
   getUserList()
 }
-const getBasicData = () => {
+const getBasicData = async () => {
   const { result } = await api.getBrandListOfUserRole({
     brandName: brandName.value,
   });
@@ -123,13 +126,14 @@ const handleBlur = () => {
   Brand.value = backipBrand.value
 
 }
-const getUserList = () => {
-  const data = await api.getUserList({ ...UserList });
-  data.value = data.result.list;
-  total.value = data.result.total;
+const getUserList = async () => {
+  const tabledata = await api.getUserList({ ...UserList });
+  // console.log(data.result.list, "???data");
+  data.value = tabledata.result.list;
+  total.value = tabledata.result.total;
 }
 getUserList()
-const handleSearch = (name) => {
+const handleSearch = async (name) => {
   let timer;
   if (timer) clearTimeout(timer);
   timer = setTimeout(async () => {
@@ -145,9 +149,10 @@ const onSearch = async () => {
   UserList.brandIdList = brandId.value;
   UserList.userNameCn = search.name;
   UserList.userNameEn = search.username;
-  const data = await api.getUserList(this.UserList);
-  data.value = data.result.list;
-  total.value = data.result.total;
+  const tabledata = await api.getUserList({ ...UserList });
+  // console.log(data.result.list, "???data");
+  data.value = tabledata.result.list;
+  total.value = tabledata.result.total;
 }
 const reset = () => {
   UserList.brandIdList = [];
@@ -174,9 +179,4 @@ const handleOk = () => {
   margin-top: 16px;
   float: right;
 }
-
-
-
-
-
 </style>

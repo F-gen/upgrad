@@ -47,6 +47,9 @@
               <a href="#">Delete</a>
             </a-popconfirm>
           </template>
+          <template v-if="column.key === 'officialUrl'">
+            <a :href="record.officialUrl" target="_blank">{{record.officialUrl}}</a>
+          </template>
         </template>
       </a-table>
     </div>
@@ -116,7 +119,7 @@ const columns = reactive([
   { title: "Brand Eng Name", dataIndex: "brandName", key: "brandName" },
   { title: "Platform Name", dataIndex: "platformName", key: "platformName" },
   { title: "official ID", dataIndex: "officialId", key: "officialId" },
-  { title: "official Url", dataIndex: "officialUrl", key: "officialUrl" },
+  { title: "official Url", dataIndex: "officialUrl", key: "officialUrl",ellipsis:true },
   {
     title: "official Username",
     dataIndex: "officialUserName",
