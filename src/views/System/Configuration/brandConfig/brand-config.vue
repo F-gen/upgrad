@@ -86,7 +86,7 @@ let brandCategory = ref([]);
 // mehtods
 const SearchBrand = (value) => {
   let timer;
-  if (timer) clearTimeout(this.timer);
+  if (timer) clearTimeout(timer);
   timer = setTimeout(async () => {
     BrandItems.value = await api.queryAllBrandName({ keyword: value });
     clearTimeout(timer);
