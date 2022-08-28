@@ -23,9 +23,9 @@
     <a-modal :visible="visiable" :title="item.roleType == null ? '添加角色' : '编辑角色'" @ok="handOk" @cancel="handelcancel">
       <a-form :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }" ref="ruleForm">
         <a-form-item label="角色名称" name="roleName" :rules="[
-                  {
-                    required: true,
-                    trigger: blur,
+  {
+    required: true,
+    trigger: 'blur',
             message: '角色名称不能为空',
           },
           { max: 20, message: '角色名称不得超过20个字', trigger: ['blur'] }
@@ -36,7 +36,7 @@
           { max: 100, message: '角色描述不得超过100个字', trigger: ['blur'] },
           {
             required: true,
-            trigger: blur,
+            trigger: 'blur',
             message: '角色描述不能为空',
           },
         ]">
