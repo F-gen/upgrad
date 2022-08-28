@@ -25,8 +25,8 @@ let componentList = {
 </script>
 
 <script setup>
-const comName = ref('Role')
-const componentId = ref('Role')
+const comName = ref('User')
+const componentId = ref('User')
 const change = (e) => {
   comName.value = e.target.value
   componentId.value = e.target.value
