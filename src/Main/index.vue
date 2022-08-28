@@ -3,7 +3,7 @@
     <!-- nav -->
     <div class="basicheader">
       <div class="logo">
-        <router-link to="/BrandAnalysis/BrandExplore/BrandDiscovery">
+        <router-link to="/Layout/BrandDiscovery">
           <div><img src="../assets/MI.png" alt="" class="img" /></div>
         </router-link>
       </div>
@@ -64,8 +64,8 @@
               <user-outlined />
             </a-avatar>
             <span style="margin-left: 12px; color: #fff">{{
-                JSON.parse(username)
-            }}</span>
+              JSON.parse(username)
+              }}</span>
             <down-outlined style="margin-left: 4px" />
 
           </div>

@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     ATag: typeof import('ant-design-vue/es')['Tag']
+    ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     BarChart: typeof import('./src/components/Chart/barChart.vue')['default']
     Cloudword: typeof import('./src/components/Chart/cloudword.vue')['default']
