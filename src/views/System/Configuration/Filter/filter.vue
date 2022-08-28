@@ -19,15 +19,15 @@
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="onSearch">
-              <span class="iconify" data-icon="material-symbols:search" data-inline="false" />
+              <search-outlined />
               <span class="inline">Search</span>
             </a-button>
             <a-button type="primary" style="margin-left: 12px;" @click="reset">
-              <span class="iconify" data-icon="carbon:reset" data-inline="false" />
+              <undo-outlined />
               <span class="inline">Reset</span>
             </a-button>
             <a-button type="primary" style="left: 12px;" @click="add">
-              <span class="iconify" data-icon="ic:round-plus" data-inline="false" />
+              <plus-outlined />
               <span class="inline">New</span>
             </a-button>
           </a-form-item>

@@ -4,7 +4,7 @@
     <div class="basicheader">
       <div class="logo">
         <router-link to="/BrandAnalysis/BrandExplore/BrandDiscovery">
-          <div><img src="./../../assets/MI.png" alt="" class="img" /></div>
+          <div><img src="../assets/MI.png" alt="" class="img" /></div>
         </router-link>
       </div>
       <div class="route">
@@ -61,12 +61,13 @@
         <a-dropdown placement="bottom">
           <div>
             <a-avatar>
-              <a-icon type="user" />
+              <user-outlined />
             </a-avatar>
             <span style="margin-left: 12px; color: #fff">{{
-              JSON.parse(username)
-              }}</span>
-            <a-icon type="down" style="margin-left: 4px" />
+                JSON.parse(username)
+            }}</span>
+            <down-outlined style="margin-left: 4px" />
+
           </div>
 
           <template #overlay>
@@ -86,7 +87,8 @@
               <!-- <a-menu-divider  v-show="!$store.getters.routerNameList.includes('DownloadCenter')" /> -->
               <a-menu-item key="logout" @click="quit()">
                 <span class="dropItem">
-                  <a-icon type="close" style="margin-left: 10px" />
+                  <close-outlined style="margin-left: 10px" />
+
                   <span class="text">退出登录</span>
                 </span>
               </a-menu-item>
@@ -107,7 +109,7 @@
 
     <div class="online" @click="onlinetack">
       <div class="icon" style="margin-left: 3px">
-        <a-icon type="message" />
+        <message-outlined />
       </div>
       <div class="message">在线运维</div>
     </div>

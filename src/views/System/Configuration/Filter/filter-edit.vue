@@ -51,8 +51,7 @@
             </a-select-option>
           </a-select>
           <button @click="onSearch" class=" relative pt-1 h-8 rounded-r text-[#fff] bg-[#1890ff] w-[89px]">
-            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
-              data-inline="false" />
+            <search-outlined />
             Search
           </button>
         </div>
@@ -64,7 +63,7 @@
             v-model:value="inputValue" @blur="handleInputConfirm" @keyup.enter="handleInputConfirm" />
           <!-- 新增 -->
           <a-tag v-else class="bg-[#fff] border-dashed mt-1" @click="addinput">
-            <span class="iconify inline " data-icon="material-symbols:add" data-inline="false"></span>
+            <plus-outlined />
             New Tag
           </a-tag>
           <!-- 修改已有 -->
