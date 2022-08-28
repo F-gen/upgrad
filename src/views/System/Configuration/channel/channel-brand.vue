@@ -19,12 +19,11 @@
       </a-form-item>
       <a-form-item>
         <a-button type="primary" @click="onSearch">
-          <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
-            data-inline="false" />
+          <search-outlined />
           <span class="inline">Search</span>
         </a-button>
         <a-button type="primary" class="ml-3" @click="reset">
-          <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset" data-inline="false" />
+          <undo-outlined />
           <span class="inline">Reset</span>
         </a-button>
       </a-form-item>

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="flex justify-between">
+    <div class="box">
       <div>
         <a-form layout="inline">
-          <a-form-item class="w-[200px]" label="Brand">
+
+          <a-form-item style="width:200px;" label="Brand">
             <a-select v-model:value="searchText" show-search :filter-option="false" :show-arrow="false"
               @search="SearchBrand" @blur="getBrandAgain">
               <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
@@ -20,29 +21,30 @@
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="getKeyList">
-              <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
-                data-inline="false" />
+              <search-outlined />
               <span class="inline">Search</span>
             </a-button>
             <a-button type="primary" class="ml-3" @click="reset">
-              <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset"
-                data-inline="false" />
+              <undo-outlined />
               <span class="inline">Reset</span>
             </a-button>
             <a-button type="primary" class="ml-3" @click="add">
-              <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus"
-                data-inline="false" />
+              <plus-outlined />
               <span class="inline">New</span>
             </a-button>
+
           </a-form-item>
+
         </a-form>
       </div>
       <div>
+
         <a-button title="下载数据" @click="downFn">
-          <span class="iconify inline align-middle mr-1 mb-1 text-base text-[#1890ff]" data-icon="ant-design:download"
-            data-inline="false" />
+          <cloud-download-outlined style="color: #1890ff;" />
+
           <span style="color: #1890ff" title="下载数据"> 下载</span>
         </a-button>
+
       </div>
     </div>
     <div class="mt-4">
@@ -233,3 +235,11 @@ const dele = async (record) => {
 getBaseData();
 getKeyList();
 </script>
+
+<style lang="scss" scoped>
+.box{
+  display: flex;
+  justify-content: space-between;
+}
+
+</style>

@@ -1,10 +1,6 @@
 <template>
   <a-button type="primary" class="ml-3" @click="add">
-    <span
-      class="iconify inline align-middle mr-1 mb-1 text-base"
-      data-icon="ic:round-plus"
-      data-inline="false"
-    />
+    <plus-outlined />
     <span class="inline">New</span>
   </a-button>
   <div class="mt-4">
@@ -23,30 +19,15 @@
       </template>
     </a-table>
   </div>
-  <a-modal
-    :visible="visible"
-    :title="!this.item.id ? '新增平台' : '编辑平台'"
-    centered
-    @ok="handleOk"
-    @cancel="handleCancel"
-  >
-    <a-form
-      ref="ruleForm"
-      :model="item"
-      :label-col="{ span: 6 }"
-      :wrapper-col="{ span: 14 }"
-    >
-      <a-form-item
-        label="Channel Name"
-        name="platName"
-        :rules="[
+  <a-modal :visible="visible" :title="!this.item.id ? '新增平台' : '编辑平台'" centered @ok="handleOk" @cancel="handleCancel">
+    <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
+      <a-form-item label="Channel Name" name="platName" :rules="[
           {
             required: true,
             message: 'Channel Name 不能为空',
             trigger: 'blur',
           },
-        ]"
-      >
+        ]">
         <a-input v-model:value="item.platName" />
       </a-form-item>
       <a-form-item label="Platfrom Eng Name">

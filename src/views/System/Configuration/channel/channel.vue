@@ -10,8 +10,8 @@
 -->
 
 <template>
-  <div class="bg-[#f0f2f5] w-full box-border p-6">
-    <div class="bg-[#fff] p-6">
+  <div class="bg">
+    <div class="bg-container">
       <a-tabs v-model:activeKey="activeKey" @change="changtab">
         <a-tab-pane key="channelBrand" tab="Brand Channel" />
         <a-tab-pane key="channelConfig" tab="Channel" />
@@ -40,3 +40,18 @@ const changtab = (activeKey) => {
   componentId.value = activeKey;
 };
 </script>
+<style scoped lang="scss">
+.bg {
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 24px;
+}
+
+.bg-container {
+
+  background-color: #fff;
+  padding: 24px;
+}
+
+
+</style>

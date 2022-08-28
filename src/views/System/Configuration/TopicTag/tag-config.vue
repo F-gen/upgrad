@@ -11,73 +11,38 @@
 <template>
   <a-form layout="inline">
     <a-form-item label="Report Type">
-      <a-select
-        @change="changeReport"
-        v-model:value="reportTypeId"
-        :show-arrow="false"
-        style="width: 150px"
-      >
-        <a-select-option
-          v-for="item in report_type"
-          :key="item.code"
-          :value="item.code"
-        >
+      <a-select @change="changeReport" v-model:value="reportTypeId" :show-arrow="false" style="width: 150px">
+        <a-select-option v-for="item in report_type" :key="item.code" :value="item.code">
           {{ item.value }}
         </a-select-option>
       </a-select>
     </a-form-item>
-    <a-form-item class="w-[200px]" label="Topic">
-      <a-select
-        v-model:value="topicId"
-        show-search
-        :filter-option="false"
-        :show-arrow="false"
-      >
-        <a-select-option
-          v-for="item in topicList"
-          :key="item.topicId"
-          :value="item.topicId"
-        >
+    <a-form-item style="width:200px;" label="Topic">
+      <a-select v-model:value="topicId" show-search :filter-option="false" :show-arrow="false">
+        <a-select-option v-for="item in topicList" :key="item.topicId" :value="item.topicId">
           {{ item.topicName }}
         </a-select-option>
       </a-select>
     </a-form-item>
     <a-form-item>
       <a-button type="primary" @click="onSearch">
-        <span
-          class="iconify inline align-middle mr-1 mb-1 text-sm"
-          data-icon="material-symbols:search"
-          data-inline="false"
-        />
+        <search-outlined />
         <span class="inline">Search</span>
       </a-button>
       <a-button type="primary" class="ml-3" @click="reset">
-        <span
-          class="iconify inline align-middle mr-1 mb-1 text-sm"
-          data-icon="carbon:reset"
-          data-inline="false"
-        />
+        <undo-outlined />
         <span class="inline">Reset</span>
       </a-button>
       <a-button type="primary" class="ml-3" @click="add">
-        <span
-          class="iconify inline align-middle mr-1 mb-1 text-base"
-          data-icon="ic:round-plus"
-          data-inline="false"
-        />
+        <plus-outlined />
         <span class="inline">New</span>
       </a-button>
     </a-form-item>
   </a-form>
   <!-- table -->
   <div class="mt-4">
-    <a-table
-      :columns="columns"
-      :data-source="tabData"
-      bordered
-      :pagination="paginationOption"
-      :scroll="{ y: 'calc(100vh - 376px)' }"
-    >
+    <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
+      :scroll="{ y: 'calc(100vh - 376px)' }">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <a @click="edit(record)">Edit</a>
@@ -93,51 +58,29 @@
     </a-table>
   </div>
   <!-- 弹窗 -->
-  <a-modal
-    :visible="visible"
-    :title="item.tagI == null ? '新增标签' : '编辑标签'"
-    centered
-    @ok="handleOk"
-    @cancel="handleCancel"
-  >
-    <a-form
-      ref="ruleForm"
-      :model="item"
-      :label-col="{ span: 6 }"
-      :wrapper-col="{ span: 14 }"
-    >
-      <a-form-item
-        label="Topic Name"
-        name="topicId"
-        :rules="[
+  <a-modal :visible="visible" :title="item.tagI == null ? '新增标签' : '编辑标签'" centered @ok="handleOk"
+    @cancel="handleCancel">
+    <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
+      <a-form-item label="Topic Name" name="topicId" :rules="[
           {
             required: true,
             message: 'TopicName 不能为空',
             trigger: 'blur',
           },
-        ]"
-      >
+        ]">
         <a-select v-model:value="item.topicId">
-          <a-select-option
-            v-for="val in topicAllList"
-            :key="val.topicId"
-            :value="val.topicId"
-          >
+          <a-select-option v-for="val in topicAllList" :key="val.topicId" :value="val.topicId">
             {{ val.topicName }}
           </a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item
-        label="Tag"
-        name="tag"
-        :rules="[
+      <a-form-item label="Tag" name="tag" :rules="[
           {
             required: true,
             message: 'Tag 不能为空',
             trigger: 'blur',
           },
-        ]"
-      >
+        ]">
         <a-input v-model:value="item.tag" />
       </a-form-item>
     </a-form>

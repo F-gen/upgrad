@@ -2,7 +2,7 @@
 <template>
   <div>
     <a-button type="primary" class="ml-3" @click="add">
-      <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus" data-inline="false" />
+      <plus-outlined />
       <span class="inline">New</span>
     </a-button>
   </div>

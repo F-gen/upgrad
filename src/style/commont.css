@@ -6,6 +6,23 @@
   color: #2c3e50;
   height: 100vh;
 }
+.mt-4{
+  margin-top: 16px;
+}
+.ml-3{
+  margin-left: 12px;
+}
+.bg {
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 24px;
+}
+
+.bg-container {
+
+  background-color: #fff;
+  padding: 24px;
+}
 
 .ant-select-selection,
 .ant-input {

@@ -10,15 +10,12 @@
 -->
 
 <template>
-  <div class="bg-[#f0f2f5] w-full box-border p-6">
-    <div class="bg-[#fff] p-6">
+  <div class="bg">
+    <div class="bg-container">
       <a-tabs v-model:activeKey="activeKey" @change="changtab">
         <a-tab-pane key="PlatformDetail" tab="Brand Platform" />
-        <a-tab-pane
-          key="PlatformConfig"
-          tab="Platform
-"
-        />
+        <a-tab-pane key="PlatformConfig" tab="Platform
+" />
       </a-tabs>
       <component :is="componentList[componentId]" />
     </div>

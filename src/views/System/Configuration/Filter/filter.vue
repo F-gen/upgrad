@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-[#f0f2f5] w-full box-border p-6">
-    <div class="bg-[#fff] p-6">
+  <div class="bg">
+    <div class="bg-container">
       <div>
         <a-form layout="inline">
-          <a-form-item class="w-[200px]" label="Report Type">
+          <a-form-item style="width:200px;" label="Report Type">
             <a-select :show-arrow="false" @change="changereport">
               <a-select-option v-for="item in report_type" :key="item.code" :value="item.code">
                 {{ item.value }}
               </a-select-option>
             </a-select>
           </a-form-item>
-          <a-form-item label="Industry" class="w-[200px]">
+          <a-form-item label="Industry" style="width:200px;">
             <a-select :show-arrow="false" @change="changeInd">
               <a-select-option v-for="item in Industry" :key="item.indId" :value="item.indId">
                 {{ item.indName }}
@@ -19,24 +19,21 @@
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="onSearch">
-              <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
-                data-inline="false" />
+              <span class="iconify" data-icon="material-symbols:search" data-inline="false" />
               <span class="inline">Search</span>
             </a-button>
-            <a-button type="primary" class="ml-3" @click="reset">
-              <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset"
-                data-inline="false" />
+            <a-button type="primary" style="margin-left: 12px;" @click="reset">
+              <span class="iconify" data-icon="carbon:reset" data-inline="false" />
               <span class="inline">Reset</span>
             </a-button>
-            <a-button type="primary" class="ml-3" @click="add">
-              <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus"
-                data-inline="false" />
+            <a-button type="primary" style="left: 12px;" @click="add">
+              <span class="iconify" data-icon="ic:round-plus" data-inline="false" />
               <span class="inline">New</span>
             </a-button>
           </a-form-item>
         </a-form>
       </div>
-      <div class="mt-4">
+      <div style="margin-top: 16px;">
         <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
           :scroll="{ y: 'calc(100vh - 376px)' }">
           <template #bodyCell="{ column, record }">
@@ -164,3 +161,17 @@ const dele = async (record) => {
   onSearch();
 }
 </script>
+<style scoped lang="scss">
+.bg {
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 24px;
+}
+
+.bg-container {
+
+  background-color: #fff;
+  padding: 24px;
+}
+
+</style>

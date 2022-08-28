@@ -9,45 +9,45 @@
  * Copyright (c) 2022 by eureka, All Rights Reserved. 
 -->
 <template>
- 
-      <a-button type="primary" class="ml-3" @click="add">
-        <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus" data-inline="false" />
-        <span class="inline">New</span>
-      </a-button>
-      <div class="mt-4">
-        <a-table :columns="columns" :data-source="datas" bordered>
-          <template #bodyCell="{ column, record }">
-            <template v-if="column.key === 'action'">
-              <a @click="edit(record)">Edit</a>
-              <a-divider type="vertical" />
-              <a-popconfirm title="确定删除该渠道 ?" @confirm="dele(record)">
-                <template #icon>
-                  <question-circle-outlined style="color: red" />
-                </template>
-                <a href="#">Delete</a>
-              </a-popconfirm>
+
+  <a-button type="primary" class="ml-3" @click="add">
+    <plus-outlined />
+    <span class="inline">New</span>
+  </a-button>
+  <div class="mt-4">
+    <a-table :columns="columns" :data-source="datas" bordered>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <a @click="edit(record)">Edit</a>
+          <a-divider type="vertical" />
+          <a-popconfirm title="确定删除该渠道 ?" @confirm="dele(record)">
+            <template #icon>
+              <question-circle-outlined style="color: red" />
             </template>
-          </template>
-        </a-table>
-      </div>
-      <a-modal :visible="visible" :title="item.channelId == null ? '新增渠道' : '编辑渠道'" centered @ok="handleOk"
-        @cancel="handleCancel">
-        <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
-          <a-form-item label="Channel Name" name="channelName" :rules="[
-            {
-              required: true,
-              message: 'Channel Name 不能为空',
-              trigger: 'blur',
-            },
-          ]">
-            <a-input v-model:value="item.channelName" />
-          </a-form-item>
-          <a-form-item label="Channel Eng Name">
-            <a-input v-model:value="item.channelNameEn" />
-          </a-form-item>
-        </a-form>
-      </a-modal>
-  
+            <a href="#">Delete</a>
+          </a-popconfirm>
+        </template>
+      </template>
+    </a-table>
+  </div>
+  <a-modal :visible="visible" :title="item.channelId == null ? '新增渠道' : '编辑渠道'" centered @ok="handleOk"
+    @cancel="handleCancel">
+    <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
+      <a-form-item label="Channel Name" name="channelName" :rules="[
+        {
+          required: true,
+          message: 'Channel Name 不能为空',
+          trigger: 'blur',
+        },
+      ]">
+        <a-input v-model:value="item.channelName" />
+      </a-form-item>
+      <a-form-item label="Channel Eng Name">
+        <a-input v-model:value="item.channelNameEn" />
+      </a-form-item>
+    </a-form>
+  </a-modal>
+
 </template>
 
 <script>

@@ -58,7 +58,7 @@
         </nav>
       </div>
       <div class="user">
-        <a-dropdown placement="bottomCenter">
+        <a-dropdown placement="bottom">
           <div>
             <a-avatar>
               <a-icon type="user" />

@@ -11,7 +11,7 @@
 <template>
   <div>
     <a-button type="primary" class="ml-3" @click="add">
-      <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus" data-inline="false" />
+      <plus-outlined />
       <span class="inline">New</span>
     </a-button>
   </div>
@@ -74,8 +74,19 @@ const dele = async (record) => {
     typeName: record.typeName,
     value: record.value,
   });
-   message.success("删除成功");
+  message.success("删除成功");
   getCategory();
 };
 getCategory();
 </script>
+<style scoped lang="scss">
+.mt-4{
+  margin-top: 16px;
+}
+.ml-3{
+  margin-left: 12px;
+}
+
+
+
+</style>

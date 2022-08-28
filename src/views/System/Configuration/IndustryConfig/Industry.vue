@@ -9,10 +9,10 @@
  * Copyright (c) 2022 by eureka, All Rights Reserved. 
 -->
 <template>
-  <div class="bg-[#f0f2f5] w-full box-border p-6">
-    <div class="bg-[#fff] p-6">
+  <div class="bg">
+    <div class="bg-container">
       <a-button type="primary" class="ml-3" @click="add">
-        <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus" data-inline="false" />
+        <plus-outlined />
         <span class="inline">New</span>
       </a-button>
       <div class="mt-4">
@@ -104,11 +104,11 @@ const handleOk = async () => {
     getIndustry();
     message.success("编辑成功");
   }
-  
+
 };
 const handleCancel = () => {
- ruleForm.value.resetFields();
-resetItem()
+  ruleForm.value.resetFields();
+  resetItem()
 };
 const getIndustry = async () => {
   const data = await api.queryInd();
@@ -117,11 +117,24 @@ const getIndustry = async () => {
     return item;
   });
 };
-const resetItem=() => {
-    visible.value = false;
+const resetItem = () => {
+  visible.value = false;
   item.indId = null;
   item.indName = "";
   item.indNameEn = "";
 }
 getIndustry();
 </script>
+<style scoped lang="scss">
+.bg {
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 24px;
+}
+
+.bg-container {
+
+  background-color: #fff;
+  padding: 24px;
+}
+</style>

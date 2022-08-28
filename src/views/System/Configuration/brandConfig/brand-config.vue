@@ -2,7 +2,7 @@
   <div>
     <div>
       <a-form layout="inline">
-        <a-form-item class="w-[200px]">
+        <a-form-item style="width:200px;">
           <a-select v-model:value="searchText" show-search :filter-option="false" :show-arrow="false"
             @search="SearchBrand" @blur="getBrandAgain">
             <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
@@ -12,17 +12,15 @@
         </a-form-item>
         <a-form-item>
           <a-button type="primary" @click="onSearch">
-            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="material-symbols:search"
-              data-inline="false" />
+            <search-outlined />
             <span class="inline">Search</span>
           </a-button>
           <a-button type="primary" class="ml-3" @click="reset">
-            <span class="iconify inline align-middle mr-1 mb-1 text-sm" data-icon="carbon:reset" data-inline="false" />
+            <undo-outlined />
             <span class="inline">Reset</span>
           </a-button>
           <a-button type="primary" class="ml-3" @click="add">
-            <span class="iconify inline align-middle mr-1 mb-1 text-base" data-icon="ic:round-plus"
-              data-inline="false" />
+            <plus-outlined />
             <span class="inline">New</span>
           </a-button>
         </a-form-item>
@@ -163,3 +161,11 @@ const dele = async (record) => {
 getBaseData();
 onSearch();
 </script>
+<style scoped lang="scss">
+.mt-4{
+  margin-top: 16px;
+}
+.ml-3 {
+  margin-left: 12px;
+}
+</style>

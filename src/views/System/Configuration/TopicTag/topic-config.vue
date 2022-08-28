@@ -2,35 +2,18 @@
   <div>
     <a-form layout="inline">
       <a-form-item label="Report Type">
-        <a-select
-          v-model:value="reportType"
-          showArrow
-          style="width: 150px"
-          @change="getTopicTable(reportType)"
-        >
-          <a-select-option
-            :value="item.code"
-            v-for="item in report_type"
-            :key="item.code"
-            >{{ item.value }}</a-select-option
-          >
+        <a-select v-model:value="reportType" showArrow style="width: 150px" @change="getTopicTable(reportType)">
+          <a-select-option :value="item.code" v-for="item in report_type" :key="item.code">{{ item.value }}
+          </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item>
         <a-button type="primary" class="ml-3" @click="reset">
-          <span
-            class="iconify inline align-middle mr-1 mb-1 text-sm"
-            data-icon="carbon:reset"
-            data-inline="false"
-          />
+          <undo-outlined />
           <span class="inline">Reset</span>
         </a-button>
         <a-button type="primary" class="ml-3" @click="add">
-          <span
-            class="iconify inline align-middle mr-1 mb-1 text-base"
-            data-icon="ic:round-plus"
-            data-inline="false"
-          />
+          <plus-outlined />
           <span class="inline">New</span>
         </a-button>
       </a-form-item>
@@ -38,13 +21,8 @@
   </div>
   <!-- table -->
   <div class="mt-4">
-    <a-table
-      :columns="columns"
-      :data-source="tabData"
-      bordered
-      :pagination="paginationOption"
-      :scroll="{ y: 'calc(100vh - 376px)' }"
-    >
+    <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
+      :scroll="{ y: 'calc(100vh - 376px)' }">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <a @click="edit(record)">Edit</a>
@@ -60,40 +38,21 @@
     </a-table>
   </div>
   <!-- 弹窗 -->
-  <a-modal
-    :visible="visible"
-    :title="!item.topicId ? '新增主题' : '编辑主题'"
-    centered
-    @ok="handleOk"
-    @cancel="handleCancel"
-  >
-    <a-form
-      ref="ruleForm"
-      :model="item"
-      :label-col="{ span: 6 }"
-      :wrapper-col="{ span: 14 }"
-    >
+  <a-modal :visible="visible" :title="!item.topicId ? '新增主题' : '编辑主题'" centered @ok="handleOk" @cancel="handleCancel">
+    <a-form ref="ruleForm" :model="item" :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
       <a-form-item label="Report Type" name="reportType">
         <a-select v-model:value="item.reportTypeId">
-          <a-select-option
-            :value="item.code"
-            v-for="item in report_type"
-            :key="item.code"
-            >{{ item.value }}</a-select-option
-          >
+          <a-select-option :value="item.code" v-for="item in report_type" :key="item.code">{{ item.value }}
+          </a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item
-        label="Topic Name"
-        name="topicName"
-        :rules="[
+      <a-form-item label="Topic Name" name="topicName" :rules="[
           {
             required: true,
             message: 'Topic Name 不能为空',
             trigger: 'blur',
           },
-        ]"
-      >
+        ]">
         <a-input v-model:value="item.topicName" />
       </a-form-item>
       <a-form-item label="Topic Name Eng">
