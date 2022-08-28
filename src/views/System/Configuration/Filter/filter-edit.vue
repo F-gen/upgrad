@@ -44,25 +44,24 @@
       </a-form-item>
       <a-form-item label="Filter Word">
         <!-- search -->
-        <div class=" flex items-center mb-[6px]">
+        <div class="filter_search">
           <a-select v-model:value="searchText" show-search style="width: 186px" @search="searchFilterword">
             <a-select-option v-for="(item, index) in item.filterword" :key="index" :value="item">
               {{ item }}
             </a-select-option>
           </a-select>
-          <button @click="onSearch" class=" relative pt-1 h-8 rounded-r text-[#fff] bg-[#1890ff] w-[89px]">
+          <button @click="onSearch" class="search_btn">
             <search-outlined />
             Search
           </button>
         </div>
         <!-- search -->
         <!-- 新增 input-->
-        <div
-          class="w-[275px] h-[120px] rounded  pt-1 pr-[10px] pb-1 pl-[10px] overflow-scroll border-solid border-[#ccc] border-[1px]">
-          <a-input v-if="inputVisible" ref="input" type="text" size="small" class="mr-1 w-[78px]"
+        <div class="add_input">
+          <a-input v-if="inputVisible" ref="input" type="text" size="small" style="margin-right: 4px; width: 78px;"
             v-model:value="inputValue" @blur="handleInputConfirm" @keyup.enter="handleInputConfirm" />
           <!-- 新增 -->
-          <a-tag v-else class="bg-[#fff] border-dashed mt-1" @click="addinput">
+          <a-tag v-else style="margin-top:4px;background-color: #fff;" @click="addinput">
             <plus-outlined />
             New Tag
           </a-tag>
@@ -195,3 +194,36 @@ const resetItem = () => {
   item.tags = []
 }
 </script>
+
+<style scoped lang="scss">
+  .filter_search{
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .search_btn{
+    position: relative;
+    padding-top: 4px;
+    height: 32px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    color: #fff;
+    border: 1px solid #1890ff;
+    background-color: #1890ff;
+    width: 89px;
+  }
+  .add_input{
+    width: 275px;
+    height: 120px;
+    border-radius: 4px;
+    padding: 4px 10px 4px 10px;
+    overflow: scroll;
+    border: 1px solid #ccc;
+  
+  }
+
+
+
+
+
+</style>
