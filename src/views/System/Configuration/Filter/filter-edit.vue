@@ -59,15 +59,16 @@
         <!-- search -->
         <!-- 新增 input-->
         <div class="add_input">
-          <a-input v-if="inputVisible" ref="input" type="text" size="small" style="margin-right: 4px; width: 78px;"
-            v-model:value="inputValue" @change="handleInputConfirm" @keydown.enter="handleInputConfirm" />
+          <a-input v-if="inputVisible" ref="addinputval" type="text" size="small"
+            style="margin-right: 4px; width: 78px;" v-model:value="inputValue" @blur="handleInputConfirm"
+            @keydown.enter="handleInputConfirm" />
           <!-- 新增 -->
           <a-tag v-else style="margin:4px 4px 4px 0;background-color: #fff;" @click="addinput">
             <plus-outlined />
             New Tag
           </a-tag>
           <!-- 修改已有 -->
-          <a-input v-if="isshow" type="text" ref="input" size="small" class="mr-1  w-[78px]" style=" width: 120px"
+          <a-input v-if="isshow" type="text" ref="editinput" size="small" class="mr-1  w-[78px]" style=" width: 120px"
             v-model:value="inputval" @blur="handleInputChange" @keydown.enter="handleInputChange" />
           <a-tag v-else @click="showinput(val)" v-for="(val, index) in item.filterword" :key="val"
             :closable="index !== 0" @close="() => handleClose(val)">
@@ -155,20 +156,25 @@ const resetFilterword = () => {
 // 新增input  tag
 const inputVisible = ref(false)
 const inputValue = ref('')
-const input = ref()
+const editinput = ref()
+const addinputval = ref()
 // 新增
 const handleInputConfirm = () => {
-  let inputValue = inputValue.value
-  if (inputValue && item.filterword.indexOf(inputValue) === -1) {
-    item.filterword = [...item.filterword, inputValue];
+  let va = inputValue.value
+  if (va && item.filterword.indexOf(va) === -1) {
+    item.filterword = [...item.filterword, va];
   }
+  item.filterwords = item.filterword.join(',')
   inputVisible.value = false;
-  inputValue.val = "";
+  inputValue.value = "";
 }
 // 新增显示
 const addinput = () => {
   inputVisible.value = true
-  // input.value.focus()
+
+  nextTick(() => {
+    addinputval.value.focus()
+  })
 }
 
 // 修改input  tag
@@ -210,7 +216,13 @@ const showinput = (val) => {
   tempval.value = val
   isshow.value = !isshow.value
   inputval.value = val
-  // console.log(input.value);
+  nextTick(() => {
+    editinput.value.focus()
+  })
+
+
+
+
 }
 // 删除
 const handleClose = (val) => {
@@ -221,7 +233,10 @@ const handleClose = (val) => {
 const ruleForm = ref()
 const handleOk = async () => {
   await ruleForm.value.validate();
-
+  if (item.filterFieldId == null) { changeFilterField(item.filterField) }
+  if (item.indId == null) {
+    changeInd(item.indName)
+  }
   let data = await api.updFilter({
     reportId: item.reportId,
     filterCond: item.filterCond,
@@ -255,6 +270,9 @@ const resetItem = () => {
   item.filterFieldId = null
   item.filterCond = null
   item.tags = []
+  item.filterwords = ''
+  item.renderList = []
+  item.filterword = []
   searchText.value = ''
 }
 </script>
