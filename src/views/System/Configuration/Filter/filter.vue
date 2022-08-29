@@ -151,6 +151,7 @@ const edit = (record) => {
   editfilter.value.item.filterCond = record.filterCond
   editfilter.value.item.tempId = record.tempId
   editfilter.value.item.filterword = record.filterList
+  editfilter.value.item.renderList = record.filterList
 
 }
 const dele = async (record) => {

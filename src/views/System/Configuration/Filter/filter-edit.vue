@@ -45,8 +45,9 @@
       <a-form-item label="Filter Word">
         <!-- search -->
         <div class="filter_search">
-          <a-select v-model:value="searchText" show-search style="width: 186px" @search="searchFilterword">
-            <a-select-option v-for="(item, index) in item.filterword" :key="index" :value="item">
+          <a-select v-model:value="searchText" show-search style="width: 186px" @search="searchFilterword"
+            @blur="resetFilterword" allowClear>
+            <a-select-option v-for="(item, index) in item.renderList" :key="index" :value="item">
               {{ item }}
             </a-select-option>
           </a-select>
@@ -59,7 +60,7 @@
         <!-- 新增 input-->
         <div class="add_input">
           <a-input v-if="inputVisible" ref="input" type="text" size="small" style="margin-right: 4px; width: 78px;"
-            v-model:value="inputValue" @blur="handleInputConfirm" @keyup.enter="handleInputConfirm" />
+            v-model:value="inputValue" @change="handleInputConfirm" @keydown.enter="handleInputConfirm" />
           <!-- 新增 -->
           <a-tag v-else style="margin:4px 4px 4px 0;background-color: #fff;" @click="addinput">
             <plus-outlined />
@@ -67,7 +68,7 @@
           </a-tag>
           <!-- 修改已有 -->
           <a-input v-if="isshow" type="text" ref="input" size="small" class="mr-1  w-[78px]" style=" width: 120px"
-            v-model:value="inputval" @blur="handleInputChange" @keyup.enter="handleInputChange" />
+            v-model:value="inputval" @blur="handleInputChange" @keydown.enter="handleInputChange" />
           <a-tag v-else @click="showinput(val)" v-for="(val, index) in item.filterword" :key="val"
             :closable="index !== 0" @close="() => handleClose(val)">
             {{ val }}
@@ -111,48 +112,59 @@ const changeFilterField = (val) => {
 const item = reactive({
   tempId: null,
   report: '',
-  reportId: null,
+  reportId: null,//请求
   indName: '',
-  indId: null,
+  indId: null,//请求
   filterField: '',
-  filterFieldId: null,
-  filterCond: null,
+  filterFieldId: null, //请求
+  filterCond: null,//请求
   filterword: [],
   backupfilterword: [],
-  filterList: []
+  renderList: [],
+  filterwords: ''//请求
 })
 
 defineExpose({
   visible,
   item,
 })
+
 // 过滤词词中的搜索
 const searchText = ref('')
-const onSearch = () => { }
-const searchFilterword = (value) => {
-  searchText.value = value;
-  item.backupfilterword = item.filterword
-  item.backupfilterword.forEach((i) => {
-    if (i.startsWith(value)) {
-      let temp = []
-      temp.push(i)
-      item.filterword = temp
+const temp = ref([])
+const onSearch = () => {
+  item.filterword.forEach((val) => {
+    if (val != searchText.value) {
+      temp.value.push(val);
     }
-  })
+  });
+
+  item.filterword = [searchText.value];
+}
+const searchFilterword = (value) => {
+  let teacherList = item.filterword.filter((array) =>
+    array.match(value)
+  );
+  item.renderList = teacherList;
+}
+const resetFilterword = () => {
+  item.renderList = item.backupfilterword
 
 }
 // 新增input  tag
 const inputVisible = ref(false)
 const inputValue = ref('')
 const input = ref()
+// 新增
 const handleInputConfirm = () => {
   let inputValue = inputValue.value
-  if (inputValue && item.filterList.indexOf(inputValue) === -1) {
-    item.filterList = [...item.filterList, inputValue];
+  if (inputValue && item.filterword.indexOf(inputValue) === -1) {
+    item.filterword = [...item.filterword, inputValue];
   }
   inputVisible.value = false;
   inputValue.val = "";
 }
+// 新增显示
 const addinput = () => {
   inputVisible.value = true
   // input.value.focus()
@@ -160,11 +172,14 @@ const addinput = () => {
 
 // 修改input  tag
 const isshow = ref(false)
-const inputval = ref('')
-const temp = ref([])
+const inputval = ref('') // input 值
+
+const tempval = ref('') // 暂存 修改已经
+// 编辑现有
 const handleInputChange = (e) => {
+
   const inputValue = e.target.value;
-  let tags = item.filterList;
+  let tags = item.filterword;
 
   Array.prototype.indexOf = function (val) {
     for (var i = 0; i < this.length; i++) {
@@ -178,21 +193,28 @@ const handleInputChange = (e) => {
       this.splice(index, 1);
     }
   };
-  tags.remove(this.tempval);
-  tags.unshift(inputValue.value);
+  tags.remove(tempval.value);
+  tags.unshift(inputval.value);
   isshow.value = !isshow.value;
   tags = [...new Set(temp.value), ...new Set(tags)];
   // console.log(tags, "编辑完成");
-  item.filterword = tags.join(",");
-  item.filterList = tags;
+  item.filterwords = tags.join(",");
+  item.filterword = tags;
   temp.value = [];
 
   searchText.value = "";
 }
-const showinput = () => { }
+// 显示input框
+const showinput = (val) => {
+  tempval.value = val
+  isshow.value = !isshow.value
+  inputval.value = val
+  // console.log(input.value);
+}
+// 删除
 const handleClose = (val) => {
-  const tags = item.filterList.filter((tag) => tag !== val);
-  item.filterList = tags;
+  const tags = item.filterword.filter((tag) => tag !== val);
+  item.filterword = tags;
 }
 // 校验 确认提交
 const ruleForm = ref()
@@ -230,6 +252,7 @@ const resetItem = () => {
   item.filterFieldId = null
   item.filterCond = null
   item.tags = []
+  searchText.value = ''
 }
 </script>
 
@@ -238,6 +261,9 @@ const resetItem = () => {
   display: flex;
   align-items: center;
   margin-bottom: 6px;
+}
+:deep(.ant-tag) {
+  margin-top: 4px;
 }
 .search_btn {
   position: relative;
@@ -250,6 +276,7 @@ const resetItem = () => {
   background-color: #1890ff;
   width: 89px;
 }
+
 .add_input {
   width: 275px;
   height: 120px;
