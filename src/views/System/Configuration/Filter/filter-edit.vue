@@ -61,7 +61,7 @@
           <a-input v-if="inputVisible" ref="input" type="text" size="small" style="margin-right: 4px; width: 78px;"
             v-model:value="inputValue" @blur="handleInputConfirm" @keyup.enter="handleInputConfirm" />
           <!-- 新增 -->
-          <a-tag v-else style="margin-top:4px;background-color: #fff;" @click="addinput">
+          <a-tag v-else style="margin:4px 4px 4px 0;background-color: #fff;" @click="addinput">
             <plus-outlined />
             New Tag
           </a-tag>
@@ -118,7 +118,8 @@ const item = reactive({
   filterFieldId: null,
   filterCond: null,
   filterword: [],
-  backupfilterword: []
+  backupfilterword: [],
+  filterList: []
 })
 
 defineExpose({
@@ -144,18 +145,55 @@ const searchFilterword = (value) => {
 const inputVisible = ref(false)
 const inputValue = ref('')
 const input = ref()
-const handleInputConfirm = () => { }
+const handleInputConfirm = () => {
+  let inputValue = inputValue.value
+  if (inputValue && item.filterList.indexOf(inputValue) === -1) {
+    item.filterList = [...item.filterList, inputValue];
+  }
+  inputVisible.value = false;
+  inputValue.val = "";
+}
 const addinput = () => {
   inputVisible.value = true
-  input.value.focus()
+  // input.value.focus()
 }
 
 // 修改input  tag
 const isshow = ref(false)
 const inputval = ref('')
-const handleInputChange = () => { }
+const temp = ref([])
+const handleInputChange = (e) => {
+  const inputValue = e.target.value;
+  let tags = item.filterList;
+
+  Array.prototype.indexOf = function (val) {
+    for (var i = 0; i < this.length; i++) {
+      if (this[i] == val) return i;
+    }
+    return -1;
+  };
+  Array.prototype.remove = function (val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+      this.splice(index, 1);
+    }
+  };
+  tags.remove(this.tempval);
+  tags.unshift(inputValue.value);
+  isshow.value = !isshow.value;
+  tags = [...new Set(temp.value), ...new Set(tags)];
+  // console.log(tags, "编辑完成");
+  item.filterword = tags.join(",");
+  item.filterList = tags;
+  temp.value = [];
+
+  searchText.value = "";
+}
 const showinput = () => { }
-const handleClose = () => { }
+const handleClose = (val) => {
+  const tags = item.filterList.filter((tag) => tag !== val);
+  item.filterList = tags;
+}
 // 校验 确认提交
 const ruleForm = ref()
 const handleOk = async () => {
@@ -196,34 +234,29 @@ const resetItem = () => {
 </script>
 
 <style scoped lang="scss">
-  .filter_search{
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-  .search_btn{
-    position: relative;
-    padding-top: 4px;
-    height: 32px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    color: #fff;
-    border: 1px solid #1890ff;
-    background-color: #1890ff;
-    width: 89px;
-  }
-  .add_input{
-    width: 275px;
-    height: 120px;
-    border-radius: 4px;
-    padding: 4px 10px 4px 10px;
-    overflow: scroll;
-    border: 1px solid #ccc;
-  
-  }
+.filter_search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.search_btn {
+  position: relative;
+  padding-top: 4px;
+  height: 32px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #fff;
+  border: 1px solid #1890ff;
+  background-color: #1890ff;
+  width: 89px;
+}
+.add_input {
+  width: 275px;
+  height: 120px;
+  border-radius: 4px;
+  padding: 4px 10px 4px 10px;
+  overflow: scroll;
+  border: 1px solid #ccc;
 
-
-
-
-
+}
 </style>

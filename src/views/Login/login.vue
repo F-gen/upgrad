@@ -24,7 +24,7 @@ const loginFn = async () => {
 
   store.commit("user/setToken", data);
   await api.saveAuthorizationInfo({ token: token });
-  //   store.commit("user/setToken", data);
+
   router.replace({
     path: "/Layout/BrandNewsHome/",
   });
