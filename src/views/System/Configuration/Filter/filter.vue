@@ -55,7 +55,7 @@
       </div>
     </div>
   </div>
-  <filterEdit ref="editfilter" :Industry="Industry" :filterfield="filterfield" />
+  <filterEdit ref="editfilter" :Industry="Industry" :filterfield="filterfield" @refresh="onSearch" />
   <filterAdd ref="addfilter" @refresh="onSearch" :Industry="Industry" :report_type="report_type"
     :filterfield="filterfield" />
 </template>

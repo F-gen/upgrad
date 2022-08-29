@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { message } from "ant-design-vue";
 export default {
   name: 'filter-edit',
 };
@@ -128,7 +129,7 @@ defineExpose({
   visible,
   item,
 })
-
+const emits = defineEmits(["refresh"]);
 // 过滤词词中的搜索
 const searchText = ref('')
 const temp = ref([])
@@ -219,22 +220,24 @@ const handleClose = (val) => {
 // 校验 确认提交
 const ruleForm = ref()
 const handleOk = async () => {
-  // await ruleForm.value.validate();
-  resetItem()
-  console.log(item);
-  /*
+  await ruleForm.value.validate();
 
-  await api.updFilter({
+  let data = await api.updFilter({
     reportId: item.reportId,
     filterCond: item.filterCond,
     tempId: item.tempId,
     filterFieldId: item.filterFieldId,
-    industryId: item.industryId,
-    // filterWord: item.filterWord,
+    industryId: item.indId,
+    filterWord: item.filterwords,
 
   });
-  
-  */
+  if (data !== null) {
+    message.warning(data.message);
+    return;
+  }
+  emits("refresh")
+  resetItem()
+
 }
 const handleCancel = () => {
   //  ruleForm.value.resetFields();
@@ -262,9 +265,11 @@ const resetItem = () => {
   align-items: center;
   margin-bottom: 6px;
 }
+
 :deep(.ant-tag) {
   margin-top: 4px;
 }
+
 .search_btn {
   position: relative;
   padding-top: 4px;
