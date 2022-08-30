@@ -3,18 +3,35 @@
     <div class="box">
       <div>
         <a-form layout="inline">
-
-          <a-form-item style="width:200px;" label="Brand">
-            <a-select v-model:value="searchText" show-search :filter-option="false" :show-arrow="false"
-              @search="SearchBrand" @blur="getBrandAgain">
-              <a-select-option v-for="(item, index) in BrandItems" :key="index" :value="item">
+          <a-form-item style="width: 200px" label="Brand">
+            <a-select
+              v-model:value="searchText"
+              show-search
+              :filter-option="false"
+              :show-arrow="false"
+              @search="SearchBrand"
+              @blur="getBrandAgain"
+            >
+              <a-select-option
+                v-for="(item, index) in BrandItems"
+                :key="index"
+                :value="item"
+              >
                 {{ item }}
               </a-select-option>
             </a-select>
           </a-form-item>
           <a-form-item label="Report Type">
-            <a-select v-model:value="ReportTypeId" :show-arrow="false" style="width: 150px">
-              <a-select-option v-for="item in reportType" :key="item.code" :value="item.code">
+            <a-select
+              v-model:value="ReportTypeId"
+              :show-arrow="false"
+              style="width: 150px"
+            >
+              <a-select-option
+                v-for="item in reportType"
+                :key="item.code"
+                :value="item.code"
+              >
                 {{ item.value }}
               </a-select-option>
             </a-select>
@@ -32,24 +49,25 @@
               <plus-outlined />
               <span class="inline">New</span>
             </a-button>
-
           </a-form-item>
-
         </a-form>
       </div>
       <div>
-
         <a-button title="下载数据" @click="downFn">
-          <cloud-download-outlined style="color: #1890ff;" />
+          <cloud-download-outlined style="color: #1890ff" />
 
           <span style="color: #1890ff" title="下载数据"> 下载</span>
         </a-button>
-
       </div>
     </div>
     <div class="mt-4">
-      <a-table :columns="columns" :data-source="tabData" bordered :pagination="paginationOption"
-        :scroll="{ y: 'calc(100vh - 376px)' }">
+      <a-table
+        :columns="columns"
+        :data-source="tabData"
+        bordered
+        :pagination="paginationOption"
+        :scroll="{ y: 'calc(100vh - 376px)' }"
+      >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <a @click="edit(record)">Edit</a>
@@ -62,13 +80,32 @@
             </a-popconfirm>
           </template>
           <template v-if="column.key === 'must'">
-            <a-switch checked-children="是" un-checked-children="否" :checked="record.must" @change="isMust(record)" />
+            <a-switch
+              checked-children="是"
+              un-checked-children="否"
+              :checked="record.must"
+              @change="isMust(record)"
+            />
+          </template>
+          <template v-if="column.key === 'industry'">
+            <a-tooltip
+              placement="topLeft"
+              :title="record.industry"
+              arrow-point-at-center
+            >
+              <Swiperscroll :record="record.showIndustry"></Swiperscroll>
+            </a-tooltip>
           </template>
         </template>
       </a-table>
     </div>
-    <Config ref="configKeyword" :report-type="reportType" :industry="industry" :brand-items="BackupBrandItems"
-      @refresh="getKeyList()" />
+    <Config
+      ref="configKeyword"
+      :report-type="reportType"
+      :industry="industry"
+      :brand-items="BackupBrandItems"
+      @refresh="getKeyList()"
+    />
   </div>
 </template>
 
@@ -83,13 +120,14 @@ export default {
 import { message } from "ant-design-vue";
 import Config from "./components/keyconfig-box.vue";
 import { downloadFile } from "@/utils/tool";
+
 // data
 let BrandItems = ref([]);
 const BackupBrandItems = ref([]);
-const industry = ref([])
-const brandDetail = ref([]) //获取品牌详情 得id
-const reportType = ref([]) //报告类型
-const ReportTypeId = ref(null) //报告类型id
+const industry = ref([]);
+const brandDetail = ref([]); //获取品牌详情 得id
+const reportType = ref([]); //报告类型
+const ReportTypeId = ref(null); //报告类型id
 const configKeyword = ref(null);
 const columns = reactive([
   { title: "NO", dataIndex: "key", key: "key" },
@@ -111,7 +149,7 @@ let searchText = ref("");
 let query = reactive({
   brandId: "-1",
   reportId: "-1",
-})
+});
 // mehtods
 const downFn = async () => {
   const data = await api.downloadBrandKeyword();
@@ -122,7 +160,7 @@ const downFn = async () => {
     fileData: data,
   });
   message.success("下载成功");
-}
+};
 const SearchBrand = (value) => {
   let timer;
   if (timer) clearTimeout(this.timer);
@@ -143,20 +181,22 @@ const getBaseData = async () => {
   BrandItems.value = data;
   BackupBrandItems.value = data;
   reportType.value = await api.queryDict({ type: "report_type" });
-
 };
-watch(() => [searchText.value, ReportTypeId.value], ([newsearchText, newReport], [oldsearchText, oldReport]) => {
-  if (searchText.value) {
-    brandDetail.value.forEach((item) => {
-      if (searchText.value === item.brandNameEn) {
-        query.brandId = item.brandId;
-      }
-    });
+watch(
+  () => [searchText.value, ReportTypeId.value],
+  ([newsearchText, newReport], [oldsearchText, oldReport]) => {
+    if (searchText.value) {
+      brandDetail.value.forEach((item) => {
+        if (searchText.value === item.brandNameEn) {
+          query.brandId = item.brandId;
+        }
+      });
+    }
+    if (ReportTypeId.value) {
+      query.reportId = ReportTypeId.value;
+    }
   }
-  if (ReportTypeId.value) {
-    query.reportId = ReportTypeId.value;
-  }
-})
+);
 // watchEffect(() => {
 //   if (searchText.value) {
 //     brandDetail.value.forEach((item) => {
@@ -172,17 +212,16 @@ watch(() => [searchText.value, ReportTypeId.value], ([newsearchText, newReport],
 // 初始获取表格数据
 const getKeyList = async () => {
   const data = await api.queryBrandKeyword({
-    ...query
+    ...query,
   });
   tabData.value = data.map((item, index) => {
     item.showIndustry = item.industry.split(",");
     item.key = index + 1;
     return item;
   });
-
 };
 
-//IsMust 的 确认 
+//IsMust 的 确认
 const isMust = async (record) => {
   let data = await api.updBrandKeyword({
     must: !record.must,
@@ -204,14 +243,14 @@ const reset = () => {
   query.brandId = "-1";
   query.reportId = "-1";
   ReportTypeId.value = "";
-  searchText.value = '';
+  searchText.value = "";
   getKeyList();
 };
 //弹层 新增 品牌
 const add = () => {
   configKeyword.value.visible = true;
   configKeyword.value.BrandItems = BrandItems.value;
-}
+};
 //弹层 新增 编辑品牌
 const edit = async (record) => {
   configKeyword.value.visible = true;
@@ -237,9 +276,8 @@ getKeyList();
 </script>
 
 <style lang="scss" scoped>
-.box{
+.box {
   display: flex;
   justify-content: space-between;
 }
-
 </style>
