@@ -3,16 +3,36 @@
     <a-card>
       <a-form layout="inline">
         <a-form-item label="用户ID">
-          <a-input placeholder="请输入用户ID" v-model:value="search.username"></a-input>
+          <a-input
+            placeholder="请输入用户ID"
+            v-model:value="search.username"
+          ></a-input>
         </a-form-item>
         <a-form-item label="姓名">
-          <a-input placeholder="请输入姓名" v-model:value="search.name"></a-input>
+          <a-input
+            placeholder="请输入姓名"
+            v-model:value="search.name"
+          ></a-input>
         </a-form-item>
         <a-form-item label="品牌">
-          <a-select v-model:value="brandId" show-search mode="multiple" :max-tag-count="1" style="width: 200px"
-            :default-active-first-option="false" :show-arrow="false" :filter-option="false" :not-found-content="null"
-            @search="handleSearch" @blur="handleBlur">
-            <a-select-option v-for="(item, index) in Brand" :key="index" :value="item.brandId">
+          <a-select
+            v-model:value="brandId"
+            show-search
+            mode="multiple"
+            :max-tag-count="1"
+            style="width: 200px"
+            :default-active-first-option="false"
+            :show-arrow="false"
+            :filter-option="false"
+            :not-found-content="null"
+            @search="handleSearch"
+            @blur="handleBlur"
+          >
+            <a-select-option
+              v-for="(item, index) in Brand"
+              :key="index"
+              :value="item.brandId"
+            >
               {{ item.brandNameEn }}
             </a-select-option>
           </a-select>
@@ -28,30 +48,50 @@
       </a-form>
 
       <div style="margin-top: 16px">
-        <a-table :columns="columns" :data-source="data" bordered :pagination="false">
+        <a-table
+          :columns="columns"
+          :data-source="data"
+          bordered
+          :pagination="false"
+        >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">
               <a @click="checkData(record)">数据权限</a>
             </template>
             <template v-if="column.key === 'brandNameList'">
-              {{ record.brandNameList }}
+              <Swiperscroll :record="record.brandNameList"></Swiperscroll>
             </template>
             <template v-if="column.key === 'status'">
               {{ record.status == 0 ? "未锁定 " : "锁定 " }}
             </template>
           </template>
-
         </a-table>
         <div class="page">
-          <a-pagination v-model:current="UserList.pageNum" v-model:pageSize="UserList.pageSize" :total="total"
-            show-size-changer :page-size-options="pageSizeOptions" :default-current="UserList.pageNum"
-            @showSizeChange="onShowSizeChange" />
+          <a-pagination
+            v-model:current="UserList.pageNum"
+            v-model:pageSize="UserList.pageSize"
+            :total="total"
+            show-size-changer
+            :page-size-options="pageSizeOptions"
+            :default-current="UserList.pageNum"
+            @showSizeChange="onShowSizeChange"
+          />
         </div>
       </div>
     </a-card>
-    <a-modal :visible="visible" title="数据权限" @ok="handleOk" @cancel="handleOk" center>
+    <a-modal
+      :visible="visible"
+      title="数据权限"
+      @ok="handleOk"
+      @cancel="handleOk"
+      center
+    >
       <div style="height: 300px; overflow: auto">
-        <div v-for="(i, index) in modalData" :key="index" style="padding: 5px; font-size: 14px">
+        <div
+          v-for="(i, index) in modalData"
+          :key="index"
+          style="padding: 5px; font-size: 14px"
+        >
           {{ i }}
         </div>
       </div>
@@ -61,7 +101,7 @@
 
 <script>
 export default {
-  name: 'user',
+  name: "user",
 };
 </script>
 
@@ -69,9 +109,9 @@ export default {
 const search = reactive({
   username: "", // 姓名eng
   name: "", // 姓名
-})
-const brandId = ref([]) //  getUserList 使用
-const data = ref([])
+});
+const brandId = ref([]); //  getUserList 使用
+const data = ref([]);
 const columns = ref([
   { title: "用户ID", key: "userNameEn", dataIndex: "userNameEn" },
   { title: "姓名", key: "userNameCn", dataIndex: "userNameCn" },
@@ -81,7 +121,6 @@ const columns = ref([
     key: "brandNameList",
     scopedSlots: { customRender: "brandNameList" },
     width: "200px",
-    ellipsis: true,
   },
   { title: "角色", key: "roleName", dataIndex: "roleName" },
   {
@@ -94,45 +133,44 @@ const columns = ref([
     key: "action",
     scopedSlots: { customRender: "action" },
   },
-])
-const Brand = ref([])
-const backipBrand = ref([])
-const visible = ref(false)
-const modalData = ref([])
-const total = ref(0)
-const pageSizeOptions = ref([10, 20, 30, 40, 50])
+]);
+const Brand = ref([]);
+const backipBrand = ref([]);
+const visible = ref(false);
+const modalData = ref([]);
+const total = ref(0);
+const pageSizeOptions = ref([10, 20, 30, 40, 50]);
 const UserList = reactive({
   brandIdList: [],
   userNameCn: "",
   userNameEn: "",
   pageNum: 1,
   pageSize: 10,
-})
-const brandName = ref('')
+});
+const brandName = ref("");
 const onShowSizeChange = (current, pageSize) => {
-  UserList.pageNum = current
-  UserList.pageSize = pageSize
-  getUserList()
-}
+  UserList.pageNum = current;
+  UserList.pageSize = pageSize;
+  getUserList();
+};
 const getBasicData = async () => {
   const { result } = await api.getBrandListOfUserRole({
     brandName: brandName.value,
   });
-  Brand.value = result
-  backipBrand.value = result
-}
-getBasicData()
+  Brand.value = result;
+  backipBrand.value = result;
+};
+getBasicData();
 const handleBlur = () => {
-  Brand.value = backipBrand.value
-
-}
+  Brand.value = backipBrand.value;
+};
 const getUserList = async () => {
   const tabledata = await api.getUserList({ ...UserList });
   // console.log(data.result.list, "???data");
   data.value = tabledata.result.list;
   total.value = tabledata.result.total;
-}
-getUserList()
+};
+getUserList();
 const handleSearch = async (name) => {
   let timer;
   if (timer) clearTimeout(timer);
@@ -144,7 +182,7 @@ const handleSearch = async (name) => {
     Brand.value = result;
     clearTimeout(timer);
   }, 500);
-}
+};
 const onSearch = async () => {
   UserList.brandIdList = brandId.value;
   UserList.userNameCn = search.name;
@@ -153,7 +191,7 @@ const onSearch = async () => {
   // console.log(data.result.list, "???data");
   data.value = tabledata.result.list;
   total.value = tabledata.result.total;
-}
+};
 const reset = () => {
   UserList.brandIdList = [];
   UserList.userNameCn = "";
@@ -162,17 +200,17 @@ const reset = () => {
   UserList.pageSize = 10;
   search.name = "";
   search.username = "";
-  brandId.value = []
-  getUserList()
-}
+  brandId.value = [];
+  getUserList();
+};
 const checkData = (record) => {
-  visible.value = true
-  modalData.value = record.brandNameList
-}
+  visible.value = true;
+  modalData.value = record.brandNameList;
+};
 const handleOk = () => {
-  visible.value = false
-  modalData.value = []
-}
+  visible.value = false;
+  modalData.value = [];
+};
 </script>
 <style lang="scss" scoped>
 .page {
