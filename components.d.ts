@@ -39,6 +39,7 @@ declare module '@vue/runtime-core' {
     ATag: typeof import('ant-design-vue/es')['Tag']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
+    ATree: typeof import('ant-design-vue/es')['Tree']
     BarChart: typeof import('./src/components/Chart/barChart.vue')['default']
     Cloudword: typeof import('./src/components/Chart/cloudword.vue')['default']
     CompareChart: typeof import('./src/components/Chart/CompareChart.vue')['default']
