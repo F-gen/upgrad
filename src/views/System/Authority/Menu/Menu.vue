@@ -49,7 +49,7 @@ export default {
 </script>
 
 <script setup>
-
+const treeData = ref([])
 </script>
 <style lang="scss" scoped>
     .title {
