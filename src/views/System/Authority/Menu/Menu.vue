@@ -6,7 +6,7 @@
         <div class="check">
           <a-radio-group v-model:value="roleId" @change="change">
             <a-radio v-for="i in roleList" :key="i.roleType" :style="radioStyle" :value="i.roleType">
-              {{  i.roleName  }}
+              {{ i.roleName }}
             </a-radio>
           </a-radio-group>
         </div>
@@ -18,7 +18,7 @@
         <a-tree checkable :tree-data="treeData" @drop="onDrop" draggable v-model:value="checkedKeys" @check="onCheck"
           v-if="treeData.length > 0" :defaultExpandedKeys="expandedKeys">
           <template v-slot:title="nodeData">
-            <span style="margin-right: 15px">{{  nodeData.name  }}</span>
+            <span style="margin-right: 15px">{{ nodeData.name }}</span>
             <div style="float: right">
               <span v-if="nodeData.dataRef.name != 'Root'" style="margin-right: 8px" @click="edit(nodeData)">
                 <a-icon type="form" />
@@ -52,16 +52,16 @@ export default {
 const treeData = ref([])
 </script>
 <style lang="scss" scoped>
-    .title {
-      padding: 16px 24px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-  
-    .body {
-      padding: 24px;
-      height: 720px;
-      overflow: scroll;
-    }
+.title {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.body {
+  padding: 24px;
+  height: calc(100vh - 148px);
+    overflow: scroll;
+  }
   
     .check {
       padding: 0 10px 24px 10px;
@@ -69,7 +69,6 @@ const treeData = ref([])
   
     .page {
       padding: 16px;
-      height: 820px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -86,7 +85,6 @@ const treeData = ref([])
         margin-left: 16px;
         background-color: #fff;
       }
-    }
-  
+                                                                                                                                                                                                                                                                }
 </style>
   
