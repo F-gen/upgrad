@@ -39,11 +39,12 @@
         </a-tree>
       </div>
     </div>
-    <Model ref="model" @ok="addMenu" @edit='editMenu' />
+    <Model ref="modelref" @add="addMenu" @edit='editMenu' />
   </div>
 </template>
 
 <script>
+import Model from './Model.vue'
 export default {
   name: 'auth-menu',
 };
@@ -73,7 +74,11 @@ getRoleList()
 // tree
 const treeData = ref([])
 const expandedKeys = ref(['root'])
+const SaveMenu = async (data) => {
+  await api.updateMenu(treeData.value[0])
 
+  getMeunByRoleId('-1')
+}
 const getMeunByRoleId = async () => {
   const data = await api.getMeunByRole({
     roleId: '-1'
@@ -85,6 +90,78 @@ const getMeunByRoleId = async () => {
   checkedKeys.value = roleIdList.result.keyList
 }
 getMeunByRoleId()
+const modelref = ref()
+const onCheck = () => { }
+const add = (data) => {
+
+  modelref.value.visiable = true
+  console.log(data, 'add');
+}
+const edit = (data) => { }
+const del = (data) => { }
+const onDrop = info => {
+  // console.log(info);
+  const dropKey = info.node.key;
+  const dragKey = info.dragNode.key;
+  const dropPos = info.node.pos.split('-');
+  const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
+
+  const loop = (data, key, callback) => {
+    data.forEach((item, index) => {
+      if (item.key === key) {
+        return callback(item, index, data);
+      }
+
+      if (item.children) {
+        return loop(item.children, key, callback);
+      }
+    });
+  };
+
+  const data = [...treeData.value]; // Find dragObject
+
+  let dragObj;
+  loop(data, dragKey, (item, index, arr) => {
+    arr.splice(index, 1);
+    dragObj = item;
+  });
+
+  if (!info.dropToGap) {
+    // Drop on the content
+    loop(data, dropKey, item => {
+      item.children = item.children || []; /// where to insert 示例添加到头部，可以是随意位置
+
+      item.children.unshift(dragObj);
+    });
+  } else if ((info.node.children || []).length > 0 && // Has children
+    info.node.expanded && // Is expanded
+    dropPosition === 1 // On the bottom gap
+  ) {
+    loop(data, dropKey, item => {
+      item.children = item.children || []; // where to insert 示例添加到头部，可以是随意位置
+
+      item.children.unshift(dragObj);
+    });
+  } else {
+    let ar = [];
+    let i = 0;
+    loop(data, dropKey, (_item, index, arr) => {
+      ar = arr;
+      i = index;
+    });
+
+    if (dropPosition === -1) {
+      ar.splice(i, 0, dragObj);
+    } else {
+      ar.splice(i + 1, 0, dragObj);
+    }
+  }
+
+  treeData.value = data;
+  SaveMenu()
+};
+const addMenu = () => { }
+const editMenu = () => { }
 </script>
 <style lang="scss" scoped>
 .title {
@@ -96,30 +173,30 @@ getMeunByRoleId()
   padding: 24px;
   height: calc(100vh - 148px);
   overflow: scroll;
+}
+
+.check {
+  padding: 0 10px 24px 10px;
+}
+
+.page {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f1f2f6;
+
+  .left {
+    width: 300px;
+
+    background-color: #fff;
   }
-  
-    .check {
-      padding: 0 10px 24px 10px;
-    }
-  
-    .page {
-      padding: 16px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        background-color: #f1f2f6;
-      
-        .left {
-          width: 300px;
-      
-          background-color: #fff;
-        }
-      
-        .right {
-          width: calc(100% - 300px);
-          margin-left: 16px;
-          background-color: #fff;
-        }
-      }
+
+  .right {
+    width: calc(100% - 300px);
+    margin-left: 16px;
+    background-color: #fff;
+  }
+}
 </style>
   

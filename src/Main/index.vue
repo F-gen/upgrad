@@ -87,7 +87,7 @@
               <!-- <a-menu-divider  v-show="!$store.getters.routerNameList.includes('DownloadCenter')" /> -->
               <a-menu-item key="logout" @click="quit()">
                 <span class="dropItem">
-                  <close-outlined style="margin-left: 10px" />
+                  <close-outlined style="margin:0 10px" />
 
                   <span class="text">退出登录</span>
                 </span>
