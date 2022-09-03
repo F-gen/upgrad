@@ -15,21 +15,22 @@
     <div class="right">
       <div class="title">菜单列表</div>
       <div class="body">
-        <a-tree checkable :tree-data="treeData" @drop="onDrop" draggable v-model:value="checkedKeys" @check="onCheck"
-          v-if="treeData.length > 0" :defaultExpandedKeys="expandedKeys">
+        <a-tree checkable :tree-data="treeData" @drop="onDrop" draggable v-model:checkedKeys="checkedKeys"
+          @check="onCheck" v-if="treeData.length > 0" v-model:defaultExpandedKeys="expandedKeys">
           <template v-slot:title="nodeData">
             <span style="margin-right: 15px">{{ nodeData.name }}</span>
             <div style="float: right">
               <span v-if="nodeData.dataRef.name != 'Root'" style="margin-right: 8px" @click="edit(nodeData)">
-                <a-icon type="form" />
+                <edit-outlined />
               </span>
               <span style="margin-right: 8px" @click="add(nodeData)" v-if="nodeData.children">
-                <a-icon type="plus" />
+                <plus-outlined />
               </span>
               <a-popconfirm title="确定要删除吗？" @confirm="del(nodeData)">
-                <a-icon slot="icon" type="question-circle-o" style="color: red" />
+
+
                 <span v-if="nodeData.dataRef.name != 'Root'">
-                  <a-icon type="delete" />
+                  <delete-outlined />
                 </span>
               </a-popconfirm>
 
@@ -49,7 +50,41 @@ export default {
 </script>
 
 <script setup>
+// role
+const roleId = ref(1)
+const checkedKeys = ref([])
+const roleList = ref([])
+const radioStyle = reactive({
+  display: 'block',
+  height: '30px',
+  lineHeight: '30px',
+})
+const change = async () => {
+  const roleIdList = await api.getRoleKeyList({
+    roleId: roleId.value
+  })
+  checkedKeys.value = roleIdList.result.keyList
+}
+const getRoleList = async () => {
+  const { result } = await api.getRoleList()
+  roleList.value = result
+}
+getRoleList()
+// tree
 const treeData = ref([])
+const expandedKeys = ref(['root'])
+
+const getMeunByRoleId = async () => {
+  const data = await api.getMeunByRole({
+    roleId: '-1'
+  })
+  treeData.value = [data.result]
+  const roleIdList = await api.getRoleKeyList({
+    roleId: roleId.value
+  })
+  checkedKeys.value = roleIdList.result.keyList
+}
+getMeunByRoleId()
 </script>
 <style lang="scss" scoped>
 .title {
@@ -60,7 +95,7 @@ const treeData = ref([])
 .body {
   padding: 24px;
   height: calc(100vh - 148px);
-    overflow: scroll;
+  overflow: scroll;
   }
   
     .check {
@@ -69,22 +104,22 @@ const treeData = ref([])
   
     .page {
       padding: 16px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      background-color: #f1f2f6;
-  
-      .left {
-        width: 300px;
-  
-        background-color: #fff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #f1f2f6;
+      
+        .left {
+          width: 300px;
+      
+          background-color: #fff;
+        }
+      
+        .right {
+          width: calc(100% - 300px);
+          margin-left: 16px;
+          background-color: #fff;
+        }
       }
-  
-      .right {
-        width: calc(100% - 300px);
-        margin-left: 16px;
-        background-color: #fff;
-      }
-                                                                                                                                                                                                                                                                }
 </style>
   
