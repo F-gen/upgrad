@@ -39,12 +39,12 @@
         </a-tree>
       </div>
     </div>
-    <Model ref="modelref" @add="addMenu" @edit='editMenu' />
+    <MenuModel :visiable="visiable" @addMenu="addMenu" @editMenu="editMenu" />
   </div>
 </template>
 
 <script>
-import Model from './Model.vue'
+import MenuModel from './MenuModel.vue'
 export default {
   name: 'auth-menu',
 };
@@ -90,12 +90,12 @@ const getMeunByRoleId = async () => {
   checkedKeys.value = roleIdList.result.keyList
 }
 getMeunByRoleId()
-const modelref = ref()
+const visiable = ref(false)
 const onCheck = () => { }
 const add = (data) => {
+  visiable.value = true
 
-  modelref.value.visiable = true
-  console.log(data, 'add');
+  // console.log(data, 'add');
 }
 const edit = (data) => { }
 const del = (data) => { }
