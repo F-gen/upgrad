@@ -39,7 +39,7 @@
         </a-tree>
       </div>
     </div>
-    <MenuModel :visiable="visiable" @addMenu="addMenu" @editMenu="editMenu" />
+    <MenuModel @addMenu="addMenu" @editMenu="editMenu" ref="menuModel" />
   </div>
 </template>
 
@@ -72,7 +72,9 @@ const getRoleList = async () => {
 }
 getRoleList()
 // tree
+
 const treeData = ref([])
+const nameKey=ref([])
 const expandedKeys = ref(['root'])
 const SaveMenu = async (data) => {
   await api.updateMenu(treeData.value[0])
@@ -90,13 +92,21 @@ const getMeunByRoleId = async () => {
   checkedKeys.value = roleIdList.result.keyList
 }
 getMeunByRoleId()
-const visiable = ref(false)
+const menuModel = ref()
 const onCheck = () => { }
+const where = ref('')
 const add = (data) => {
-  visiable.value = true
+  menuModel.value.item.type= 0
+  menuModel.value.item.tag=''
+  menuModel.value.item.id=null
+  menuModel.value.item.name=''
+  menuModel.value.item.key=''
+  menuModel.value.item.path=''
+  menuModel.value.visiable = true
+  where.value=data.data.name
 
-  // console.log(data, 'add');
 }
+const editTargetKey = ref('')
 const edit = (data) => { }
 const del = (data) => { }
 const onDrop = info => {
@@ -160,8 +170,49 @@ const onDrop = info => {
   treeData.value = data;
   SaveMenu()
 };
-const addMenu = () => { }
+const addMenu =async (item) => {
+  nameKey.value=[]
+  getNameKey(treeData.value)
+  let isAlreadyinMenu = nameKey.value.some((value) => value.name == item.name || value.tag == item.tag)
+  if (isAlreadyinMenu) {
+    message.warning('菜单名称或标签重复，请重新添加')
+    return
+  }else{
+    addMenuchildren(treeData.value, item,where.value)
+    if(treeData.value[0].children.length==0){
+      await api.insertMenu(treeData.value[0])
+    }else{
+      // treeData.value[0].children.splice(5,8)
+      await api.updateMenu(treeData.value[0])
+    }
+  }
+  getMeunByRoleId()
+ }
+ const addMenuchildren=(data, item, where)=>{
+  data.forEach(element => {
+    if (element.name == where) {
+          element.children.push(item)
+       }
+    if (element.children.length > 0) {
+        addMenuchildren(element.children, item, where)
+       }
+   });
+ }
 const editMenu = () => { }
+const getNameKey=(data)=>{
+  for (let i = 0; i < data.length; i++) {
+
+    nameKey.value.push({
+    name: data[i].name,
+    key: data[i].key,
+    tag: data[i].tag
+});
+
+if (data[i].children && data[i].children.length > 0) {
+  getNameKey(data[i].children)
+}
+}
+}
 </script>
 <style lang="scss" scoped>
 .title {
