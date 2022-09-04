@@ -45,6 +45,7 @@
 
 <script>
 import MenuModel from './MenuModel.vue'
+import {message} from 'ant-design-vue'
 export default {
   name: 'auth-menu',
 };
@@ -93,7 +94,15 @@ const getMeunByRoleId = async () => {
 }
 getMeunByRoleId()
 const menuModel = ref()
-const onCheck = () => { }
+const wantoDelTag=ref([])
+const wantoDelBtn=ref([])
+const routerNameList=ref([])
+const onCheck = async(checkedKeys, e) => {
+  nameKey.value=[]
+   getNameKey(treeData.value)
+
+ }
+ 
 const where = ref('')
 const add = (data) => {
   menuModel.value.item.type= 0
@@ -104,11 +113,44 @@ const add = (data) => {
   menuModel.value.item.path=''
   menuModel.value.visiable = true
   where.value=data.data.name
-
+  
 }
 const editTargetKey = ref('')
-const edit = (data) => { }
-const del = (data) => { }
+const edit = (data) => { 
+  menuModel.value.visiable = true
+  menuModel.value.item.type= data.data.type
+  menuModel.value.item.tag=data.data.tag
+  menuModel.value.item.id=data.data.id
+  menuModel.value.item.name=data.data.name
+  menuModel.value.item.key=data.data.key
+  menuModel.value.item.path=data.data.path
+  menuModel.value.item.children=data.data.children
+  menuModel.value.item.hide=data.data.hide
+
+  editTargetKey.value=data.data.key
+
+}
+const del = (data) => { 
+  if (data.children.length > 0) {
+              message.warning('请先删除子菜单')
+                return
+            }
+            deleteTree(treeData.value, data.dataRef.name)
+
+            SaveMenu()
+}
+const deleteTree=(treeList,id)=>{
+  if (!treeList || !treeList.length) {
+                return
+            }
+            for (let i = 0; i < treeList.length; i++) {
+                if (treeList[i].name === id) {
+                    treeList.splice(i, 1);
+                    break;
+                }
+              deleteTree(treeList[i].children, id)
+            }
+}
 const onDrop = info => {
   // console.log(info);
   const dropKey = info.node.key;
@@ -170,21 +212,21 @@ const onDrop = info => {
   treeData.value = data;
   SaveMenu()
 };
-const addMenu =async (item) => {
-  nameKey.value=[]
-  getNameKey(treeData.value)
-  let isAlreadyinMenu = nameKey.value.some((value) => value.name == item.name || value.tag == item.tag)
-  if (isAlreadyinMenu) {
+const addMenu =async(item) => {
+   nameKey.value=[]
+   getNameKey(treeData.value)
+   let isAlreadyinMenu = nameKey.value.some((value) => value.name == item.name || value.tag == item.tag)
+   if (isAlreadyinMenu) {
     message.warning('菜单名称或标签重复，请重新添加')
-    return
-  }else{
-    addMenuchildren(treeData.value, item,where.value)
+      return
+    }else{
+     addMenuchildren(treeData.value, item,where.value)
     if(treeData.value[0].children.length==0){
       await api.insertMenu(treeData.value[0])
-    }else{
-      // treeData.value[0].children.splice(5,8)
+     }else{
+          // treeData.value[0].children.splice(5,8)
       await api.updateMenu(treeData.value[0])
-    }
+     }
   }
   getMeunByRoleId()
  }
@@ -198,7 +240,32 @@ const addMenu =async (item) => {
        }
    });
  }
-const editMenu = () => { }
+const editMenu =async (item) => { 
+  nameKey.value=[]
+   getNameKey(treeData.value)
+  nameKey.value = nameKey.value.filter(item => { return item.key !== editTargetKey.value })
+            let isAlreadyinMenu = nameKey.value.some((value) => value.name == item.name || value.tag == item.tag)
+            if (isAlreadyinMenu) {
+              menuModel.value.visiable = false
+              message.warning('已存在该标签，请重新修改')
+                return
+            } else {
+              menuModel.value.visiable = false
+              editMenuByKey(treeData.value, item, editTargetKey.value)
+                SaveMenu()
+            }
+}
+const editMenuByKey=(data, item, key,) =>{
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].key === key) {
+                    data[i] = item
+                    break
+                }
+                if (data[i].children) {
+                  editMenuByKey(data[i].children, item, key)
+                }
+            }
+        }
 const getNameKey=(data)=>{
   for (let i = 0; i < data.length; i++) {
 
@@ -206,13 +273,13 @@ const getNameKey=(data)=>{
     name: data[i].name,
     key: data[i].key,
     tag: data[i].tag
-});
+    });
 
-if (data[i].children && data[i].children.length > 0) {
-  getNameKey(data[i].children)
-}
-}
-}
+    if (data[i].children && data[i].children.length > 0) {
+       getNameKey(data[i].children)
+    }
+    }
+  }
 </script>
 <style lang="scss" scoped>
 .title {

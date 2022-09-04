@@ -72,7 +72,7 @@ export default {
       item.id=nanoid()
       item.key=nanoid(3)
       emits('addMenu', item)
-      console.log(item, 'add');
+
     } else {
       // 编辑
       emits('editMenu', item)
