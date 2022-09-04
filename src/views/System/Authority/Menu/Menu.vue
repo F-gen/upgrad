@@ -52,6 +52,7 @@ export default {
 </script>
 
 <script setup>
+    const store = useStore();
 // role
 const roleId = ref(1)
 const checkedKeys = ref([])
@@ -77,7 +78,7 @@ getRoleList()
 const treeData = ref([])
 const nameKey=ref([])
 const expandedKeys = ref(['root'])
-const SaveMenu = async (data) => {
+const SaveMenu = async () => {
   await api.updateMenu(treeData.value[0])
 
   getMeunByRoleId('-1')
@@ -100,9 +101,65 @@ const routerNameList=ref([])
 const onCheck = async(checkedKeys, e) => {
   nameKey.value=[]
    getNameKey(treeData.value)
+   routerNameList.value=[]
+   wantoDelBtn.value=[]
+   setRoleMenuSelect(checkedKeys,treeData.value)
+   wantoDelTag.value=[]
+   keyTurnToTag(e.halfCheckedKeys)
+   wantoDelTag.value.map(item => {
+                let result = routerNameList.value.findIndex(v => v == item)
+                if (result !== -1) {
+                   routerNameList.value.splice(result, 1)
+                }
+            })
+   wantoDelTag.value.map(item => {
+     let result = wantoDelBtn.value.findIndex(v => v == item)
+       if (result !== -1) {
+    wantoDelBtn.value.splice(result, 1)
+     }
+   })
+
+   await api.saveRoleKeyList({
+                btnNameList: wantoDelBtn.value,
+                routerNameList: routerNameList.value,
+                roleId: roleId.value,
+                keyList: checkedKeys
+            })
+            await api.updateMenu(treeData.value[0])
+           getMeunByRoleId()
+          store.dispatch("user/getRoutByRole");
 
  }
- 
+const setRoleMenuSelect=(checkedKeys, treeData)=>{
+  for (let i = 0; i < treeData.length; i++) {
+                if (checkedKeys.includes(treeData[i].key)) {
+                    treeData[i].hide = 1 // 若包含则  隐藏设置为false
+                    // this.routerNameList.push(treeData[i].name)
+                } else {
+                    treeData[i].hide = 0  // 隐藏设置为true
+
+                    if (treeData[i].type == 1) {
+                        wantoDelBtn.value.push(treeData[i].tag)
+                    } else {
+                        routerNameList.value.push(treeData[i].tag)
+                    }
+
+                }
+                if (treeData[i].children && treeData[i].children.length > 0) {
+                  setRoleMenuSelect(checkedKeys, treeData[i].children)
+                }
+            }
+}
+const  keyTurnToTag=(halfKey) =>{
+            // 把routername中有namekey 的删除
+          nameKey.value.forEach((i, index) => {
+                halfKey.forEach((item) => {
+                    if (item == i.key) {
+                      wantoDelTag.value.push(i.tag)
+                    }
+                })
+            })
+        }
 const where = ref('')
 const add = (data) => {
   menuModel.value.item.type= 0
