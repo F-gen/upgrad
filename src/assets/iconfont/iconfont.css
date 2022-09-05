@@ -1,0 +1,95 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3609686 */
+  src: url('iconfont.woff2?t=1662359885017') format('woff2'),
+       url('iconfont.woff?t=1662359885017') format('woff'),
+       url('iconfont.ttf?t=1662359885017') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-color-success:before {
+  content: "\e601";
+}
+
+.icon-authoritymanagement:before {
+  content: "\e609";
+}
+
+.icon-baogao-copy:before {
+  content: "\e647";
+}
+
+.icon-caidan:before {
+  content: "\e636";
+}
+
+.icon-yonghuguanli:before {
+  content: "\e6aa";
+}
+
+.icon-faxian:before {
+  content: "\e616";
+}
+
+.icon-others:before {
+  content: "\e603";
+}
+
+.icon-Channel:before {
+  content: "\e605";
+}
+
+.icon-tag:before {
+  content: "\e606";
+}
+
+.icon-data-trend:before {
+  content: "\e607";
+}
+
+.icon-platform:before {
+  content: "\e608";
+}
+
+.icon-report:before {
+  content: "\e60b";
+}
+
+.icon-statistical:before {
+  content: "\e60c";
+}
+
+.icon-building:before {
+  content: "\e60d";
+}
+
+.icon-Brand:before {
+  content: "\e60e";
+}
+
+.icon-targat:before {
+  content: "\e60f";
+}
+
+.icon-time:before {
+  content: "\e610";
+}
+
+.icon-table:before {
+  content: "\e611";
+}
+
+.icon-download:before {
+  content: "\e66c";
+}
+
+.icon-filter:before {
+  content: "\e8d4";
+}
+
