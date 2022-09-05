@@ -4,7 +4,7 @@ import system from "@/views/System/";
 Author: eureka
 Date: 2022-08-19 11:14:45
 LastEditors: eureka
-LastEditTime: 2022-08-25 17:54:14
+LastEditTime: 2022-09-05 14:43:43
  */
 export default [
 
@@ -125,29 +125,29 @@ export default [
                             {
                                 path: "/System/NewReport",
                                 component: () => import("@/views/System/Configuration/NewReport"),
-                                meta: { title: "New Report", },
+                                meta: { title: "New Report",icon: 'icon-baogao-copy' },
                             },
                             {
                                 path: "/Layout/BrandDiscovery",
                                 component: () => import("@/views/BrandDiscovery"),
-                                meta: { title: "Brand Discovery" },
+                                meta: { title: "Brand Discovery" ,icon:'icon-faxian' },
                             },
                         ]
                     },
                     {
                         path: '/Authority',
                         component: () => import("@/views/System/Authority/"),
-                        meta: { title: 'Authority', icon: 'icon-a-gerenyinsi_personal-privacy1' },
+                        meta: { title: 'Authority', icon:'icon-authoritymanagement' },
                         children: [
                             {
                                 path: "/System/UserManagement",
                                 component: () => import("@/views/System/Authority/User/user.vue"),
-                                meta: { title: "User Management" },
+                                meta: { title: "User Management",icon:"icon-yonghuguanli" },
                             },
                             {
                                 path: "/System/MenuManagement",
                                 component: () => import("@/views/System/Authority/Menu/Menu.vue"),
-                                meta: { title: "Menu Management" },
+                                meta: { title: "Menu Management",icon:'icon-caidan' },
                             },
                         ]
                     }
