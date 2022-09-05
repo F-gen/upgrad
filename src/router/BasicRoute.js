@@ -4,7 +4,7 @@ import system from "@/views/System/";
 Author: eureka
 Date: 2022-08-19 11:14:45
 LastEditors: eureka
-LastEditTime: 2022-09-05 14:43:43
+LastEditTime: 2022-09-05 15:04:25
  */
 export default [
 
@@ -22,20 +22,20 @@ export default [
             {
                 path: "/Layout/BrandNewsHome",
                 component: () => import("@/views/BrandNewsHome"),
-                meta: { title: "Brand News" },
+                meta: { title: "Brand Insight" },
                 name: "BrandNewsHome",
             },
             {
                 path: "/Layout/BrandNews",
                 component: () => import("@/views/BrandNewsHome/BrandNews"),
-                meta: { title: "Brand News" },
+                meta: { title: "Brand Insight" },
                 name: "BrandNews",
                 hidden: true,
             },
             {
                 path: "/Layout/Overview",
                 component: () => import("@/views/DataIntelligence/Overview/"),
-                meta: { title: "Data Intelligence" },
+                meta: { title: "Social Intelligence" },
                 name: "Overview",
             },
             {
