@@ -10,9 +10,12 @@
       <div class="route">
         <nav id="menu">
           <div v-for="(item, index) in routes[0].children" :key="index">
-            <div v-show="!item.hidden" :class="[
-              item.children ? 'menu-item highlight' : 'nochildren highlight',
-            ]">
+            <div
+              v-show="!item.hidden"
+              :class="[
+                item.children ? 'menu-item highlight' : 'nochildren highlight',
+              ]"
+            >
               <!-- 一级 -->
               <div class="menu-text" @click="routeReplace(item.path)">
                 <a>{{ item.meta.title }}</a>
@@ -24,7 +27,11 @@
 
                 <div v-for="i in item.children" :key="i.path">
                   <!-- 二级标题config... -->
-                  <div class="menu-text_border" v-show="!item.hidden" v-if="i.children">
+                  <div
+                    class="menu-text_border"
+                    v-show="!item.hidden"
+                    v-if="i.children"
+                  >
                     <div class="icon">
                       <span :class="['iconfont', i.meta.icon]"></span>
                     </div>
@@ -37,8 +44,12 @@
                   </div>
                   <!-- 二级标题config... end -->
                   <!-- 三级star-->
-                  <div class="icon-box gb a" v-for="inner in i.children" :key="inner.path"
-                    @click="routeReplace(inner.path)">
+                  <div
+                    class="icon-box gb a"
+                    v-for="inner in i.children"
+                    :key="inner.path"
+                    @click="routeReplace(inner.path)"
+                  >
                     <div class="icon">
                       <span :class="['iconfont', inner.meta.icon]"></span>
                     </div>
@@ -65,29 +76,31 @@
             </a-avatar>
             <span style="margin-left: 12px; color: #fff">{{
               JSON.parse(username)
-              }}</span>
+            }}</span>
             <down-outlined style="margin-left: 4px" />
-
           </div>
 
           <template #overlay>
             <a-menu style="width: 130px; margin-right: 24px">
-              <!-- <a-menu-item
+              <a-menu-item
                 @click="$router.push('/Layout/DownloadCenter')"
-                v-show="!$store.getters.routerNameList.includes('DownloadCenter')"
+                v-show="
+                  !$store.getters.routerNameList.includes('DownloadCenter')
+                "
               >
                 <span class="dropItem">
-                  <span
-                    class="iconfont icon-xiazai"
-                    style="margin: 0 5px 0 10px"
-                  ></span>
+                  <download-outlined style="margin: 0 10px" />
                   <span>下载中心</span>
                 </span>
-              </a-menu-item> -->
-              <!-- <a-menu-divider  v-show="!$store.getters.routerNameList.includes('DownloadCenter')" /> -->
+              </a-menu-item>
+              <a-menu-divider
+                v-show="
+                  !$store.getters.routerNameList.includes('DownloadCenter')
+                "
+              />
               <a-menu-item key="logout" @click="quit()">
                 <span class="dropItem">
-                  <close-outlined style="margin:0 10px" />
+                  <close-outlined style="margin: 0 10px" />
 
                   <span class="text">退出登录</span>
                 </span>
@@ -119,61 +132,60 @@
 <script>
 import { getSession, removeSession } from "@/utils/auth";
 export default {
-  name: 'MainLayout',
+  name: "MainLayout",
 };
 </script>
 
 <script setup>
 const router = useRouter();
-const store = useStore()
-const routes = store.getters.routes
+const store = useStore();
+const routes = store.getters.routes;
 const leftroute = reactive([
   {
-    path: '/System/brand',
-    icon: 'ant-design:trademark-circle-outlined',
-    title: 'Brand'
+    path: "/System/brand",
+    icon: "ant-design:trademark-circle-outlined",
+    title: "Brand",
   },
   {
-    path: '/System/Industry',
-    icon: 'tabler:building-skyscraper',
-    title: 'Industry'
+    path: "/System/Industry",
+    icon: "tabler:building-skyscraper",
+    title: "Industry",
   },
   {
-    path: '/System/KeyConfig',
-    icon: 'fluent:target-arrow-20-regular',
-    title: 'Keyword'
+    path: "/System/KeyConfig",
+    icon: "fluent:target-arrow-20-regular",
+    title: "Keyword",
   },
   {
-    path: '/System/Channel',
-    icon: 'ant-design:apartment-outlined',
-    title: 'Channel'
+    path: "/System/Channel",
+    icon: "ant-design:apartment-outlined",
+    title: "Channel",
   },
   {
-    path: '/System/Platform',
-    icon: 'fluent:desktop-pulse-48-regular',
-    title: 'Platform'
+    path: "/System/Platform",
+    icon: "fluent:desktop-pulse-48-regular",
+    title: "Platform",
   },
   {
-    path: '/System/Topictag',
-    icon: 'ant-design:tag-outlined',
-    title: 'Topic Tag'
+    path: "/System/Topictag",
+    icon: "ant-design:tag-outlined",
+    title: "Topic Tag",
   },
   {
-    path: '/System/Filter',
-    icon: 'ant-design:filter-outlined',
-    title: 'Filter Word'
+    path: "/System/Filter",
+    icon: "ant-design:filter-outlined",
+    title: "Filter Word",
   },
-
-])
+]);
 const username = getSession("userName");
 const quit = () => {
   window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
-}
+};
 const routeReplace = (paths) => {
   router.push({
-    path: paths
+    path: paths,
   });
-}
+};
 </script>
 
 <style scoped lang="scss">
