@@ -88,7 +88,7 @@
           <template #overlay>
             <a-menu style="width: 130px; margin-right: 24px">
               <a-menu-item
-                @click="$router.push('/Layout/DownloadCenter')"
+                @click="routeReplace('/Layout/DownloadCenter')"
                 v-show="
                   !$store.getters.routerNameList.includes('DownloadCenter')
                 "
