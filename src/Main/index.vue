@@ -18,7 +18,12 @@
             >
               <!-- 一级 -->
               <div class="menu-text" @click="routeReplace(item.path)">
-                <a>{{ item.meta.title }}</a>
+                <a
+                  :style="
+                    torouterName == item.meta.title ? 'color:#1890ff' : ''
+                  "
+                  >{{ item.meta.title }}</a
+                >
               </div>
               <!-- 三级开始 -->
 
@@ -181,9 +186,21 @@ const username = getSession("userName");
 const quit = () => {
   window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
 };
-const routeReplace = (paths) => {
+const torouterName = ref("Brand Insight");
+const routeReplace = (route) => {
+  if (route == "/Layout/BrandNewsHome") {
+    torouterName.value = "Brand Insight";
+  } else if (route == "/Layout/Overview") {
+    torouterName.value = "Social Intelligence";
+  } else if (route == "/Layout/OriginData") {
+    torouterName.value = "Social Buzz";
+  } else if (route.indexOf("System") !== -1) {
+    torouterName.value = "System";
+  } else if (route == "/Layout/DownloadCenter") {
+    torouterName.value = "";
+  }
   router.push({
-    path: paths,
+    path: route,
   });
 };
 </script>
