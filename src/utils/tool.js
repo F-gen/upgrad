@@ -86,3 +86,15 @@ export const downloadFile = function (
   URL.revokeObjectURL(elink.href);
   document.body.removeChild(elink);
 };
+//动态表头 修改内容所需  OriArray 后端的动态表头 ，colArray 为页面想要修改的列
+export function dynamicTableHead(OriArray, colArray) {
+  let newArray = [];
+  newArray = OriArray.forEach((item) => {
+    colArray.forEach((val) => {
+      if (item.column == val.name) {
+        item[val.key] = val.value;
+      }
+    });
+  });
+  return newArray;
+}
