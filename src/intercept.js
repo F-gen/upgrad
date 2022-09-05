@@ -6,7 +6,6 @@ import store from "./store/index";
 
 const CancelToken = axios.CancelToken;
 import { getSession, removeSession } from "./utils/auth";
-import { filterObjectEmpty, addRequestData } from "./utils/tool";
 import router from "./router/index";
 const clearRequest = {
   source: {
@@ -50,10 +49,10 @@ router.beforeEach(async (to, from, next) => {
       tem.forEach((i) => {
         router.addRoute(i);
       })
-      let hasBrandNews = tem[0].children.some(i => i.path == '/Layout/BrandDiscovery')
+      let hasBrandNews = tem[0].children.some(i => i.path == '/Layout/BrandNewsHome')
 
       if (hasBrandNews) {
-        router.push('/Layout/BrandDiscovery');//v3
+        router.push('/Layout/BrandNewsHome');//v3
         // router.push('/Layout/DownloadCenter')
       } else {
         // 没有BrandNewsHome路由，跳转到第一个
