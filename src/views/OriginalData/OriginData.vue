@@ -110,7 +110,10 @@
             </a-radio-group>
           </div>
         </div>
-        
+        <a-table>
+
+          
+        </a-table>
     
         <!-- 分页 -->
         <div class="page">
