@@ -73,6 +73,7 @@
             :total="total"
             show-size-changer
             @showSizeChange="onShowSizeChange"
+            @change="onShowSizeChange"
           />
         </div>
       </div>
