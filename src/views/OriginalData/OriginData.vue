@@ -110,8 +110,57 @@
             </a-radio-group>
           </div>
         </div>
-        
-    
+        <a-table
+          :columns="columns"
+          :data-source="data"
+          bordered
+          :pagination="false"
+          :scroll="{ x: 800, y: 'calc(100vh - 376px)' }"
+        >
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.dataIndex === 'bodyLink'">
+              <a :href="record.bodyLink" target="blank">{{
+                record.bodyLink
+              }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'publisherLink'">
+              <a :href="record.publisherLink" target="blank">{{
+                record.publisherLink
+              }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'topicLink'">
+              <a :href="record.topicLink" target="blank">{{
+                record.topicLink
+              }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'opusUrl'">
+              <a :href="record.opusUrl" target="blank">{{ record.opusUrl }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'videoUrl'">
+              <a :href="record.videoUrl" target="blank">{{
+                record.videoUrl
+              }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'audioUrl'">
+              <a :href="record.audioUrl" target="blank">{{
+                record.audioUrl
+              }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'musicUrl'">
+              <a :href="record.musicUrl" target="blank">{{
+                record.musicUrl
+              }}</a>
+            </template>
+            <template v-if="column.dataIndex === 'originalFlag'">
+              {{ record.originalFlag === 0 ? "原创" : "转载" }}
+            </template>
+            <template v-if="column.dataIndex === 'topicList'">
+             <Swiperscroll :record="record.topicList"></Swiperscroll>
+            </template>
+
+          </template>
+        </a-table>
+
         <!-- 分页 -->
         <div class="page">
           <a-pagination
@@ -138,8 +187,10 @@
 import dayjs from "dayjs";
 import moment from "moment";
 import { getBeforeDate, dynamicTableHead } from "@/utils/tool";
+import Swiperscroll from '@/components/Swiperscroll.vue';
 
 export default {
+  components: { Swiperscroll },
   name: "originData",
 };
 </script>
@@ -244,29 +295,6 @@ const changcolumWeibo = ref([
     key: "fixed",
     value: "left",
   },
-  {
-    name: "bodyLink",
-    key: "scopedSlots",
-    value: {
-      customRender: "bodyLink",
-    },
-  },
-
-  {
-    name: "publisherLink",
-    key: "scopedSlots",
-    value: {
-      customRender: "publisherLink",
-    },
-  },
-  ,
-  {
-    name: "topicLink",
-    key: "scopedSlots",
-    value: {
-      customRender: "topicLink",
-    },
-  },
 ]);
 const changcolumWechat = ref([
   {
@@ -278,42 +306,6 @@ const changcolumWechat = ref([
     name: "publishTime",
     key: "fixed",
     value: "left",
-  },
-
-  {
-    name: "opusUrl",
-    key: "scopedSlots",
-    value: {
-      customRender: "opusUrl",
-    },
-  },
-  {
-    name: "videoUrl",
-    key: "scopedSlots",
-    value: {
-      customRender: "videoUrl",
-    },
-  },
-  {
-    name: "audioUrl",
-    key: "scopedSlots",
-    value: {
-      customRender: "audioUrl",
-    },
-  },
-  {
-    name: "musicUrl",
-    key: "scopedSlots",
-    value: {
-      customRender: "musicUrl",
-    },
-  },
-  {
-    name: "originalFlag",
-    key: "scopedSlots",
-    value: {
-      customRender: "originalFlag",
-    },
   },
 ]);
 const changcolumTiktok = ref([
@@ -328,21 +320,6 @@ const changcolumTiktok = ref([
     value: "left",
   },
 
-  {
-    name: "opusUrl",
-    key: "scopedSlots",
-    value: {
-      customRender: "opusUrl",
-    },
-  },
-
-  {
-    name: "topicList",
-    key: "scopedSlots",
-    value: {
-      customRender: "topicList",
-    },
-  },
 ]);
 const changcolumBook = ref([
   {
@@ -354,22 +331,6 @@ const changcolumBook = ref([
     name: "publishTime",
     key: "fixed",
     value: "left",
-  },
-
-  {
-    name: "opusUrl",
-    key: "scopedSlots",
-    value: {
-      customRender: "opusUrl",
-    },
-  },
-
-  {
-    name: "topicList",
-    key: "scopedSlots",
-    value: {
-      customRender: "topicList",
-    },
   },
 ]);
 // changeplatform
@@ -402,8 +363,8 @@ const getcolumn = async (Array) => {
     item.title = item.title;
     item.dataIndex = item.column;
     item.key = index;
-
     item.width = 200;
+    item.ellipsis = true;
     return item;
   });
 };

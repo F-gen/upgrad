@@ -42,8 +42,10 @@
           </template>
         </a-table>
         <div class="page">
+
           <a-pagination v-model:current="UserList.pageNum" v-model:pageSize="UserList.pageSize" :total="total"
             show-size-changer @showSizeChange="onShowSizeChange" />
+
         </div>
       </div>
     </a-card>
@@ -97,7 +99,7 @@ const backipBrand = ref([]);
 const visible = ref(false);
 const modalData = ref([]);
 const total = ref(0);
-// const pageSizeOptions = ref([10, 20, 30, 40, 50]);
+
 const UserList = reactive({
   brandIdList: [],
   userNameCn: "",
