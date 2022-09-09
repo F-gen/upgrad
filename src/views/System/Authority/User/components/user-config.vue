@@ -3,36 +3,16 @@
     <a-card>
       <a-form layout="inline">
         <a-form-item label="用户ID">
-          <a-input
-            placeholder="请输入用户ID"
-            v-model:value="search.username"
-          ></a-input>
+          <a-input placeholder="请输入用户ID" v-model:value="search.username"></a-input>
         </a-form-item>
         <a-form-item label="姓名">
-          <a-input
-            placeholder="请输入姓名"
-            v-model:value="search.name"
-          ></a-input>
+          <a-input placeholder="请输入姓名" v-model:value="search.name"></a-input>
         </a-form-item>
         <a-form-item label="品牌">
-          <a-select
-            v-model:value="brandId"
-            show-search
-            mode="multiple"
-            :max-tag-count="1"
-            style="width: 200px"
-            :default-active-first-option="false"
-            :show-arrow="false"
-            :filter-option="false"
-            :not-found-content="null"
-            @search="handleSearch"
-            @blur="handleBlur"
-          >
-            <a-select-option
-              v-for="(item, index) in Brand"
-              :key="index"
-              :value="item.brandId"
-            >
+          <a-select v-model:value="brandId" show-search mode="multiple" :max-tag-count="1" style="width: 200px"
+            :default-active-first-option="false" :show-arrow="false" :filter-option="false" :not-found-content="null"
+            @search="handleSearch" @blur="handleBlur">
+            <a-select-option v-for="(item, index) in Brand" :key="index" :value="item.brandId">
               {{ item.brandNameEn }}
             </a-select-option>
           </a-select>
@@ -48,12 +28,7 @@
       </a-form>
 
       <div style="margin-top: 16px">
-        <a-table
-          :columns="columns"
-          :data-source="data"
-          bordered
-          :pagination="false"
-        >
+        <a-table :columns="columns" :data-source="data" bordered :pagination="false">
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">
               <a @click="checkData(record)">数据权限</a>
@@ -67,31 +42,14 @@
           </template>
         </a-table>
         <div class="page">
-          <a-pagination
-            v-model:current="UserList.pageNum"
-            v-model:pageSize="UserList.pageSize"
-            :total="total"
-            show-size-changer
-            :page-size-options="pageSizeOptions"
-            :default-current="UserList.pageNum"
-            @showSizeChange="onShowSizeChange"
-          />
+          <a-pagination v-model:current="UserList.pageNum" v-model:pageSize="UserList.pageSize" :total="total"
+            show-size-changer @showSizeChange="onShowSizeChange" />
         </div>
       </div>
     </a-card>
-    <a-modal
-      :visible="visible"
-      title="数据权限"
-      @ok="handleOk"
-      @cancel="handleOk"
-      center
-    >
+    <a-modal :visible="visible" title="数据权限" @ok="handleOk" @cancel="handleOk" center>
       <div style="height: 300px; overflow: auto">
-        <div
-          v-for="(i, index) in modalData"
-          :key="index"
-          style="padding: 5px; font-size: 14px"
-        >
+        <div v-for="(i, index) in modalData" :key="index" style="padding: 5px; font-size: 14px">
           {{ i }}
         </div>
       </div>
@@ -139,7 +97,7 @@ const backipBrand = ref([]);
 const visible = ref(false);
 const modalData = ref([]);
 const total = ref(0);
-const pageSizeOptions = ref([10, 20, 30, 40, 50]);
+// const pageSizeOptions = ref([10, 20, 30, 40, 50]);
 const UserList = reactive({
   brandIdList: [],
   userNameCn: "",
