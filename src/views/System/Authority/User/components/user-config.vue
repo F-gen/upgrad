@@ -42,10 +42,8 @@
           </template>
         </a-table>
         <div class="page">
-
           <a-pagination v-model:current="UserList.pageNum" v-model:pageSize="UserList.pageSize" :total="total"
-            show-size-changer @showSizeChange="onShowSizeChange" />
-
+            show-size-changer @showSizeChange="onShowSizeChange" @change="onShowSizeChange" />
         </div>
       </div>
     </a-card>
