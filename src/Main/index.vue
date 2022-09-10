@@ -145,43 +145,7 @@ export default {
 const router = useRouter();
 const store = useStore();
 const routes = store.getters.routes;
-const leftroute = reactive([
-  {
-    path: "/System/brand",
-    icon: "ant-design:trademark-circle-outlined",
-    title: "Brand",
-  },
-  {
-    path: "/System/Industry",
-    icon: "tabler:building-skyscraper",
-    title: "Industry",
-  },
-  {
-    path: "/System/KeyConfig",
-    icon: "fluent:target-arrow-20-regular",
-    title: "Keyword",
-  },
-  {
-    path: "/System/Channel",
-    icon: "ant-design:apartment-outlined",
-    title: "Channel",
-  },
-  {
-    path: "/System/Platform",
-    icon: "fluent:desktop-pulse-48-regular",
-    title: "Platform",
-  },
-  {
-    path: "/System/Topictag",
-    icon: "ant-design:tag-outlined",
-    title: "Topic Tag",
-  },
-  {
-    path: "/System/Filter",
-    icon: "ant-design:filter-outlined",
-    title: "Filter Word",
-  },
-]);
+
 const username = getSession("userName");
 const quit = () => {
   window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
