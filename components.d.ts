@@ -51,6 +51,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Swiperscroll: typeof import('./src/components/Swiperscroll.vue')['default']
+    Title: typeof import('./src/components/title.vue')['default']
     Topword: typeof import('./src/components/Chart/topword.vue')['default']
   }
 }
