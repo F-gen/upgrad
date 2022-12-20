@@ -4,12 +4,21 @@
     <div class="basicheader">
       <div class="logo">
         <router-link to="/Layout/BrandDiscovery">
-          <div><img src="../assets/MI.png" alt="" class="img" /></div>
+          <div>
+            <img
+              src="../assets/MI.png"
+              alt=""
+              class="img"
+            >
+          </div>
         </router-link>
       </div>
       <div class="route">
         <nav id="menu">
-          <div v-for="(item, index) in routes[0].children" :key="index">
+          <div
+            v-for="(item, index) in routes[0].children"
+            :key="index"
+          >
             <div
               v-show="!item.hidden"
               :class="[
@@ -17,28 +26,33 @@
               ]"
             >
               <!-- 一级 -->
-              <div class="menu-text" @click="routeReplace(item.path)">
+              <div
+                class="menu-text"
+                @click="routeReplace(item.path)"
+              >
                 <a
                   :style="
                     torouterName == item.meta.title ? 'color:#1890ff' : ''
                   "
-                  >{{ item.meta.title }}</a
-                >
+                >{{ item.meta.title }}</a>
               </div>
               <!-- 三级开始 -->
 
               <div class="sub-menu double">
                 <!-- 二级 -->
 
-                <div v-for="i in item.children" :key="i.path">
+                <div
+                  v-for="i in item.children"
+                  :key="i.path"
+                >
                   <!-- 二级标题config... -->
                   <div
-                    class="menu-text_border"
                     v-show="!item.hidden"
                     v-if="i.children"
+                    class="menu-text_border"
                   >
                     <div class="icon">
-                      <span :class="['iconfont', i.meta.icon]"></span>
+                      <span :class="['iconfont', i.meta.icon]" />
                     </div>
 
                     <div class="title">
@@ -50,13 +64,13 @@
                   <!-- 二级标题config... end -->
                   <!-- 三级star-->
                   <div
-                    class="icon-box gb a"
                     v-for="inner in i.children"
                     :key="inner.path"
+                    class="icon-box gb a"
                     @click="routeReplace(inner.path)"
                   >
                     <div class="icon">
-                      <span :class="['iconfont', inner.meta.icon]"></span>
+                      <span :class="['iconfont', inner.meta.icon]" />
                     </div>
                     <div class="text">
                       <div class="title">
@@ -67,7 +81,7 @@
                   <!-- 三级结束 -->
                 </div>
 
-                <div></div>
+                <div />
               </div>
             </div>
           </div>
@@ -88,10 +102,10 @@
           <template #overlay>
             <a-menu style="width: 130px; margin-right: 24px">
               <a-menu-item
-                @click="routeReplace('/Layout/DownloadCenter')"
                 v-show="
                   !$store.getters.routerNameList.includes('DownloadCenter')
                 "
+                @click="routeReplace('/Layout/DownloadCenter')"
               >
                 <span class="dropItem">
                   <download-outlined style="margin: 0 10px" />
@@ -103,7 +117,10 @@
                   !$store.getters.routerNameList.includes('DownloadCenter')
                 "
               />
-              <a-menu-item key="logout" @click="quit()">
+              <a-menu-item
+                key="logout"
+                @click="quit()"
+              >
                 <span class="dropItem">
                   <close-outlined style="margin: 0 10px" />
 
@@ -122,14 +139,22 @@
     <!-- back-top -->
     <div>
       <a-back-top />
-      <strong style="color: rgba(64, 64, 64, 0.6)"> </strong>
+      <strong style="color: rgba(64, 64, 64, 0.6)" />
     </div>
 
-    <div class="online" @click="onlinetack">
-      <div class="icon" style="margin-left: 3px">
+    <div
+      class="online"
+      @click="onlinetack"
+    >
+      <div
+        class="icon"
+        style="margin-left: 3px"
+      >
         <message-outlined />
       </div>
-      <div class="message">在线运维</div>
+      <div class="message">
+        在线运维
+      </div>
     </div>
   </div>
 </template>
@@ -148,7 +173,7 @@ const routes = store.getters.routes;
 
 const username = getSession("userName");
 const quit = () => {
-  window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
+  window.location.href = 'https://biuat.ibaiqiu.com/a/dist/';
 };
 const torouterName = ref("Brand Insight");
 const routeReplace = (route) => {

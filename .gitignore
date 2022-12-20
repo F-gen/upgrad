@@ -11,12 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-src/api
-src/intercept.js
-.env.production
-.env.development
-src/store
-src/views/Login
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

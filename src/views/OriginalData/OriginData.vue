@@ -13,9 +13,9 @@
                   show-search
                   placeholder="全部品牌"
                   :filter-option="false"
+                  show-arrow
                   @search="SearchBrand"
                   @blur="getBrandAgain"
-                  showArrow
                 >
                   <a-select-option
                     v-for="item in Branditems.result"
@@ -28,33 +28,36 @@
               </a-form-item>
               <a-form-item label="Publish time">
                 <a-range-picker
+                  v-model:value="time"
                   style="width: 200px; height: 32px"
                   :format="dateFormat"
-                  @change="onChange"
-                  :allowClear="false"
-                  v-model:value="time"
+                  :allow-clear="false"
                   :placeholder="['Start Time', 'End Time']"
-                  :disabledDate="disabledDate"
+                  :disabled-date="disabledDate"
+                  @change="onChange"
                 />
               </a-form-item>
               <a-form-item label="Data Source">
                 <a-radio-group
                   v-model:value="dataSource"
-                  @change="changeDataSource"
                   button-style="solid"
+                  @change="changeDataSource"
                 >
-                  <a-radio-button :value="1"> KOL/KOC发布 </a-radio-button>
-                  <a-radio-button :value="0"> 官方发布 </a-radio-button>
+                  <a-radio-button :value="1">
+                    KOL/KOC发布
+                  </a-radio-button>
+                  <a-radio-button :value="0">
+                    官方发布
+                  </a-radio-button>
                 </a-radio-group>
               </a-form-item>
               <a-form-item>
                 <a-input
-                  style="width: 180px; height: 32px"
                   v-model:value="searchdetail"
-                  allowClear
+                  style="width: 180px; height: 32px"
+                  allow-clear
                   placeholder="Search Content"
-                >
-                </a-input>
+                />
               </a-form-item>
               <a-form-item>
                 <a-button
@@ -67,25 +70,37 @@
                 </a-button>
                 <a-button
                   html-type="submit"
-                  @click="reset"
                   style="height: 32px"
+                  @click="reset"
                 >
                   Reset
                 </a-button>
               </a-form-item>
-              <a-form-item> </a-form-item>
+              <a-form-item />
             </a-form>
           </div>
           <div class="righticon">
             <!-- v-has="'Social-btn-chart'" v-has="'Social-btn-export'" -->
-            <div class="down" @click="toOverview">
-              <a-tooltip placement="left" title="查看图表">
-                <span class="iconfont icon-statistical"></span>
+            <div
+              class="down"
+              @click="toOverview"
+            >
+              <a-tooltip
+                placement="left"
+                title="查看图表"
+              >
+                <span class="iconfont icon-statistical" />
               </a-tooltip>
             </div>
-            <div class="down" @click="download">
-              <a-tooltip placement="left" title="一键下载">
-                <span class="iconfont icon-download"></span>
+            <div
+              class="down"
+              @click="download"
+            >
+              <a-tooltip
+                placement="left"
+                title="一键下载"
+              >
+                <span class="iconfont icon-download" />
               </a-tooltip>
             </div>
           </div>
@@ -98,15 +113,23 @@
         <div class="download">
           <div>
             <a-radio-group
-              button-style="solid"
               v-model:value="platform"
+              button-style="solid"
               @change="getOriginData"
             >
-              <a-radio-button :value="1"> WeChat </a-radio-button>
-              <a-radio-button :value="0"> Weibo </a-radio-button>
+              <a-radio-button :value="1">
+                WeChat
+              </a-radio-button>
+              <a-radio-button :value="0">
+                Weibo
+              </a-radio-button>
 
-              <a-radio-button :value="3"> Xiaohongshu </a-radio-button>
-              <a-radio-button :value="2"> Douyin </a-radio-button>
+              <a-radio-button :value="3">
+                Xiaohongshu
+              </a-radio-button>
+              <a-radio-button :value="2">
+                Douyin
+              </a-radio-button>
             </a-radio-group>
           </div>
         </div>
@@ -119,35 +142,56 @@
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.dataIndex === 'bodyLink'">
-              <a :href="record.bodyLink" target="blank">{{
+              <a
+                :href="record.bodyLink"
+                target="blank"
+              >{{
                 record.bodyLink
               }}</a>
             </template>
             <template v-if="column.dataIndex === 'publisherLink'">
-              <a :href="record.publisherLink" target="blank">{{
+              <a
+                :href="record.publisherLink"
+                target="blank"
+              >{{
                 record.publisherLink
               }}</a>
             </template>
             <template v-if="column.dataIndex === 'topicLink'">
-              <a :href="record.topicLink" target="blank">{{
+              <a
+                :href="record.topicLink"
+                target="blank"
+              >{{
                 record.topicLink
               }}</a>
             </template>
             <template v-if="column.dataIndex === 'opusUrl'">
-              <a :href="record.opusUrl" target="blank">{{ record.opusUrl }}</a>
+              <a
+                :href="record.opusUrl"
+                target="blank"
+              >{{ record.opusUrl }}</a>
             </template>
             <template v-if="column.dataIndex === 'videoUrl'">
-              <a :href="record.videoUrl" target="blank">{{
+              <a
+                :href="record.videoUrl"
+                target="blank"
+              >{{
                 record.videoUrl
               }}</a>
             </template>
             <template v-if="column.dataIndex === 'audioUrl'">
-              <a :href="record.audioUrl" target="blank">{{
+              <a
+                :href="record.audioUrl"
+                target="blank"
+              >{{
                 record.audioUrl
               }}</a>
             </template>
             <template v-if="column.dataIndex === 'musicUrl'">
-              <a :href="record.musicUrl" target="blank">{{
+              <a
+                :href="record.musicUrl"
+                target="blank"
+              >{{
                 record.musicUrl
               }}</a>
             </template>
@@ -155,9 +199,8 @@
               {{ record.originalFlag === 0 ? "原创" : "转载" }}
             </template>
             <template v-if="column.dataIndex === 'topicList'">
-             <Swiperscroll :record="record.topicList"></Swiperscroll>
+              <Swiperscroll :record="record.topicList" />
             </template>
-
           </template>
         </a-table>
 
@@ -190,8 +233,8 @@ import { getBeforeDate, dynamicTableHead } from "@/utils/tool";
 import Swiperscroll from '@/components/Swiperscroll.vue';
 
 export default {
+  name: "OriginData",
   components: { Swiperscroll },
-  name: "originData",
 };
 </script>
 
@@ -209,8 +252,8 @@ const onShowSizeChange = (current, pageSize) => {
   Search();
 };
 // 品牌
-const selectbrandID = ref(null);
-const Branditems = ref([]);
+let selectbrandID = ref(null);
+let Branditems = ref([]);
 const BackupBrandItems = ref([]);
 const SearchBrand = (value) => {
   let timer;
@@ -228,7 +271,7 @@ const getBrandAgain = () => {
 };
 // 日期
 const dateFormat = ref("YYYY-MM-DD");
-const time = ref([
+let time = ref([
   dayjs(getBeforeDate(33), dateFormat.value),
   dayjs(getBeforeDate(3), dateFormat.value),
 ]);
@@ -246,7 +289,7 @@ const onChange = (date, dateString) => {
 };
 //Data Source 及切换
 const dataSource = ref(1);
-const platform = ref(1);
+let platform = ref(1);
 const changeDataSource = () => {
   page.page = 1;
   getOriginData();

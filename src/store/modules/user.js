@@ -24,12 +24,15 @@ const state = {
 };
 const mutations = {
   setToken: (state, data) => {
-    state.userName = data.userInfo.userName;
-    state.token = data.token;
-    setSession("name", JSON.stringify(data.userInfo.name));
+    localStorage.setItem("name", data?.userInfo.name ? JSON.stringify(data.userInfo.name) : null);
+    localStorage.setItem("email", data?.userInfo.name ? JSON.stringify(data?.userInfo.email) : null);
+    // state.userName = data.userInfo.username;
+    // state.token = data.token;
+
+    setSession("name", data?.userInfo.name ? JSON.stringify(data.userInfo.name) : null);
     setSession("token", data.token);
-    setSession("email", JSON.stringify(data.userInfo.email));
-    setSession("userName", JSON.stringify(data.userInfo.userName));
+    setSession("email", data?.userInfo.email ? JSON.stringify(data.userInfo.email) : null);
+    setSession("userName", data?.userInfo.username ? JSON.stringify(data.userInfo.username) : null);
 
   },
   setRoles: (state, data) => {
