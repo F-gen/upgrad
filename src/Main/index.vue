@@ -173,7 +173,7 @@ const routes = store.getters.routes;
 
 const username = getSession("userName");
 const quit = () => {
-  window.location.href = 'https://biuat.ibaiqiu.com/a/dist/';
+  window.location.href = import.meta.env.VITE_APP_BASE_LOGIN;
 };
 const torouterName = ref("Brand Insight");
 const routeReplace = (route) => {

@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.headers.post["Content-Type"] = "application/json;charset=UTF-8";
 axios.defaults.timeout = 160000;
-axios.defaults.baseURL = 'https://biuat.ibaiqiu.com/mi/';
+axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_API;
 export const login = (params) => {
   return axios.get(`/system/loginByFutail`, { params });
 };
